@@ -1,2 +1,2 @@
 # PopeAndPopers
- Repo For Pope And Popers Game
+ PopeAndPopers Repo for Game Staff
