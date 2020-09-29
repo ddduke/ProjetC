@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -92,7 +93,7 @@ GameObject:
   - component: {fileID: -6593560523142434495}
   - component: {fileID: 6929837355215518569}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonGo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +117,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 102, y: 46}
+  m_SizeDelta: {x: 108, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8674618270852066524
 CanvasRenderer:
@@ -141,6 +142,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -200,6 +202,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7060449129826469677, guid: ea59025d152ca4b4886e8d3054e9a2b0,
           type: 3}
+        m_TargetAssemblyTypeName: 
         m_MethodName: OnButtonPress
         m_Mode: 1
         m_Arguments:

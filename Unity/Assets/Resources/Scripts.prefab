@@ -61,8 +61,8 @@ MonoBehaviour:
   CitiesTocheck: []
   CitiesCreated: []
   MaximumCitiesConnected: 2
-  CityPrefab: {fileID: 0}
-  Moving_Lines: {fileID: 0}
+  POIPrefab: {fileID: 7430256814651565679, guid: d79c261f0ece7fe4c89503c40f9eeabc,
+    type: 3}
   objs: []
   MinimumDistanceBetweenCities: 1
 --- !u!114 &7060449129826469677
