@@ -143,6 +143,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1844531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64be75a5f836e42458afbbd5f8bfa9d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerPOI: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -734,12 +747,12 @@ PrefabInstance:
     - target: {fileID: 2505277363860683864, guid: 3c88106e9c32f994ea742608df72add4,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.001984
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2505277363860683864, guid: 3c88106e9c32f994ea742608df72add4,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.9696829
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2505277363860683866, guid: 3c88106e9c32f994ea742608df72add4,
         type: 3}
@@ -756,6 +769,11 @@ PrefabInstance:
       propertyPath: POI
       value: 
       objectReference: {fileID: 7430256815205988795}
+    - target: {fileID: 2505277363860683866, guid: 3c88106e9c32f994ea742608df72add4,
+        type: 3}
+      propertyPath: movement_speed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2505277363860683869, guid: 3c88106e9c32f994ea742608df72add4,
         type: 3}
       propertyPath: m_Name
@@ -834,6 +852,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273951233998497027, guid: 2b389d4bd6f156745bbce275f00a79cd,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b389d4bd6f156745bbce275f00a79cd, type: 3}
@@ -914,6 +937,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403999761789160439, guid: 006c37e6d3d75a140aa133fdb2259eee,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006c37e6d3d75a140aa133fdb2259eee, type: 3}

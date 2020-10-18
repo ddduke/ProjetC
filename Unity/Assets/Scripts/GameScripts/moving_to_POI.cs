@@ -42,7 +42,7 @@ public class moving_to_POI : MonoBehaviour
     {
         GameObject player = GameObject.Find("Player");
         if (player == null) Debug.Log("player not found");
-        GameObject PlayerPOI = player.GetComponent<moving>().POI;
+        GameObject PlayerPOI = player.GetComponent<ActualPOI>().PlayerPOI;
         POIsConnectedToPlayer = PlayerPOI.GetComponent<POI_Variables>().POIsConnected;
         foreach (GameObject POI in POIsConnectedToPlayer)
         {
@@ -53,3 +53,4 @@ public class moving_to_POI : MonoBehaviour
         
         
 }
+

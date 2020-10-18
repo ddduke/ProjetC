@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 7430256814651565679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.5205463, y: 3.0651274, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8646c16a533d9b844984ac5b9c36f5e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CitiesConnectedToPlayer: []
+  POIsConnectedToPlayer: []
 --- !u!65 &-5744975045524421793
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5974049584568606655
 MonoBehaviour:
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d53245add9b7349a088bdb4723e518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CitiesConnected: []
+  POIsConnected: []
 --- !u!114 &-413021362930566330
 MonoBehaviour:
   m_ObjectHideFlags: 0
