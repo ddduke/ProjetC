@@ -6,11 +6,11 @@ public class EnlightGround : MonoBehaviour
 {
     void OnMouseOver()
     {
-        GetComponent<MeshRenderer>().material.color = Color.blue;
+        //GetComponent<MeshRenderer>().material.color = Color.blue;
     }
 
     void OnMouseExit()
     {
-        GetComponent<MeshRenderer>().material.color = Color.white;
+        //GetComponent<MeshRenderer>().material.color = Color.white;
     }
 }

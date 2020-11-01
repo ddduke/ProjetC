@@ -15,7 +15,8 @@ public class Move_There : MonoBehaviour
             // Casts the ray and get the first game object hit
             Physics.Raycast(ray, out hit);
             Debug.Log("This hit at " + hit.collider.gameObject.name);
-            unit.transform.position = hit.point;
+            //unit.transform.position = new Vector3(hit.point.x,1,hit.point.z);
+            unit.transform.position = Vector3.MoveTowards(unit.transform.position, new Vector3(hit.point.x, 1, hit.point.z), Time.deltaTime * 1);
             enabled = false;
         }
     }
