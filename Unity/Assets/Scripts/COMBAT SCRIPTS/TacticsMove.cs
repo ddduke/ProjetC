@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+//using System.Runtime.InteropServices;
+using System.Threading;
 using UnityEngine;
 //class used to manage moving and selecting ground for every unit in combat
 public class TacticsMove : MonoBehaviour
 {
     //get all the selectable grounds in the map
-    List<Ground> selectableGround = new List<Ground>();
+    List<Ground> selectableGrounds = new List<Ground>();
     GameObject[] grounds;
 
     //used to stack the path for the ground
@@ -19,12 +20,19 @@ public class TacticsMove : MonoBehaviour
     public int move = 5;
     public float jumpHeight = 2;
     public float moveSpeed = 2;
+    public float jumpVelocity = 4.5f;
 
     //to settle next
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
     float halfHeight = 0;
+
+    bool fallingDown = false;
+    bool jumpingUp = false;
+    bool movingEdge = false;
+    //get the point where we are on the edge
+    Vector3 jumpTarget;
     
     //Init function called by the unit to get all the variables used in its function
     protected void Init()
@@ -80,7 +88,7 @@ public class TacticsMove : MonoBehaviour
         {
             Ground g = process.Dequeue();
 
-            selectableGround.Add(g);
+            selectableGrounds.Add(g);
             g.selectable = true;
 
             if (g.distance < move)
@@ -99,7 +107,7 @@ public class TacticsMove : MonoBehaviour
             
         }
     }
-    // to finish
+
     public void MoveToGround(Ground ground)
     {
         path.Clear();
@@ -112,5 +120,65 @@ public class TacticsMove : MonoBehaviour
             path.Push(next);
             next = next.parent;
         }
+    }
+
+    public void Move()
+    {
+        if (path.Count > 0)
+        {
+            Ground g = path.Peek();
+            Vector3 target = g.transform.position;
+            Debug.Log("target :" + target);
+
+
+            //calculate the units position on top of the targeted ground
+            target.y += halfHeight + g.GetComponent<Collider>().bounds.extents.y;
+            if (Vector3.Distance(transform.position, target)>=0.05f)
+            {
+                CalculateHeading(target);
+                SetHorizontalVelocity();
+                                
+                transform.forward = heading;
+                transform.position += velocity * Time.deltaTime;
+            }
+            else
+            {
+                //ground center reached 
+                transform.position = target;
+                path.Pop();
+            }
+        }
+        else
+        {
+            RemoveSelectableGrounds();
+            moving = false;
+        }
+    }
+
+    protected void RemoveSelectableGrounds()
+    {
+        if(currentGround!=null)
+        {
+            currentGround.current = false;
+            currentGround = null;
+        }
+        foreach(Ground ground in selectableGrounds)
+        {
+            ground.Reset();
+        }
+
+        selectableGrounds.Clear();
+    }
+
+    void CalculateHeading(Vector3 target)
+    {
+        heading = target - transform.position;
+        heading.Normalize();
+        Debug.Log("heading :" + heading);
+    }
+
+    void SetHorizontalVelocity()
+    {
+        velocity = heading * moveSpeed;
     }
 }

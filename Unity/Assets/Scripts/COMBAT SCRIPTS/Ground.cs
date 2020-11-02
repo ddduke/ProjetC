@@ -86,8 +86,14 @@ public class Ground : MonoBehaviour
             if (ground != null && ground.walkable)
             {
                 RaycastHit hit;
+
                 //check if there is an object upwards of the ground
                 if (!Physics.Raycast(ground.transform.position, Vector3.up, out hit, 1))
+                {
+                    adjacencyList.Add(ground);
+                }
+                //check if the thing blocking the ray is a unit (moveable)
+                else if (hit.transform.gameObject.tag == "Unit")
                 {
                     adjacencyList.Add(ground);
                 }

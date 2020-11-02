@@ -15,6 +15,7 @@ public class PlayerMove : TacticsMove
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position, transform.forward);
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
@@ -23,7 +24,7 @@ public class PlayerMove : TacticsMove
         }
         else
         {
-            //moving
+            Move();
         }
     }
 

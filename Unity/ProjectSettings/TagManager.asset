@@ -6,6 +6,7 @@ TagManager:
   tags:
   - POI
   - Ground
+  - Unit
   layers:
   - Default
   - TransparentFX
