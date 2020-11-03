@@ -20,19 +20,13 @@ public class TacticsMove : MonoBehaviour
     public int move = 5;
     public float jumpHeight = 2;
     public float moveSpeed = 2;
-    public float jumpVelocity = 4.5f;
 
     //to settle next
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
     float halfHeight = 0;
-
-    bool fallingDown = false;
-    bool jumpingUp = false;
-    bool movingEdge = false;
     //get the point where we are on the edge
-    Vector3 jumpTarget;
     
     //Init function called by the unit to get all the variables used in its function
     protected void Init()
@@ -42,14 +36,15 @@ public class TacticsMove : MonoBehaviour
 
     }
 
-    //function to set the current ground
-    public void GetCurrentGround()
+    //function to get the current ground of the gameObject
+    public Ground GetCurrentGround()
     {
         currentGround = GetTargetGround(gameObject);
         currentGround.current = true;
+        return currentGround;
 
     }
-    //function called to get the current ground
+    //function called to get the round under a gameobject
     public Ground GetTargetGround(GameObject target)
     {
         RaycastHit hit;
@@ -128,7 +123,6 @@ public class TacticsMove : MonoBehaviour
         {
             Ground g = path.Peek();
             Vector3 target = g.transform.position;
-            Debug.Log("target :" + target);
 
 
             //calculate the units position on top of the targeted ground
