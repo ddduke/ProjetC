@@ -20,7 +20,7 @@ public class FormationMove : TacticsMove
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
-            FindSelectableGrounds();
+            FindSelectableGroundsFormation();
             CheckMouse();
         }
         else

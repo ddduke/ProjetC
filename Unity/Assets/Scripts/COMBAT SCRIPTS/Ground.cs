@@ -53,7 +53,7 @@ public class Ground : MonoBehaviour
         adjacencyList.Clear();
         current = false;
         target = false;
-        selectable = false;
+        //selectable = false;
         walkable = true;
 
         visited = false;
@@ -92,8 +92,8 @@ public class Ground : MonoBehaviour
                 {
                     adjacencyList.Add(ground);
                 }
-                //check if the thing blocking the ray is a unit (moveable)
-                else if (hit.transform.gameObject.tag == "Unit")
+                //check if the thing blocking the ray is a unit (moveable) or the formation
+                else if (hit.transform.gameObject.tag == "Unit" || hit.transform.gameObject.tag == "Formation")
                 {
                     adjacencyList.Add(ground);
                 }

@@ -68,7 +68,7 @@ public class TacticsMove : MonoBehaviour
     }
 
     //set all the selectable grounds variables to "selectable" and enqueue all the paths for the target
-    public void FindSelectableGrounds()
+    public void FindSelectableGroundsFormation()
     {
         ComputeAdjacencyLists();
         GetCurrentGround();
@@ -103,6 +103,40 @@ public class TacticsMove : MonoBehaviour
         }
     }
 
+    public void FindSelectableGroundsUnit()
+    {
+        ComputeAdjacencyLists();
+        GetCurrentGround();
+
+        Queue<Ground> process = new Queue<Ground>();
+        //get the current ground and set it to visited
+        process.Enqueue(currentGround);
+        currentGround.visited = true;
+
+        // we get a neighbor, set the previous in parent variable to queue the path
+        while (process.Count > 0)
+        {
+            Ground g = process.Dequeue();
+
+            selectableGrounds.Add(g);
+
+            if (g.distance < move)
+            {
+                foreach (Ground ground in g.adjacencyList)
+                {
+                    if (!ground.visited)
+                    {
+                        ground.parent = g;
+                        ground.visited = true;
+                        ground.distance = 1 + g.distance;
+                        process.Enqueue(ground);
+                    }
+                }
+            }
+
+        }
+    }
+
     public void MoveToGround(Ground ground)
     {
         path.Clear();
@@ -131,14 +165,16 @@ public class TacticsMove : MonoBehaviour
             {
                 CalculateHeading(target);
                 SetHorizontalVelocity();
-                                
-                transform.forward = heading;
-                transform.position += velocity * Time.deltaTime;
+                //start coroutine to pause every move
+                StartCoroutine(Move1Secs(target));
+
             }
             else
             {
                 //ground center reached 
                 transform.position = target;
+                heading = new Vector3(1, 0, 0);
+                transform.forward = heading;
                 path.Pop();
             }
         }
@@ -167,6 +203,7 @@ public class TacticsMove : MonoBehaviour
     void CalculateHeading(Vector3 target)
     {
         heading = target - transform.position;
+        
         heading.Normalize();
         Debug.Log("heading :" + heading);
     }
@@ -175,4 +212,15 @@ public class TacticsMove : MonoBehaviour
     {
         velocity = heading * moveSpeed;
     }
+
+    IEnumerator Move1Secs(Vector3 target)
+    {
+        yield return new WaitForSeconds(1);
+        transform.forward = heading;
+
+
+        //SMOOTH MOVING transform.position += velocity * Time.deltaTime;
+        transform.position = target;
+    }
 }
+

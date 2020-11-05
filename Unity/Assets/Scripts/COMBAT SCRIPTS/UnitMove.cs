@@ -29,7 +29,7 @@ public class UnitMove : TacticsMove
         {
             if (!inFormation())
             {
-                FindSelectableGrounds();
+                FindSelectableGroundsUnit();
                 formationPivot = formation.GetComponent<FormationMove>().targetGround;
                 unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
                 Debug.Log("unit final target :" + unitTarget.transform.position);
