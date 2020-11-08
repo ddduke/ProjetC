@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -1834221310258821538}
   - component: {fileID: -6155611538540095756}
   - component: {fileID: 378736678112891789}
+  - component: {fileID: 8152314362274093964}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -101,7 +102,8 @@ MonoBehaviour:
   jumpHeight: 2
   moveSpeed: 2
   formation: {fileID: 0}
-  movementSpeed: 0
+  actualRound: 1
+  moveNumber: 0
 --- !u!95 &-6155611538540095756
 Animator:
   serializedVersion: 3
@@ -135,3 +137,17 @@ CapsuleCollider:
   m_Height: 1.5768298
   m_Direction: 1
   m_Center: {x: 0, y: 0.7873576, z: -0.0154325105}
+--- !u!114 &8152314362274093964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6235526354122871969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52cd3b6a4707c44fb71343c9ed10b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movesPerRound: 1
+  inFormation: 1

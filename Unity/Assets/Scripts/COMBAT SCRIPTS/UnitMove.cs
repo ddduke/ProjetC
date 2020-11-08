@@ -5,11 +5,13 @@ using UnityEngine;
 public class UnitMove : TacticsMove
 {
     public GameObject formation;
-    public int movementSpeed;
 
     Vector3 relativeFormationPosition;
     Ground formationPivot;
     Ground unitTarget;
+
+    public int actualRound = 1;
+    public int moveNumber = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,6 @@ public class UnitMove : TacticsMove
         formationPivot = GetTargetGround(formation);
         unitTarget = GetCurrentGround();
         relativeFormationPosition = formationPivot.transform.position - unitTarget.transform.position;
-        Debug.Log(relativeFormationPosition);
     }
 
     // Update is called once per frame
@@ -32,13 +33,12 @@ public class UnitMove : TacticsMove
                 FindSelectableGroundsUnit();
                 formationPivot = formation.GetComponent<FormationMove>().targetGround;
                 unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
-                Debug.Log("unit final target :" + unitTarget.transform.position);
                 MoveToGround(unitTarget);
             }
         }
         else
         {
-            gameObject.GetComponent<Animator>().Play("HumanoidRun");
+            //gameObject.GetComponent<Animator>().Play("HumanoidRun");
             Move();
         }
 
@@ -55,7 +55,7 @@ public class UnitMove : TacticsMove
 
     Ground GetUnitPositionInFormation(Ground formationGround, Vector3 direction)
     {
-        //cube of 0.5 x and z and height of a jumpheight to check if it is walkable
+        //cube of 0.5 x and z and height of a maxHeightDifference to check if it is walkable
         Vector3 halfExtends = new Vector3(0.25f, 3f, 0.25f);
         Collider[] colliders = Physics.OverlapBox(formationGround.transform.position - direction, halfExtends);
         //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list

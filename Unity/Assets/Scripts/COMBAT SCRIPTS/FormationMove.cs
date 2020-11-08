@@ -47,7 +47,6 @@ public class FormationMove : TacticsMove
                     {
                         //set the new target
                         targetGround = g;
-                        Debug.Log("formation final target :" + targetGround.transform.position);
                         MoveToGround(g);
                     }
                 }

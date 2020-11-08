@@ -13,13 +13,19 @@ public class TacticsMove : MonoBehaviour
     //used to stack the path for the ground
     Stack<Ground> path = new Stack<Ground>();
 
+    //used to list all the
+    List<GameObject> UnitsInFormation = new List<GameObject>();
+
     Ground currentGround;
 
     //Variables for the movement of the unit
     public bool moving = false;
-    public int move = 5;
-    public float jumpHeight = 2;
-    public float moveSpeed = 2;
+    float move;
+    public float maxHeightDifference = 2;
+    int numberOfRounds = 4;
+    //get the speed of the velocity for smooth speed
+    float moveSpeed = 2;
+
 
     //to settle next
     Vector3 velocity = new Vector3();
@@ -33,6 +39,27 @@ public class TacticsMove : MonoBehaviour
     {
         grounds = GameObject.FindGameObjectsWithTag("Ground");
         halfHeight = GetComponent<Collider>().bounds.extents.y;
+        
+        if (gameObject.tag == "Formation")
+        {
+            GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+            foreach (GameObject unit in units)
+            {
+                if (unit.GetComponent<CombatVariables>().inFormation) UnitsInFormation.Add(unit);
+            }
+            //maybe integrate the relative position of the units here ? 
+            move = UnitsInFormation[0].GetComponent<CombatVariables>().movesPerRound;
+            foreach (GameObject unit in UnitsInFormation)
+            {
+                if (move >= unit.GetComponent<CombatVariables>().movesPerRound) move = unit.GetComponent<CombatVariables>().movesPerRound;
+            }
+            move = move * numberOfRounds;
+        }
+        else if (gameObject.tag == "Unit")
+        {
+            move = GetComponent<CombatVariables>().movesPerRound;
+            move = move * numberOfRounds;
+        }
 
     }
 
@@ -63,7 +90,7 @@ public class TacticsMove : MonoBehaviour
         foreach (GameObject ground in grounds)
         {
             Ground g = ground.GetComponent<Ground>();
-            g.FindNeighbors(jumpHeight);
+            g.FindNeighbors(maxHeightDifference);
         }
     }
 
@@ -155,18 +182,21 @@ public class TacticsMove : MonoBehaviour
     {
         if (path.Count > 0)
         {
+            
             Ground g = path.Peek();
             Vector3 target = g.transform.position;
 
 
             //calculate the units position on top of the targeted ground
             target.y += halfHeight + g.GetComponent<Collider>().bounds.extents.y;
+            //if we are distant to the target
             if (Vector3.Distance(transform.position, target)>=0.05f)
             {
                 CalculateHeading(target);
                 SetHorizontalVelocity();
                 //start coroutine to pause every move
                 StartCoroutine(Move1Secs(target));
+                
 
             }
             else
@@ -176,10 +206,24 @@ public class TacticsMove : MonoBehaviour
                 heading = new Vector3(1, 0, 0);
                 transform.forward = heading;
                 path.Pop();
+                if (gameObject.tag == "Unit")
+                {
+                    GetComponent<UnitMove>().moveNumber = GetComponent<UnitMove>().moveNumber + 1;
+                    if (GetComponent<UnitMove>().moveNumber == GetComponent<CombatVariables>().movesPerRound)
+                    {
+                        GetComponent<UnitMove>().actualRound += 1;
+                        GetComponent<UnitMove>().moveNumber = 0;
+                    }
+                }
             }
         }
         else
         {
+            if (gameObject.tag == "Unit")
+            {
+                gameObject.GetComponent<UnitMove>().moveNumber = -1;
+                gameObject.GetComponent<UnitMove>().actualRound = 1;
+            }
             RemoveSelectableGrounds();
             moving = false;
         }
@@ -205,7 +249,6 @@ public class TacticsMove : MonoBehaviour
         heading = target - transform.position;
         
         heading.Normalize();
-        Debug.Log("heading :" + heading);
     }
 
     void SetHorizontalVelocity()
@@ -215,12 +258,13 @@ public class TacticsMove : MonoBehaviour
 
     IEnumerator Move1Secs(Vector3 target)
     {
+        
         yield return new WaitForSeconds(1);
+
         transform.forward = heading;
-
-
         //SMOOTH MOVING transform.position += velocity * Time.deltaTime;
         transform.position = target;
+        
     }
 }
 

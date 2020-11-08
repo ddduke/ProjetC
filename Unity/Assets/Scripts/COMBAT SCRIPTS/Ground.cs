@@ -53,7 +53,7 @@ public class Ground : MonoBehaviour
         adjacencyList.Clear();
         current = false;
         target = false;
-        //selectable = false;
+        selectable = false;
         walkable = true;
 
         visited = false;

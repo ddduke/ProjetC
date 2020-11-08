@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4b63a916bc2b03c4f81750563522715e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - POIPrefab: {fileID: 7430256814651565679, guid: d79c261f0ece7fe4c89503c40f9eeabc,
+      type: 3}
+  - StartPOI: {fileID: 1403999761789160438, guid: 006c37e6d3d75a140aa133fdb2259eee,
+      type: 3}
+  - EndPOI: {fileID: 3273951233998497026, guid: 2b389d4bd6f156745bbce275f00a79cd,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
