@@ -11,7 +11,7 @@ public class UnitMove : TacticsMove
     Ground unitTarget;
 
     public int actualRound = 1;
-    public int moveNumber = -1;
+    int initialLengthOfPath;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,12 +34,16 @@ public class UnitMove : TacticsMove
                 formationPivot = formation.GetComponent<FormationMove>().targetGround;
                 unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
                 MoveToGround(unitTarget);
+                initialLengthOfPath = PathCount();
             }
         }
         else
         {
             //gameObject.GetComponent<Animator>().Play("HumanoidRun");
-            Move();
+            int movesUsed = initialLengthOfPath - PathCount();
+            actualRound = (int)Mathf.Floor(movesUsed / GetComponent<CombatVariables>().movesPerRound);
+            if (actualRound < combatScripts.GetComponent<TurnManager>().round) Move();
+            if (PathCount() == 0) Move(); //if there is nothing to move next, just end the moving action with reset of the round
         }
 
     }

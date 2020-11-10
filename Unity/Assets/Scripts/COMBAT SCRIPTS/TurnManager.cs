@@ -7,12 +7,19 @@ using UnityEngine.UI;
 public class TurnManager : MonoBehaviour
 {
     List<int> units = new List<int>();
-    public int round;
+    public int round = 0;
     public Text turnText;
     // Update is called once per frame
+
+    void Start()
+    {
+        turnText.text = " Round number " + round;
+    }
     void Update()
     {
-        CheckRound();
+        //CheckRound();
+        turnText.text = " Round number " + round;
+        //RoundStop();
     }
 
     void CheckRound()
@@ -20,10 +27,26 @@ public class TurnManager : MonoBehaviour
         GameObject[] t_units = GameObject.FindGameObjectsWithTag("Unit");
         foreach (GameObject unit in t_units)
         {
-            units.Add(unit.GetComponent<UnitMove>().actualRound);
+            if (unit.GetComponent<UnitMove>().moving) units.Add(unit.GetComponent<UnitMove>().actualRound);
         }
-        round = units.Min();
-        turnText.text = " Round number " + round;
+        if (units.Count > 0)
+        {
+            round = units.Min();
+            turnText.text = " Round number " + round;
+            //Debug.Log("numero de round" + round);
+        }
         units.Clear();
+    }
+
+    public void GetToNextRound()
+    {
+        if (round < 4)
+        {
+            round += 1;
+        }
+        else
+        {
+            round = 0;
+        }
     }
 }

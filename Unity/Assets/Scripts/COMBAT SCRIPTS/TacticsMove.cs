@@ -6,6 +6,7 @@ using UnityEngine;
 //class used to manage moving and selecting ground for every unit in combat
 public class TacticsMove : MonoBehaviour
 {
+    public GameObject combatScripts;
     //get all the selectable grounds in the map
     List<Ground> selectableGrounds = new List<Ground>();
     GameObject[] grounds;
@@ -164,6 +165,18 @@ public class TacticsMove : MonoBehaviour
         }
     }
 
+    public int PathCount()
+    {
+        Ground[] tmp;
+        tmp = path.ToArray();
+        int number = 0;
+        foreach (Ground g in tmp)
+        {
+            number += 1;
+        }
+        return number;
+    }
+
     public void MoveToGround(Ground ground)
     {
         path.Clear();
@@ -176,15 +189,18 @@ public class TacticsMove : MonoBehaviour
             path.Push(next);
             next = next.parent;
         }
+        path.Pop();
     }
 
     public void Move()
     {
+
         if (path.Count > 0)
         {
-            
+            GetCurrentGround();
             Ground g = path.Peek();
             Vector3 target = g.transform.position;
+            //Debug.Log("target : " + g.name + "of game Object" + gameObject.name);
 
 
             //calculate the units position on top of the targeted ground
@@ -206,23 +222,15 @@ public class TacticsMove : MonoBehaviour
                 heading = new Vector3(1, 0, 0);
                 transform.forward = heading;
                 path.Pop();
-                if (gameObject.tag == "Unit")
-                {
-                    GetComponent<UnitMove>().moveNumber = GetComponent<UnitMove>().moveNumber + 1;
-                    if (GetComponent<UnitMove>().moveNumber == GetComponent<CombatVariables>().movesPerRound)
-                    {
-                        GetComponent<UnitMove>().actualRound += 1;
-                        GetComponent<UnitMove>().moveNumber = 0;
-                    }
-                }
+                    
+                    
             }
         }
         else
         {
             if (gameObject.tag == "Unit")
             {
-                gameObject.GetComponent<UnitMove>().moveNumber = -1;
-                gameObject.GetComponent<UnitMove>().actualRound = 1;
+                gameObject.GetComponent<UnitMove>().actualRound = 0;
             }
             RemoveSelectableGrounds();
             moving = false;
