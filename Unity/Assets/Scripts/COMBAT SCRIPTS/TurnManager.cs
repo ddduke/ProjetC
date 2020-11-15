@@ -6,36 +6,44 @@ using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
-    List<int> units = new List<int>();
+    //variables for turn system
+    static Dictionary<string, List<TacticsMove>> units = new Dictionary<string, List<TacticsMove>>();
+    static Queue<string> turnKey = new Queue<string>();
+    static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
+    
+    //variables for the turn 
+    List<int> unitsList = new List<int>();
     public int round = 0;
-    public Text turnText;
-    // Update is called once per frame
+    public Text roundText;
 
     void Start()
     {
-        turnText.text = " Round number " + round;
+        roundText.text = " Round number " + round;
     }
     void Update()
     {
+        //turn manager 
+        
+        //round 
         //CheckRound();
-        turnText.text = " Round number " + round;
+        roundText.text = " Round number " + round;
         //RoundStop();
     }
 
     void CheckRound()
     {
-        GameObject[] t_units = GameObject.FindGameObjectsWithTag("Unit");
-        foreach (GameObject unit in t_units)
+        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
+        foreach (GameObject unit in t_unitsList)
         {
-            if (unit.GetComponent<UnitMove>().moving) units.Add(unit.GetComponent<UnitMove>().actualRound);
+            if (unit.GetComponent<UnitMove>().moving) unitsList.Add(unit.GetComponent<UnitMove>().actualRound);
         }
-        if (units.Count > 0)
+        if (unitsList.Count > 0)
         {
-            round = units.Min();
-            turnText.text = " Round number " + round;
+            round = unitsList.Min();
+            roundText.text = " Round number " + round;
             //Debug.Log("numero de round" + round);
         }
-        units.Clear();
+        unitsList.Clear();
     }
 
     public void GetToNextRound()
@@ -49,4 +57,11 @@ public class TurnManager : MonoBehaviour
             round = 0;
         }
     }
+
+    public void ChangeTurn()
+    {
+        
+    }
+
+
 }

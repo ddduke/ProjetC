@@ -6,6 +6,9 @@ using UnityEngine;
 //class used to manage moving and selecting ground for every unit in combat
 public class TacticsMove : MonoBehaviour
 {
+
+    
+
     public GameObject combatScripts;
     //get all the selectable grounds in the map
     List<Ground> selectableGrounds = new List<Ground>();
@@ -40,7 +43,11 @@ public class TacticsMove : MonoBehaviour
     {
         grounds = GameObject.FindGameObjectsWithTag("Ground");
         halfHeight = GetComponent<Collider>().bounds.extents.y;
-        
+        CalculateMovePerRound();
+    }
+
+    public void CalculateMovePerRound()
+    {
         if (gameObject.tag == "Formation")
         {
             GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
@@ -49,19 +56,29 @@ public class TacticsMove : MonoBehaviour
                 if (unit.GetComponent<CombatVariables>().inFormation) UnitsInFormation.Add(unit);
             }
             //maybe integrate the relative position of the units here ? 
-            move = UnitsInFormation[0].GetComponent<CombatVariables>().movesPerRound;
+            move = UnitsInFormation[0].GetComponent<CombatVariables>().moveCapacity;
             foreach (GameObject unit in UnitsInFormation)
             {
-                if (move >= unit.GetComponent<CombatVariables>().movesPerRound) move = unit.GetComponent<CombatVariables>().movesPerRound;
+                if (move >= unit.GetComponent<CombatVariables>().moveCapacity) move = unit.GetComponent<CombatVariables>().moveCapacity;
             }
             move = move * numberOfRounds;
+            GetComponent<FormationMove>().InFormationMoveCapacity = move/numberOfRounds;
         }
         else if (gameObject.tag == "Unit")
         {
-            move = GetComponent<CombatVariables>().movesPerRound;
-            move = move * numberOfRounds;
+            if (GetComponent<CombatVariables>().inFormation)
+            {
+                GameObject formation = GetComponent<UnitMove>().formation;
+                move = formation.GetComponent<FormationMove>().InFormationMoveCapacity * numberOfRounds;
+                GetComponent<CombatVariables>().movesPerRound = formation.GetComponent<FormationMove>().InFormationMoveCapacity;
+            }
+            else
+            {
+                move = GetComponent<CombatVariables>().moveCapacity;
+                GetComponent<CombatVariables>().movesPerRound = GetComponent<CombatVariables>().moveCapacity;
+                move = move * numberOfRounds;
+            }
         }
-
     }
 
     //function to get the current ground of the gameObject
@@ -75,9 +92,10 @@ public class TacticsMove : MonoBehaviour
     //function called to get the round under a gameobject
     public Ground GetTargetGround(GameObject target)
     {
+        LayerMask layer_mask = LayerMask.GetMask("Ground");
         RaycastHit hit;
         Ground ground = null; 
-        if (Physics.Raycast(target.transform.position, -Vector3.up, out hit, 1))
+        if (Physics.Raycast(target.transform.position, -Vector3.up, out hit, 1, layer_mask))
         {
             ground = hit.collider.GetComponent<Ground>();
         }
@@ -180,7 +198,6 @@ public class TacticsMove : MonoBehaviour
     public void MoveToGround(Ground ground)
     {
         path.Clear();
-        ground.target = true;
         moving = true;
 
         Ground next = ground;
@@ -197,8 +214,19 @@ public class TacticsMove : MonoBehaviour
 
         if (path.Count > 0)
         {
-            GetCurrentGround();
+            //display the path on the map
+            foreach (Ground pathGround in path)
+            {
+                pathGround.path = true;
+            }
+            //reset the display of current grounds
+            foreach (GameObject ground in grounds)
+            {
+                ground.GetComponent<Ground>().ResetCurrent();
+            }
+            //GetCurrentGround();
             Ground g = path.Peek();
+            
             Vector3 target = g.transform.position;
             //Debug.Log("target : " + g.name + "of game Object" + gameObject.name);
 
@@ -222,8 +250,9 @@ public class TacticsMove : MonoBehaviour
                 heading = new Vector3(1, 0, 0);
                 transform.forward = heading;
                 path.Pop();
-                    
-                    
+                g.path = false;
+
+
             }
         }
         else
@@ -231,6 +260,8 @@ public class TacticsMove : MonoBehaviour
             if (gameObject.tag == "Unit")
             {
                 gameObject.GetComponent<UnitMove>().actualRound = 0;
+                GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
+                formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
             }
             RemoveSelectableGrounds();
             moving = false;
@@ -246,7 +277,7 @@ public class TacticsMove : MonoBehaviour
         }
         foreach(Ground ground in selectableGrounds)
         {
-            ground.Reset();
+            //ground.Reset();
         }
 
         selectableGrounds.Clear();
@@ -266,9 +297,7 @@ public class TacticsMove : MonoBehaviour
 
     IEnumerator Move1Secs(Vector3 target)
     {
-        
-        yield return new WaitForSeconds(1);
-
+        if (gameObject.tag == "Unit") yield return new WaitForSeconds(1);
         transform.forward = heading;
         //SMOOTH MOVING transform.position += velocity * Time.deltaTime;
         transform.position = target;

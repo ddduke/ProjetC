@@ -5,6 +5,8 @@ using UnityEngine;
 public class FormationMove : TacticsMove
 {
     public Ground targetGround;
+    public int iterationFindSelectableGrounds = 1;
+    public float InFormationMoveCapacity;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,12 @@ public class FormationMove : TacticsMove
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
-            FindSelectableGroundsFormation();
+            //set an iteration of 1 FindselectableGroundsFormation function, and reset to 1 after finishing the move
+            if (iterationFindSelectableGrounds == 1)
+            { 
+                FindSelectableGroundsFormation();
+                iterationFindSelectableGrounds = 0;
+            }
             CheckMouse();
         }
         else

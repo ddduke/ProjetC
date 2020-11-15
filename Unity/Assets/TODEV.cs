@@ -1,7 +1,5 @@
 ﻿/*TO DEV : 
- * COMBAT : 
- * 
- * afficher les targets de chaque unité
+ * COMBAT :
  * integrer le systeme de tour ami / tour enemi (avec variables enemyUnit enemyFormation)
  * rajouter attaque defense range 
  * rajouter l'ordre charger (vers l'unité la plus proche) pour tester si les variables vitesses de chaque unité fonctionnent bien

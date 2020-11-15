@@ -24,21 +24,25 @@ public class UnitMove : TacticsMove
     // Update is called once per frame
     void FixedUpdate()
     {
+        GetCurrentGround();
         Debug.DrawRay(transform.position, transform.forward);
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
             if (!inFormation())
             {
+                CalculateMovePerRound();
                 FindSelectableGroundsUnit();
                 formationPivot = formation.GetComponent<FormationMove>().targetGround;
-                unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
+                unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);                
                 MoveToGround(unitTarget);
                 initialLengthOfPath = PathCount();
             }
         }
         else
         {
+            
+            unitTarget.target = true;
             //gameObject.GetComponent<Animator>().Play("HumanoidRun");
             int movesUsed = initialLengthOfPath - PathCount();
             actualRound = (int)Mathf.Floor(movesUsed / GetComponent<CombatVariables>().movesPerRound);

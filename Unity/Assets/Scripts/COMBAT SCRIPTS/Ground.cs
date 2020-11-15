@@ -8,6 +8,8 @@ public class Ground : MonoBehaviour
     public bool current = false;
     public bool target = false;
     public bool selectable = false;
+    public bool mouseOver = false;
+    public bool path = false;
     public bool walkable = true;
 
     //using a list to get all the adjacency grounds 
@@ -36,6 +38,14 @@ public class Ground : MonoBehaviour
         {
             GetComponent<MeshRenderer>().material.color = Color.green;
         }
+        else if (path)
+        {
+            GetComponent<MeshRenderer>().material.color = Color.yellow;
+        }
+        else if (mouseOver)
+        {
+            GetComponent<MeshRenderer>().material.color = Color.black;
+        }
         else if (selectable)
         {
             GetComponent<MeshRenderer>().material.color = Color.red;
@@ -44,6 +54,16 @@ public class Ground : MonoBehaviour
         {
             GetComponent<MeshRenderer>().material.color = Color.white;
         }
+    }
+
+    void OnMouseOver()
+    {
+        mouseOver = true;
+    }
+
+    void OnMouseExit()
+    {
+        mouseOver = false;
     }
 
     //used to reset all variables of the ground at each turn
@@ -60,6 +80,12 @@ public class Ground : MonoBehaviour
         parent = null;
         distance = 0;
     }
+
+    public void ResetCurrent()
+    {
+        current = false;
+    }
+
 
     //void used to get the neighbors and check if they are selectable to walk on
     public void FindNeighbors(float jumpHeight)
