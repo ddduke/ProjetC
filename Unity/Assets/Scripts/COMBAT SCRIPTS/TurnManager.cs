@@ -108,6 +108,27 @@ public class TurnManager : MonoBehaviour
         return enemyAndPlayerGroups;
     }
 
+    public List<GameObject> GetAllUnitsBySide(string side)
+    {
+        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
+        enemyAndPlayerGroups = FindenemyAndPlayerUnits();
+        List<GameObject> group = new List<GameObject>();
+        foreach (GameObject obj in enemyAndPlayerGroups)
+        {
+            if (obj.GetComponent<TacticsMove>().enemy && side == "enemy") group.Add(obj);
+            if (!obj.GetComponent<TacticsMove>().enemy && side == "player") group.Add(obj);
+        }
+        return group;
+    }
+
+    public List<GameObject> FindenemyAndPlayerUnits()
+    {
+        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
+        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
+        foreach (GameObject unit in t_unitsList) enemyAndPlayerGroups.Add(unit);
+        return enemyAndPlayerGroups;
+    }
+
 
 
 

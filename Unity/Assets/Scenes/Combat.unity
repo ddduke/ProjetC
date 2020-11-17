@@ -5070,6 +5070,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8988550391309816268, guid: 25cf3999b271c2241a7c2aee9cffb4f8,
+        type: 3}
+      propertyPath: walkable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25cf3999b271c2241a7c2aee9cffb4f8, type: 3}
 --- !u!4 &367436037 stripped
@@ -11236,7 +11241,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834258222}
   m_LocalRotation: {x: -0.06162845, y: -0.70441604, z: 0.70441604, w: -0.06162845}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 11, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -16107,10 +16112,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6003799929983491396, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}
       propertyPath: m_Name
       value: Unit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: inFormation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: chargeAndBreakFormation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: moveCapacity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bb0a5769ac17594da262da5bb07b461, type: 3}
@@ -17932,7 +17962,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 66.4
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -17958,7 +17988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461959942}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10, z: -10}
+  m_LocalPosition: {x: 1, y: 11, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18291,10 +18321,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6003799929983491396, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}
       propertyPath: m_Name
       value: Unit (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: inFormation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: chargeAndBreakFormation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: moveCapacity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bb0a5769ac17594da262da5bb07b461, type: 3}
@@ -20946,10 +21001,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6003799929983491396, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}
       propertyPath: m_Name
-      value: Unit (2)
+      value: EnemyUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235526354122871969, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: inFormation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: chargeAndBreakFormation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
+        type: 3}
+      propertyPath: moveCapacity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bb0a5769ac17594da262da5bb07b461, type: 3}

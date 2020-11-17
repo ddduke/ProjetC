@@ -168,19 +168,18 @@ public class TacticsMove : MonoBehaviour
 
             selectableGrounds.Add(g);
 
-            if (g.distance < move)
+
+            foreach (Ground ground in g.adjacencyList)
             {
-                foreach (Ground ground in g.adjacencyList)
+                if (!ground.visited)
                 {
-                    if (!ground.visited)
-                    {
-                        ground.parent = g;
-                        ground.visited = true;
-                        ground.distance = 1 + g.distance;
-                        process.Enqueue(ground);
-                    }
+                    ground.parent = g;
+                    ground.visited = true;
+                    ground.distance = 1 + g.distance;
+                    process.Enqueue(ground);
                 }
             }
+
 
         }
     }
@@ -195,6 +194,16 @@ public class TacticsMove : MonoBehaviour
             number += 1;
         }
         return number;
+    }
+
+    public void ResetPathDisplay()
+    {
+        Ground[] tmp;
+        tmp = path.ToArray();
+        foreach (Ground g in tmp)
+        {
+            g.path = false;
+        }
     }
 
     public void MoveToGround(Ground ground)
@@ -249,7 +258,8 @@ public class TacticsMove : MonoBehaviour
             {
                 //ground center reached 
                 transform.position = target;
-                heading = new Vector3(1, 0, 0);
+                if (enemy) heading = new Vector3(-1, 0, 0);
+                else heading = new Vector3(1, 0, 0);
                 transform.forward = heading;
                 path.Pop();
                 g.path = false;

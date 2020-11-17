@@ -34,7 +34,7 @@ public class UnitMove : TacticsMove
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
-            if (!inFormation())
+            if (!inFormation() && GetComponent<CombatVariables>().inFormation)
             {
                 CalculateMovePerRound();
                 FindSelectableGroundsUnit();
@@ -43,16 +43,44 @@ public class UnitMove : TacticsMove
                 MoveToGround(unitTarget);
                 initialLengthOfPath = PathCount();
             }
+
+            if(GetComponent<CombatVariables>().chargeAndBreakFormation)
+            {
+                CalculateMovePerRound();
+                FindSelectableGroundsUnit();
+                unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                MoveToGround(unitTarget);
+                initialLengthOfPath = PathCount();
+            }
         }
         else
         {
+            if (GetComponent<CombatVariables>().chargeAndBreakFormation && unitTarget != GetClosestEnemyUnit(gameObject.transform.position))
+            {
+                ResetPathDisplay();
+                CalculateMovePerRound();
+                int actualLengthOfPath = initialLengthOfPath - PathCount();
+                FindSelectableGroundsUnit();
+                unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                MoveToGround(unitTarget);
+                unitTarget.target = true;
+                initialLengthOfPath = PathCount() + actualLengthOfPath;
+                int movesUsed = initialLengthOfPath - PathCount();
+                actualRound = (int)Mathf.Floor((movesUsed + 0.01f) / GetComponent<CombatVariables>().movesPerRound);
+                if (actualRound < combatScripts.GetComponent<TurnManager>().round) Move();
+                if (PathCount() == 0) Move(); //if there is nothing to move next, just end the moving action with reset of the round
+            }
+
+            else
+            {
+                unitTarget.target = true;
+                int movesUsed = initialLengthOfPath - PathCount();
+                actualRound = (int)Mathf.Floor((movesUsed + 0.01f) / GetComponent<CombatVariables>().movesPerRound);
+                if (actualRound < combatScripts.GetComponent<TurnManager>().round) Move();
+                if (PathCount() == 0) Move(); //if there is nothing to move next, just end the moving action with reset of the round
+            }
+
             
-            unitTarget.target = true;
-            //gameObject.GetComponent<Animator>().Play("HumanoidRun");
-            int movesUsed = initialLengthOfPath - PathCount();
-            actualRound = (int)Mathf.Floor(movesUsed / GetComponent<CombatVariables>().movesPerRound);
-            if (actualRound < combatScripts.GetComponent<TurnManager>().round) Move();
-            if (PathCount() == 0) Move(); //if there is nothing to move next, just end the moving action with reset of the round
         }
 
     }
@@ -94,6 +122,23 @@ public class UnitMove : TacticsMove
             
         }
         return null;
+    }
+
+    Ground GetClosestEnemyUnit(Vector3 position)
+    {
+        List<GameObject> enemyList = new List<GameObject>();
+        if (enemy) enemyList = combatScripts.GetComponent<TurnManager>().GetAllUnitsBySide("player");
+        else enemyList = combatScripts.GetComponent<TurnManager>().GetAllUnitsBySide("enemy");
+
+        float distance = Vector3.Distance(position, enemyList[0].transform.position);
+        GameObject lowestDistanceEnemy = enemyList[0];
+        foreach(GameObject enemy in enemyList)
+        {
+            if (Vector3.Distance(position, enemy.transform.position) < distance) lowestDistanceEnemy = enemy;
+        }
+        Ground CurrentLowestDistanceEnemyPosition = GetTargetGround(lowestDistanceEnemy);
+        return CurrentLowestDistanceEnemyPosition;
+
     }
 
 }
