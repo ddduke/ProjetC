@@ -24,8 +24,13 @@ public class UnitMove : TacticsMove
     // Update is called once per frame
     void FixedUpdate()
     {
-        GetCurrentGround();
         Debug.DrawRay(transform.position, transform.forward);
+        if (!turn)
+        {
+            return;
+        }
+        GetCurrentGround();
+        
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {

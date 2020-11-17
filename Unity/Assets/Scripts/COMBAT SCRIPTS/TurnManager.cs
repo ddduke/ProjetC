@@ -6,19 +6,21 @@ using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
 {
-    //variables for turn system
-    static Dictionary<string, List<TacticsMove>> units = new Dictionary<string, List<TacticsMove>>();
-    static Queue<string> turnKey = new Queue<string>();
-    static Queue<TacticsMove> turnTeam = new Queue<TacticsMove>();
     
-    //variables for the turn 
+    
     List<int> unitsList = new List<int>();
+    List<string> formationAndUnitTags= new List<string>();
     public int round = 0;
+    public string turn = "Enemy";
     public Text roundText;
+    public Text turnText;
 
     void Start()
     {
         roundText.text = " Round number " + round;
+        turnText.text = turn + " turn";
+        ChangeTurn();
+
     }
     void Update()
     {
@@ -27,24 +29,10 @@ public class TurnManager : MonoBehaviour
         //round 
         //CheckRound();
         roundText.text = " Round number " + round;
+        turnText.text = turn + " turn";
         //RoundStop();
     }
 
-    void CheckRound()
-    {
-        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
-        foreach (GameObject unit in t_unitsList)
-        {
-            if (unit.GetComponent<UnitMove>().moving) unitsList.Add(unit.GetComponent<UnitMove>().actualRound);
-        }
-        if (unitsList.Count > 0)
-        {
-            round = unitsList.Min();
-            roundText.text = " Round number " + round;
-            //Debug.Log("numero de round" + round);
-        }
-        unitsList.Clear();
-    }
 
     public void GetToNextRound()
     {
@@ -60,8 +48,82 @@ public class TurnManager : MonoBehaviour
 
     public void ChangeTurn()
     {
-        
+
+        if (turn == "Player")
+        {
+            turn = "Enemy";
+            List<GameObject> enemyGroup = new List<GameObject>();
+            List<GameObject> playerGroup = new List<GameObject>();
+            enemyGroup = GetAllGameObjectsBySide("enemy");
+            foreach (GameObject enemy in enemyGroup)
+            {
+                enemy.GetComponent<TacticsMove>().turn = true;
+            }
+            playerGroup = GetAllGameObjectsBySide("player");
+            foreach (GameObject player in playerGroup)
+            {
+                player.GetComponent<TacticsMove>().turn = false;
+            }
+
+        }
+        else
+        {
+            turn = "Player";
+            List<GameObject> enemyGroup = new List<GameObject>();
+            List<GameObject> playerGroup = new List<GameObject>();
+            enemyGroup = GetAllGameObjectsBySide("enemy");
+            foreach (GameObject enemy in enemyGroup)
+            {
+                enemy.GetComponent<TacticsMove>().turn = false;
+            }
+            playerGroup = GetAllGameObjectsBySide("player");
+            foreach (GameObject player in playerGroup)
+            {
+                player.GetComponent<TacticsMove>().turn = true;
+            }
+
+        }
+    }
+
+    public List<GameObject> GetAllGameObjectsBySide(string side)
+    {
+        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
+        enemyAndPlayerGroups = FindenemyAndPlayerGroups();
+        List<GameObject> group = new List<GameObject>();
+        foreach (GameObject obj in enemyAndPlayerGroups)
+        {
+            if (obj.GetComponent<TacticsMove>().enemy && side == "enemy") group.Add(obj);
+            if (!obj.GetComponent<TacticsMove>().enemy && side == "player") group.Add(obj);
+        }
+        return group;
+    }
+
+    public List<GameObject> FindenemyAndPlayerGroups()
+    {
+        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
+        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
+        foreach (GameObject unit in t_unitsList) enemyAndPlayerGroups.Add(unit);
+        GameObject[] t_formationsList = GameObject.FindGameObjectsWithTag("Formation");
+        foreach (GameObject formation in t_formationsList) enemyAndPlayerGroups.Add(formation);
+        return enemyAndPlayerGroups;
     }
 
 
+
+
+    /*void CheckRound()
+    {
+        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
+        foreach (GameObject unit in t_unitsList)
+        {
+            if (unit.GetComponent<UnitMove>().moving) unitsList.Add(unit.GetComponent<UnitMove>().actualRound);
+        }
+        if (unitsList.Count > 0)
+        {
+            round = unitsList.Min();
+            roundText.text = " Round number " + round;
+            //Debug.Log("numero de round" + round);
+        }
+        unitsList.Clear();
+    }*/
 }

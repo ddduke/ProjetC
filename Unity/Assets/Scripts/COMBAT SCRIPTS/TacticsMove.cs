@@ -7,7 +7,9 @@ using UnityEngine;
 public class TacticsMove : MonoBehaviour
 {
 
-    
+    public bool turn;
+    public bool enemy;
+
 
     public GameObject combatScripts;
     //get all the selectable grounds in the map
@@ -17,7 +19,7 @@ public class TacticsMove : MonoBehaviour
     //used to stack the path for the ground
     Stack<Ground> path = new Stack<Ground>();
 
-    //used to list all the
+    //used to list all the units in formation for the formation move
     List<GameObject> UnitsInFormation = new List<GameObject>();
 
     Ground currentGround;
@@ -42,7 +44,7 @@ public class TacticsMove : MonoBehaviour
     protected void Init()
     {
         grounds = GameObject.FindGameObjectsWithTag("Ground");
-        halfHeight = GetComponent<Collider>().bounds.extents.y;
+        halfHeight = 0.001f;
         CalculateMovePerRound();
     }
 

@@ -8,7 +8,8 @@ public class CombatVariables : MonoBehaviour
     public float movesPerRound = 1;
     public float moveCapacity = 1;
 
-
     //variables for the devs
     public bool inFormation = true;
+
+
 }

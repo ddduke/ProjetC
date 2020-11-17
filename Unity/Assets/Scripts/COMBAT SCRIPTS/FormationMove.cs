@@ -19,11 +19,17 @@ public class FormationMove : TacticsMove
     void Update()
     {
         Debug.DrawRay(transform.position, transform.forward);
+
+        if (!turn)
+        {
+            return;
+        }
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
+
             //set an iteration of 1 FindselectableGroundsFormation function, and reset to 1 after finishing the move
-            if (iterationFindSelectableGrounds == 1)
+            if (iterationFindSelectableGrounds == 1 && combatScripts.GetComponent<TurnManager>().round == 0)
             { 
                 FindSelectableGroundsFormation();
                 iterationFindSelectableGrounds = 0;
