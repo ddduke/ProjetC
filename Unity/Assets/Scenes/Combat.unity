@@ -26324,6 +26324,11 @@ PrefabInstance:
       propertyPath: turn
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4760604696023883209, guid: eb03f14aed2f78f42813df55af26d760,
+        type: 3}
+      propertyPath: round
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4760604696023883222, guid: eb03f14aed2f78f42813df55af26d760,
         type: 3}
       propertyPath: m_LocalPosition.x

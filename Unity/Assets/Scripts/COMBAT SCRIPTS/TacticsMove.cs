@@ -37,6 +37,7 @@ public class TacticsMove : MonoBehaviour
     Vector3 velocity = new Vector3();
     Vector3 heading = new Vector3();
 
+    
     float halfHeight = 0;
     //get the point where we are on the edge
     
@@ -237,35 +238,45 @@ public class TacticsMove : MonoBehaviour
             }
             //GetCurrentGround();
             Ground g = path.Peek();
-            
-            Vector3 target = g.transform.position;
-            //Debug.Log("target : " + g.name + "of game Object" + gameObject.name);
 
-
-            //calculate the units position on top of the targeted ground
-            target.y += halfHeight + g.GetComponent<Collider>().bounds.extents.y;
-            //if we are distant to the target
-            if (Vector3.Distance(transform.position, target)>=0.05f)
+            //check if there is a unit on the next ground
+            GameObject unitOnNextGround = g.CheckGroundUnit(g);
+            if (unitOnNextGround!=null && gameObject.tag == "Unit")
             {
-                CalculateHeading(target);
-                SetHorizontalVelocity();
-                //start coroutine to pause every move
-                StartCoroutine(Move1Secs(target));
+                StartCoroutine(WaitSecs(unitOnNextGround));
                 
-
             }
             else
             {
-                //ground center reached 
-                transform.position = target;
-                if (enemy) heading = new Vector3(-1, 0, 0);
-                else heading = new Vector3(1, 0, 0);
-                transform.forward = heading;
-                path.Pop();
-                g.path = false;
+                Debug.Log("there is no unit on the next target that has ended the round, cheerz " + gameObject.name);
+                //no units in next ground
+                Vector3 target = g.transform.position;
+                //Debug.Log("target : " + g.name + "of game Object" + gameObject.name);
 
+
+                //calculate the units position on top of the targeted ground
+                target.y += halfHeight + g.GetComponent<Collider>().bounds.extents.y;
+                //if we are distant to the target
+                if (Vector3.Distance(transform.position, target) >= 0.05f)
+                {
+                    CalculateHeading(target);
+                    SetHorizontalVelocity();
+                    //start coroutine to pause every move
+                    StartCoroutine(Move1Secs(target));
+                }
+                else
+                {
+                    //ground center reached 
+                    transform.position = target;
+                    if (enemy) heading = new Vector3(-1, 0, 0);
+                    else heading = new Vector3(1, 0, 0);
+                    transform.forward = heading;
+                    path.Pop();
+                    g.path = false;
+                }
 
             }
+
         }
         else
         {
@@ -314,6 +325,42 @@ public class TacticsMove : MonoBehaviour
         //SMOOTH MOVING transform.position += velocity * Time.deltaTime;
         transform.position = target;
         
+    }
+
+    public bool functionWaitSecCalled = false;
+    IEnumerator WaitSecs(GameObject unitOnNextGround)
+    {
+        Debug.Log("for info " + gameObject.name + "is blocked by " + unitOnNextGround.name + "at round " + combatScripts.GetComponent<TurnManager>().round);
+
+        yield return new WaitForSeconds(1);
+        
+
+        //check if the unit has finished its turn, if its the case its blocked until next round and we add the moves that remains on the round to the initialpathcount to set the unit to the next round
+        if (unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded && combatScripts.GetComponent<TurnManager>().round == 4 && !functionWaitSecCalled)
+        {
+            functionWaitSecCalled = true;
+            Debug.Log("Unit moving set to false");
+            moving = false;// if this is the end of the 4 rounds, the unit has to set up for next order and stop moving
+            RemoveSelectableGrounds();
+            GetComponent<UnitMove>().endOfMoveCausedByNewBlockingObject = true;
+
+        }
+        if (unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded && combatScripts.GetComponent<TurnManager>().round != 4 && (GetComponent<UnitMove>().actualRound + 1) == combatScripts.GetComponent<TurnManager>().round)
+        {
+
+            Debug.Log("there is a unit on the next target that has ended the round, cheerz " + gameObject.name + "see by yourself that " + unitOnNextGround.name + "has the ended round value of " + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
+            int movesUsed = GetComponent<UnitMove>().initialLengthOfPath - PathCount();
+            int movesRemainsInRound = (int)Mathf.Floor(((GetComponent<UnitMove>().actualRound + 1) * GetComponent<CombatVariables>().movesPerRound) - movesUsed);
+            Debug.Log("Moves added : " + movesRemainsInRound);
+            GetComponent<UnitMove>().initialLengthOfPath += movesRemainsInRound;
+
+        }
+        //else just return void to avoid moving and wait for the unit to move
+        else
+        {
+            Debug.Log("there is a unit on the next target that has not ended the round, cheerz " + gameObject.name + "see by yourself" + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
+            // do nothing
+        }
     }
 }
 
