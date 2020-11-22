@@ -1,4 +1,5 @@
 ﻿/*TO DEV : 
+ * TEST ARTHUR
  * COMBAT :
  *empecher les clics sur la carte lorsqu'on veut cliquer sur un bouton
  *bouton round & tour en dessous du déplacement

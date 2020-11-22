@@ -188,7 +188,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 117
+  controlID: 4755
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -208,8 +208,8 @@ MonoBehaviour:
     y: 0
     width: 485
     height: 443
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -246,7 +246,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 54fbfffff4420000
+      m_ExpandedIDs: 54fbffffd8440000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -289,8 +289,8 @@ MonoBehaviour:
     y: 0
     width: 619
     height: 443
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 9}
@@ -397,9 +397,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.8735523, y: 2.4254463, z: -0.56119394}
+    m_Target: {x: 3.406131, y: 1.3757895, z: -0.012186199}
     speed: 2
-    m_Value: {x: 3.8735523, y: 2.4254463, z: -0.56119394}
+    m_Value: {x: 3.406131, y: 1.3757895, z: -0.012186199}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -448,11 +448,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.389896, y: 0.011671138, z: -0.004775368, w: 0.92089885}
     speed: 2
-    m_Value: {x: 0.3898507, y: 0.011669782, z: -0.004774813, w: 0.9207918}
+    m_Value: {x: -0.38989604, y: -0.011671139, z: 0.0047753686, w: -0.9208989}
   m_Size:
-    m_Target: 2.2616177
+    m_Target: 2.763999
     speed: 2
-    m_Value: 2.2616177
+    m_Value: 2.763999
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -568,21 +568,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/COMBAT SCRIPTS
+    - Assets/Resources/COMBAT/PREFABS
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/COMBAT SCRIPTS
+  - Assets/Resources/COMBAT/PREFABS
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\duret\Documents\UNITY\ProjetC\PopeAndPopers\Unity
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 38}
-    m_SelectedIDs: 70470000
-    m_LastClickedID: 18288
-    m_ExpandedIDs: 000000006a4700006c4700006e47000070470000724700007447000076470000784700007a4700007c4700007e47000080470000824700009e47000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 96470000
+    m_LastClickedID: 18326
+    m_ExpandedIDs: 000000006a4700006c4700006e47000070470000724700007447000076470000784700007a4700007c4700007e47000080470000824700009047000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -610,7 +610,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006a4700006c4700006e47000070470000724700007447000076470000784700007a4700007c4700007e4700008047000082470000
+    m_ExpandedIDs: 000000006a4700006c4700006e47000070470000724700007447000076470000784700007a4700007c4700007e470000804700008247000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000603900009039000024370400063704001437040000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -711,8 +711,8 @@ MonoBehaviour:
     y: 0
     width: 368
     height: 324
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -777,7 +777,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 10
+  m_LastVerticalScrollValue: 0
   m_AssetGUID: 
   m_InstanceID: 0
   m_LockTracker:
