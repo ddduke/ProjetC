@@ -42,12 +42,30 @@ public class UnitMove : TacticsMove
                 ResetPathDisplay();
                 endOfMoveCausedByNewBlockingObject = false;
                 functionWaitSecCalled = false;
+
+                if (GetComponent<CombatVariables>().chargeAndBreakFormation)
+                {
+                    ResetPathDisplay();
+                    CalculateMovePerRound();
+                    unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                    MoveToGround(unitTarget);
+                    initialLengthOfPath = PathCount();
+                }
             }
+
+            else if (GetComponent<CombatVariables>().chargeAndBreakFormation && combatScripts.GetComponent<TurnManager>().round == 0)
+            {
+                ResetPathDisplay();
+                CalculateMovePerRound();
+                unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                MoveToGround(unitTarget);
+                initialLengthOfPath = PathCount();
+            }
+
             else if (!endOfMoveCausedByNewBlockingObject && combatScripts.GetComponent<TurnManager>().round > 0)
             {
                 if (!inFormation() && GetComponent<CombatVariables>().inFormation)
                 {
-                    
                     CalculateMovePerRound();
                     FindSelectableGroundsUnit();
                     formationPivot = formation.GetComponent<FormationMove>().targetGround;
@@ -94,6 +112,12 @@ public class UnitMove : TacticsMove
                     
                     movementInRoundEnded = true;
                     Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
+                    if (combatScripts.GetComponent<TurnManager>().round == 0)
+                    {
+                        GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
+                        formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
+                        moving = false;
+                    }
                 }
                 if (PathCount() == 0)
                 {
@@ -121,6 +145,12 @@ public class UnitMove : TacticsMove
 
                     movementInRoundEnded = true;
                     Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
+                    if(combatScripts.GetComponent<TurnManager>().round==0)
+                    {
+                        GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
+                        formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
+                        moving = false;
+                    }
                 }
                 if (PathCount() == 0)
                 {
