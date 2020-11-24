@@ -248,7 +248,7 @@ public class TacticsMove : MonoBehaviour
             }
             else
             {
-                Debug.Log("there is no unit on the next target that has ended the round, cheerz " + gameObject.name);
+                
                 //no units in next ground
                 Vector3 target = g.transform.position;
                 //Debug.Log("target : " + g.name + "of game Object" + gameObject.name);
@@ -283,8 +283,6 @@ public class TacticsMove : MonoBehaviour
             if (gameObject.tag == "Unit")
             {
                 gameObject.GetComponent<UnitMove>().actualRound = 0;
-                GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
-                formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
             }
             RemoveSelectableGrounds();
             moving = false;
@@ -330,7 +328,6 @@ public class TacticsMove : MonoBehaviour
     public bool functionWaitSecCalled = false;
     IEnumerator WaitSecs(GameObject unitOnNextGround)
     {
-        Debug.Log("for info " + gameObject.name + "is blocked by " + unitOnNextGround.name + "at round " + combatScripts.GetComponent<TurnManager>().round);
 
         yield return new WaitForSeconds(1);
         
@@ -339,7 +336,6 @@ public class TacticsMove : MonoBehaviour
         if (unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded && combatScripts.GetComponent<TurnManager>().round == 4 && !functionWaitSecCalled)
         {
             functionWaitSecCalled = true;
-            Debug.Log("Unit moving set to false");
             moving = false;// if this is the end of the 4 rounds, the unit has to set up for next order and stop moving
             RemoveSelectableGrounds();
             GetComponent<UnitMove>().endOfMoveCausedByNewBlockingObject = true;
@@ -348,17 +344,16 @@ public class TacticsMove : MonoBehaviour
         if (unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded && combatScripts.GetComponent<TurnManager>().round != 4 && (GetComponent<UnitMove>().actualRound + 1) == combatScripts.GetComponent<TurnManager>().round)
         {
 
-            Debug.Log("there is a unit on the next target that has ended the round, cheerz " + gameObject.name + "see by yourself that " + unitOnNextGround.name + "has the ended round value of " + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
+            //Debug.Log("there is a unit on the next target that has ended the round, cheerz " + gameObject.name + "see by yourself that " + unitOnNextGround.name + "has the ended round value of " + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
             int movesUsed = GetComponent<UnitMove>().initialLengthOfPath - PathCount();
             int movesRemainsInRound = (int)Mathf.Floor(((GetComponent<UnitMove>().actualRound + 1) * GetComponent<CombatVariables>().movesPerRound) - movesUsed);
-            Debug.Log("Moves added : " + movesRemainsInRound);
             GetComponent<UnitMove>().initialLengthOfPath += movesRemainsInRound;
 
         }
         //else just return void to avoid moving and wait for the unit to move
         else
         {
-            Debug.Log("there is a unit on the next target that has not ended the round, cheerz " + gameObject.name + "see by yourself" + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
+            //Debug.Log("there is a unit on the next target that has not ended the round, cheerz " + gameObject.name + "see by yourself" + unitOnNextGround.GetComponent<UnitMove>().movementInRoundEnded);
             // do nothing
         }
     }

@@ -18339,12 +18339,12 @@ PrefabInstance:
     - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}
       propertyPath: inFormation
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}
       propertyPath: chargeAndBreakFormation
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8152314362274093964, guid: 5bb0a5769ac17594da262da5bb07b461,
         type: 3}

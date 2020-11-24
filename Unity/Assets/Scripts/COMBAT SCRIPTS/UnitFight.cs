@@ -17,6 +17,8 @@ public class UnitFight : MonoBehaviour
         if (isStuckInFight())
         {
             stuckInFight = true;
+            GetComponent<UnitMove>().moving = false;
+
         }
     }
 

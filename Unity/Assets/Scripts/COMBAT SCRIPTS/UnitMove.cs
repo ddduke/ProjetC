@@ -37,52 +37,58 @@ public class UnitMove : TacticsMove
         // if the unit is not moving, check the mouse and view selectable grounds
         if (!moving)
         {
-            if (endOfMoveCausedByNewBlockingObject && combatScripts.GetComponent<TurnManager>().round == 0)
+            if (combatScripts.GetComponent<TurnManager>().round == 0)
             {
                 ResetPathDisplay();
-                endOfMoveCausedByNewBlockingObject = false;
-                functionWaitSecCalled = false;
-
-                if (GetComponent<CombatVariables>().chargeAndBreakFormation)
+                if (endOfMoveCausedByNewBlockingObject)
                 {
-                    ResetPathDisplay();
-                    CalculateMovePerRound();
-                    unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
-                    MoveToGround(unitTarget);
-                    initialLengthOfPath = PathCount();
+                    endOfMoveCausedByNewBlockingObject = false;
+                    functionWaitSecCalled = false;
+
+                    if (GetComponent<CombatVariables>().chargeAndBreakFormation)
+                    {
+                        ResetPathDisplay();
+                        FindSelectableGroundsUnit();
+                        CalculateMovePerRound();
+                        unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                        MoveToGround(unitTarget);
+                        initialLengthOfPath = PathCount();
+                    }
                 }
+                
             }
+            
 
-            else if (GetComponent<CombatVariables>().chargeAndBreakFormation && combatScripts.GetComponent<TurnManager>().round == 0)
+
+            else if (combatScripts.GetComponent<TurnManager>().round > 0)
             {
-                ResetPathDisplay();
-                CalculateMovePerRound();
-                unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
-                MoveToGround(unitTarget);
-                initialLengthOfPath = PathCount();
-            }
-
-            else if (!endOfMoveCausedByNewBlockingObject && combatScripts.GetComponent<TurnManager>().round > 0)
-            {
-                if (!inFormation() && GetComponent<CombatVariables>().inFormation)
+                if(!GetComponent<UnitFight>().stuckInFight)
                 {
-                    CalculateMovePerRound();
-                    FindSelectableGroundsUnit();
-                    formationPivot = formation.GetComponent<FormationMove>().targetGround;
-                    unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
-                    MoveToGround(unitTarget);
-                    initialLengthOfPath = PathCount();
-                }
+                    if (!inFormation() && GetComponent<CombatVariables>().inFormation)
+                    {
+                        CalculateMovePerRound();
+                        FindSelectableGroundsUnit();
+                        formationPivot = formation.GetComponent<FormationMove>().targetGround;
+                        unitTarget = GetUnitPositionInFormation(formationPivot, relativeFormationPosition);
+                        MoveToGround(unitTarget);
+                        initialLengthOfPath = PathCount();
+                    }
 
-                if (GetComponent<CombatVariables>().chargeAndBreakFormation)
-                {
-                    ResetPathDisplay();
-                    CalculateMovePerRound();
-                    FindSelectableGroundsUnit();
-                    unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
-                    MoveToGround(unitTarget);
-                    initialLengthOfPath = PathCount();
+                    if (GetComponent<CombatVariables>().chargeAndBreakFormation)
+                    {
+                        ResetPathDisplay();
+                        CalculateMovePerRound();
+                        FindSelectableGroundsUnit();
+                        unitTarget = GetClosestEnemyUnit(gameObject.transform.position);
+                        MoveToGround(unitTarget);
+                        initialLengthOfPath = PathCount();
+                    }
                 }
+                else
+                {
+                    //if my unit is stuck in fight, it can't move
+                }
+                
             }
             
         }
@@ -104,26 +110,20 @@ public class UnitMove : TacticsMove
                 {
                     
                     movementInRoundEnded = false;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     Move();
                 }
                 if (actualRound != 0 && actualRound >= combatScripts.GetComponent<TurnManager>().round)
                 {
                     
                     movementInRoundEnded = true;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     if (combatScripts.GetComponent<TurnManager>().round == 0)
                     {
-                        GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
-                        formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
                         moving = false;
                     }
                 }
                 if (PathCount() == 0)
                 {
-                    
                     movementInRoundEnded = true;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     Move(); //if there is nothing to move next, just end the moving action with reset of the round
                 }
             }
@@ -137,18 +137,14 @@ public class UnitMove : TacticsMove
                 {
 
                     movementInRoundEnded = false;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     Move();
                 }
                 if (actualRound != 0 && actualRound >= combatScripts.GetComponent<TurnManager>().round)
                 {
 
                     movementInRoundEnded = true;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     if(combatScripts.GetComponent<TurnManager>().round==0)
                     {
-                        GameObject formationlaunchnewfindselectablegrounds = gameObject.GetComponent<UnitMove>().formation;
-                        formationlaunchnewfindselectablegrounds.GetComponent<FormationMove>().iterationFindSelectableGrounds = 1;
                         moving = false;
                     }
                 }
@@ -156,7 +152,6 @@ public class UnitMove : TacticsMove
                 {
 
                     movementInRoundEnded = true;
-                    Debug.Log("setting movementInRoundEnded for " + gameObject.name + " as " + movementInRoundEnded);
                     Move(); //if there is nothing to move next, just end the moving action with reset of the round
                 }
 
