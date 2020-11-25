@@ -16,20 +16,36 @@ public class UnitFight : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void CheckFightingStatus()
     {
-        if (isStuckInFight())
+        if (!GetComponent<CombatVariables>().dead)
         {
-            stuckInFight = true;
-            fighting = true;
-            GetComponent<UnitMove>().moving = false;
+            if (isStuckInFight())
+            {
+                stuckInFight = true;
+                fighting = true;
+                GetComponent<UnitMove>().moving = false;
 
+            }
+
+            if (!isStuckInFight())
+            {
+                stuckInFight = false;
+                GetComponent<UnitMove>().moving = true;
+
+            }
+
+            if (Fighting())
+            {
+                fighting = true;
+            }
+
+            if (!Fighting())
+            {
+                fighting = false;
+            }
         }
 
-        if(Fighting())
-        {
-            fighting = true;
-        }
     }
 
 

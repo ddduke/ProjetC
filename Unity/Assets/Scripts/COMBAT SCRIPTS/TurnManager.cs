@@ -93,11 +93,24 @@ public class TurnManager : MonoBehaviour
         enemyAndPlayerGroups = FindenemyAndPlayerUnits();
         foreach (GameObject unit in enemyAndPlayerGroups)
         {
-            unit.GetComponent<UnitFight>().LaunchUnitFight();
-
-            unit.GetComponent<CombatVariables>().CheckUnitCombatVariables();
-
+            if(!unit.GetComponent<CombatVariables>().dead) unit.GetComponent<UnitFight>().LaunchUnitFight();
         }
+
+        foreach (GameObject unit in enemyAndPlayerGroups)
+        {
+            if (!unit.GetComponent<CombatVariables>().dead) unit.GetComponent<CombatVariables>().CheckUnitCombatVariables();
+        }
+
+        foreach (GameObject unit in enemyAndPlayerGroups)
+        {
+            if (unit.GetComponent<CombatVariables>().dead)
+            {
+                unit.GetComponent<MeshRenderer>().material.color = Color.red;
+                unit.GetComponent<UnitMove>().enabled = false;
+                unit.transform.position = new Vector3(0, -4, 0);
+            }
+        }
+
     }
 
     public List<GameObject> GetAllGameObjectsBySide(string side)

@@ -28,8 +28,10 @@ public class UnitMove : TacticsMove
     void FixedUpdate()
     {
         Debug.DrawRay(transform.position, transform.forward);
+        
         if (!turn)
         {
+            GetComponent<UnitFight>().CheckFightingStatus();
             return;
         }
         GetCurrentGround();
@@ -39,6 +41,7 @@ public class UnitMove : TacticsMove
         {
             if (combatScripts.GetComponent<TurnManager>().round == 0)
             {
+                GetComponent<UnitFight>().CheckFightingStatus();
                 ResetPathDisplay();
                 if (endOfMoveCausedByNewBlockingObject)
                 {
@@ -62,7 +65,8 @@ public class UnitMove : TacticsMove
 
             else if (combatScripts.GetComponent<TurnManager>().round > 0)
             {
-                if(!GetComponent<UnitFight>().stuckInFight)
+                GetComponent<UnitFight>().CheckFightingStatus();
+                if (!GetComponent<UnitFight>().stuckInFight)
                 {
                     if (!inFormation() && GetComponent<CombatVariables>().inFormation)
                     {
@@ -92,8 +96,10 @@ public class UnitMove : TacticsMove
             }
             
         }
-        else
+        else //if the unit is moving
         {
+            //GetComponent<UnitFight>().CheckFightingStatus();
+            GetComponent<UnitFight>().CheckFightingStatus();
             if (GetComponent<CombatVariables>().chargeAndBreakFormation && unitTarget != GetClosestEnemyUnit(gameObject.transform.position))
             {
                 ResetPathDisplay();

@@ -16,6 +16,8 @@ public class CombatVariables : MonoBehaviour
 
     public int totalHealth;
 
+    public bool dead = false;
+
     public bool inFormation = true;
     public bool chargeAndBreakFormation = false;
 
@@ -27,7 +29,8 @@ public class CombatVariables : MonoBehaviour
     public void CheckUnitCombatVariables()
     {
         float relativePeopleNumber = (float)totalHealth / healthByPeople;
-        Debug.Log(relativePeopleNumber);
+        //Debug.Log(relativePeopleNumber);
         people = (int)Mathf.Ceil(relativePeopleNumber);
+        if (people <= 0) dead = true;
     }
 }
