@@ -9,9 +9,25 @@ public class CombatVariables : MonoBehaviour
     public float moveCapacity = 1;
     public int range = 1;
     public int rangeHeight = 2;
+    public int people = 3;
+    public int healthByPeople = 10;
+    public int damageByPeople = 5;
+    public int defenseByPeople = 3;
+
+    public int totalHealth;
 
     public bool inFormation = true;
     public bool chargeAndBreakFormation = false;
 
+    void Start()
+    {
+        totalHealth = healthByPeople * people;
+    }
 
+    public void CheckUnitCombatVariables()
+    {
+        float relativePeopleNumber = (float)totalHealth / healthByPeople;
+        Debug.Log(relativePeopleNumber);
+        people = (int)Mathf.Ceil(relativePeopleNumber);
+    }
 }

@@ -85,6 +85,21 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    public void Fight()
+    {
+        //get the units that are fighting and apply damages
+        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
+        List<GameObject> enemiesToFightOnSides = new List<GameObject>();
+        enemyAndPlayerGroups = FindenemyAndPlayerUnits();
+        foreach (GameObject unit in enemyAndPlayerGroups)
+        {
+            unit.GetComponent<UnitFight>().LaunchUnitFight();
+
+            unit.GetComponent<CombatVariables>().CheckUnitCombatVariables();
+
+        }
+    }
+
     public List<GameObject> GetAllGameObjectsBySide(string side)
     {
         List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
@@ -128,8 +143,6 @@ public class TurnManager : MonoBehaviour
         foreach (GameObject unit in t_unitsList) enemyAndPlayerGroups.Add(unit);
         return enemyAndPlayerGroups;
     }
-
-
 
 
     /*void CheckRound()
