@@ -102,8 +102,12 @@ MonoBehaviour:
   combatScripts: {fileID: 0}
   moving: 0
   maxHeightDifference: 2
+  functionWaitSecCalled: 0
   formation: {fileID: 0}
+  endOfMoveCausedByNewBlockingObject: 0
   actualRound: 1
+  movementInRoundEnded: 1
+  initialLengthOfPath: 0
 --- !u!114 &8152314362274093964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +124,12 @@ MonoBehaviour:
   moveCapacity: 1
   range: 1
   rangeHeight: 2
+  people: 3
+  healthByPeople: 10
+  damageByPeople: 5
+  defenseByPeople: 3
+  totalHealth: 0
+  dead: 0
   inFormation: 1
   chargeAndBreakFormation: 0
 --- !u!65 &5697345330178020214
@@ -133,7 +143,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0769868, y: 1.5768298, z: 0.26624262}
+  m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 0.7873576, z: -0.0154325105}
 --- !u!114 &6003799929983491396
 MonoBehaviour:
@@ -148,3 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stuckInFight: 0
+  fighting: 0
+  enemiesToFightOnSides: []
+  enemyToFightAhead: {fileID: 0}
