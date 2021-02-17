@@ -2,6 +2,8 @@
  * COMBAT :
  * Ce que l'on veut mettre en place : 
  * 
+ * - faire un script 
+ * 
  * - un système tour par tour qui permet de jouer différents ordres sur une formation puis sur une autre
  * 
  * 
@@ -11,7 +13,10 @@
  * - un système de pathfinding ou ma formation se deplace en tenant compte uniquement des murs physiques, et ou j'affiche son chemin
  * 
  * 
- * - 
+ * - une gestion des déplacements en fonction des ordres
+ * 
+ * 
+ *      
  * 
  * 
  * - 

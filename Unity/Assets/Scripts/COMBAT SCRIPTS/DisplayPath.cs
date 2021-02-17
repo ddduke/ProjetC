@@ -11,20 +11,21 @@ public class DisplayPath : MonoBehaviour
     public Vector3 target;
     public int startDisplayPath = 0;
     public int endDisplayPath = 4;
-    private UnityEngine.AI.NavMeshPath path;
+    //private UnityEngine.AI.NavMeshPath path;
     private float elapsed = 0.0f;
     void Start()
     {
-        path = new UnityEngine.AI.NavMeshPath();
+        //path = new UnityEngine.AI.NavMeshPath();
         elapsed = 0.0f;
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+
     }
 
 
     void Update()
     {
 
-
+        
         // Update the way to the goal every second.
         elapsed += Time.deltaTime;
         if (elapsed > 0.1f)

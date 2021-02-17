@@ -20,6 +20,7 @@ public class TurnManager : MonoBehaviour
         roundText.text = " Round number " + round;
         turnText.text = turn + " turn";
         ChangeTurn();
+        
 
     }
     void Update()
@@ -54,15 +55,15 @@ public class TurnManager : MonoBehaviour
             turn = "Enemy";
             List<GameObject> enemyGroup = new List<GameObject>();
             List<GameObject> playerGroup = new List<GameObject>();
-            enemyGroup = GetAllGameObjectsBySide("enemy");
+            enemyGroup = GetAllUnitsBySide("enemy");
             foreach (GameObject enemy in enemyGroup)
             {
-                enemy.GetComponent<TacticsMove>().turn = true;
+                //enemy.GetComponent<TacticsMove>().turn = true;
             }
-            playerGroup = GetAllGameObjectsBySide("player");
+            playerGroup = GetAllUnitsBySide("player");
             foreach (GameObject player in playerGroup)
             {
-                player.GetComponent<TacticsMove>().turn = false;
+                // player.GetComponent<TacticsMove>().turn = false;
             }
 
         }
@@ -71,15 +72,15 @@ public class TurnManager : MonoBehaviour
             turn = "Player";
             List<GameObject> enemyGroup = new List<GameObject>();
             List<GameObject> playerGroup = new List<GameObject>();
-            enemyGroup = GetAllGameObjectsBySide("enemy");
+            enemyGroup = GetAllUnitsBySide("enemy");
             foreach (GameObject enemy in enemyGroup)
             {
-                enemy.GetComponent<TacticsMove>().turn = false;
+                //enemy.GetComponent<TacticsMove>().turn = false;
             }
-            playerGroup = GetAllGameObjectsBySide("player");
+            playerGroup = GetAllUnitsBySide("player");
             foreach (GameObject player in playerGroup)
             {
-                player.GetComponent<TacticsMove>().turn = true;
+                //player.GetComponent<TacticsMove>().turn = true;
             }
 
         }
@@ -113,29 +114,6 @@ public class TurnManager : MonoBehaviour
 
     }
 
-    public List<GameObject> GetAllGameObjectsBySide(string side)
-    {
-        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
-        enemyAndPlayerGroups = FindenemyAndPlayerGroups();
-        List<GameObject> group = new List<GameObject>();
-        foreach (GameObject obj in enemyAndPlayerGroups)
-        {
-            if (obj.GetComponent<TacticsMove>().enemy && side == "enemy") group.Add(obj);
-            if (!obj.GetComponent<TacticsMove>().enemy && side == "player") group.Add(obj);
-        }
-        return group;
-    }
-
-    public List<GameObject> FindenemyAndPlayerGroups()
-    {
-        List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
-        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
-        foreach (GameObject unit in t_unitsList) enemyAndPlayerGroups.Add(unit);
-        GameObject[] t_formationsList = GameObject.FindGameObjectsWithTag("Formation");
-        foreach (GameObject formation in t_formationsList) enemyAndPlayerGroups.Add(formation);
-        return enemyAndPlayerGroups;
-    }
-
     public List<GameObject> GetAllUnitsBySide(string side)
     {
         List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
@@ -143,8 +121,8 @@ public class TurnManager : MonoBehaviour
         List<GameObject> group = new List<GameObject>();
         foreach (GameObject obj in enemyAndPlayerGroups)
         {
-            if (obj.GetComponent<TacticsMove>().enemy && side == "enemy") group.Add(obj);
-            if (!obj.GetComponent<TacticsMove>().enemy && side == "player") group.Add(obj);
+            if (obj.GetComponent<CombatVariables>().enemy && side == "enemy") group.Add(obj);
+            if (!obj.GetComponent<CombatVariables>().enemy && side == "player") group.Add(obj);
         }
         return group;
     }
@@ -152,11 +130,10 @@ public class TurnManager : MonoBehaviour
     public List<GameObject> FindenemyAndPlayerUnits()
     {
         List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
-        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Unit");
+        GameObject[] t_unitsList = GameObject.FindGameObjectsWithTag("Regiment");
         foreach (GameObject unit in t_unitsList) enemyAndPlayerGroups.Add(unit);
         return enemyAndPlayerGroups;
     }
-
 
     /*void CheckRound()
     {
@@ -173,4 +150,10 @@ public class TurnManager : MonoBehaviour
         }
         unitsList.Clear();
     }*/
+
+    public void Test()
+    {
+        Debug.Log("Test");
+        
+    }
 }

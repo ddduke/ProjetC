@@ -13,6 +13,7 @@ public class CombatVariables : MonoBehaviour
     public int healthByPeople = 10;
     public int damageByPeople = 5;
     public int defenseByPeople = 3;
+    public bool enemy = true;
 
     public int totalHealth;
 
