@@ -50,9 +50,9 @@ public class TurnManager : MonoBehaviour
     public void ChangeTurn()
     {
 
-        if (turn == "Player")
+        if (turn == "player")
         {
-            turn = "Enemy";
+            turn = "enemy";
             List<GameObject> enemyGroup = new List<GameObject>();
             List<GameObject> playerGroup = new List<GameObject>();
             enemyGroup = GetAllUnitsBySide("enemy");
@@ -69,7 +69,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            turn = "Player";
+            turn = "player";
             List<GameObject> enemyGroup = new List<GameObject>();
             List<GameObject> playerGroup = new List<GameObject>();
             enemyGroup = GetAllUnitsBySide("enemy");

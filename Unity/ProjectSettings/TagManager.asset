@@ -11,6 +11,7 @@ TagManager:
   - RoundInfo
   - Regiment
   - RegimentSlot
+  - PathLine
   layers:
   - Default
   - TransparentFX
