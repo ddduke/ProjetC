@@ -75,10 +75,12 @@ public class UsefulCombatFunctions : MonoBehaviour
         int maxZ = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            if(regiment.z > maxZ) maxZ = (int)(regiment.z);
-        }
+            Debug.Log("Hey for maxZ regimentz is " + regiment.z);
+            if(regiment.z < maxZ) maxZ = (int)(regiment.z);
 
-        return maxZ;
+        }
+        Debug.Log("Hey ! MaxZ is " + maxZ);
+        return -maxZ;
 
     }
 
@@ -88,14 +90,17 @@ public class UsefulCombatFunctions : MonoBehaviour
         List<Vector3> regimentsList = new List<Vector3>();
         regimentsList = FormationPivotRelativePosition(side);
 
-
+        
         int maxZ = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            if (regiment.z < maxZ) maxZ = (int)(regiment.z);
+            Debug.Log("Hey for minZ regimentz is " + regiment.z);
+            if (regiment.z > maxZ) maxZ = (int)(regiment.z);
         }
-
-        return maxZ;
+        Debug.Log("Hey ! MinZ is " + maxZ);
+        return -maxZ;
 
     }
+
+    
 }

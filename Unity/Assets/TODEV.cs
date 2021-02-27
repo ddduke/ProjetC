@@ -8,9 +8,11 @@
  *      
  * 
  * 
- * - 
+ * rajouter les unités en obstacle sur le pathfinding
  * 
+ * Attention l'attaque doit etre gérée par le régiment de manièer unitaire et pas par une fonction macro (la fonction macro doit activer l'attaque mais la fonction attaque peut etre appelée par d'autres fonctions ex feat) 
  * 
+ * pour les déplacements non simultanés (ex. charge) faire une analyse des chemins vers l'unité la plus proche et regarder la meilleure simulation (cas ou la distance moyenne des unités est la plus proche de l'unité enemie)
  * 
  * rajouter un check pour regarder si l'unité a bien les bonus de formation : créer un formation variables lié à l'unité avec les multiplicateurs défense ou attaque ? 
  * rajouter la possibilité de flancker
