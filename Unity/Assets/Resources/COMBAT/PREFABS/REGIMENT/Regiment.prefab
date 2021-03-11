@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4750108380768158421}
   - component: {fileID: 3404745492710902452}
   - component: {fileID: 6607067871986998554}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Regiment
   m_TagString: Regiment
   m_Icon: {fileID: 0}

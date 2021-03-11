@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class PathVariables : MonoBehaviour
 {
     public int movesPerRound = 1;
     public Vector3 staticTarget;
     public bool dynamicTarget = false;
+    public string GraphStringToUse;
+    public GraphMask GraphMaskToUse;
     private void Update()
     {
+        
+        GraphMaskToUse = GraphMask.FromGraphName(GraphStringToUse);
+        
         if ( movesPerRound != 1)
         {
             GameObject temp = gameObject.transform.Find("Line1stRound").gameObject;

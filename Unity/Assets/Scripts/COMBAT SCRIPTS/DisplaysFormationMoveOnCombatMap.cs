@@ -27,11 +27,8 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             target.y += 0.5f;
         }
 
-        //check if the target is reachable or recalculate it based on max
-        //check if reaches the top of the map, and if it is, correct the target 
-        if (target.z + GetComponent<UsefulCombatFunctions>().GetMaxZ(side) > 6) target.z = 6 - GetComponent<UsefulCombatFunctions>().GetMaxZ(side);
-        //check if reaches the bottom of the map, and if it is, correct the target 
-        if (target.z + GetComponent<UsefulCombatFunctions>().GetMinZ(side) < -6) target.z = -6 - GetComponent<UsefulCombatFunctions>().GetMinZ(side);
+        target.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+        target.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
 
         Vector3 formationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
         DisplayFormation(side, target);
@@ -48,7 +45,9 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             if ((int) reg.GetComponent<CombatVariables>().movesPerRound < minMovesPerRound) minMovesPerRound = (int)reg.GetComponent<CombatVariables>().movesPerRound;
         }
         PathInstantiated.GetComponent<PathVariables>().movesPerRound = minMovesPerRound;
+        //set the target & the graph to use for the seeker (inclue layer regiments for  
         PathInstantiated.GetComponent<PathVariables>().dynamicTarget = true;
+        PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "FormationGraph";
 
     }
     /// <summary>
@@ -89,11 +88,8 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
         {
             target = newTarget;
 
-            //check if the target is reachable or recalculate it based on max
-            //check if reaches the top of the map, and if it is, correct the target 
-            if (target.z + GetComponent<UsefulCombatFunctions>().GetMaxZ(side) > 6) target.z = 6 - GetComponent<UsefulCombatFunctions>().GetMaxZ(side);
-            //check if reaches the bottom of the map, and if it is, correct the target 
-            if (target.z + GetComponent<UsefulCombatFunctions>().GetMinZ(side) < -6) target.z = -6 - GetComponent<UsefulCombatFunctions>().GetMinZ(side);
+            target.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+            target.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
 
             GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
             foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
@@ -106,7 +102,6 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
     /// </summary>
     private void DisplayFormation(string side, Vector3 target)
     {
-
 
         List<Vector3> regimentsRelativePosition = new List<Vector3>();
         regimentsRelativePosition = GetComponent<UsefulCombatFunctions>().FormationPivotRelativePosition(side);

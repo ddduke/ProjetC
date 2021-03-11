@@ -14,6 +14,7 @@ public class DisplayPath : MonoBehaviour
     public GameObject CombatScripts;
     //private UnityEngine.AI.NavMeshPath path;
     private float elapsed = 0.0f;
+    private GraphMask graph;
     void Start()
     {
         //path = new UnityEngine.AI.NavMeshPath();
@@ -26,14 +27,14 @@ public class DisplayPath : MonoBehaviour
 
     void Update()
     {
-
+        // Check if activated for a dynamic target (mouse position) or a static target (exact point on the graph).
         if (gameObject.transform.parent.GetComponent<PathVariables>().dynamicTarget)
         {
             // Update the way to the goal every second.
             elapsed += Time.deltaTime;
             if (elapsed > 0.1f)
             {
-
+                GetComponent<Seeker>().graphMask = gameObject.transform.parent.GetComponent<PathVariables>().GraphMaskToUse;
                 elapsed -= 0.1f;
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -47,20 +48,18 @@ public class DisplayPath : MonoBehaviour
                 AstarPath.active.Scan();
             }
         }
-        else
+        else // if we already have an exact point to display path on, we juste set it as our target
         {
             target = gameObject.transform.parent.GetComponent<PathVariables>().staticTarget;
             target.y += 0.5f;
         }
 
         //check if the target is reachable or recalculate it based on max
-        string side = CombatScripts.GetComponent<TurnManager>().turn;
-        //check if reaches the top of the map, and if it is, correct the target 
-        if (target.z + CombatScripts.GetComponent<UsefulCombatFunctions>().GetMaxZ(side) > 6) target.z = 6 - CombatScripts.GetComponent<UsefulCombatFunctions>().GetMaxZ(side);
-        //check if reaches the bottom of the map, and if it is, correct the target 
-        if (target.z + CombatScripts.GetComponent<UsefulCombatFunctions>().GetMinZ(side) < -6) target.z = -6 - CombatScripts.GetComponent<UsefulCombatFunctions>().GetMinZ(side);
-
+        target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+        target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
         //Get the seeker of GO, calculate path from the parent position (regiment) to the target
+
+        GetComponent<Seeker>().graphMask = gameObject.transform.parent.GetComponent<PathVariables>().GraphMaskToUse;
         Path p = GetComponent<Seeker>().StartPath(transform.position, target);
         p.BlockUntilCalculated();
         // check if the path displayed is too large for the line (that can be 1st tour or 2nd Tour), in this case we reduce the path to the length of the line
