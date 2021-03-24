@@ -184,4 +184,30 @@ public class UsefulCombatFunctions : MonoBehaviour
         return antiFormationPivotSide;
     }
 
+
+    public Ground GetTargetGround(GameObject target)
+    {
+        LayerMask layer_mask = LayerMask.GetMask("Ground");
+        RaycastHit hit;
+        Ground ground = null;
+        if (Physics.Raycast(target.transform.position, -Vector3.up, out hit, 1, layer_mask))
+        {
+            ground = hit.collider.GetComponent<Ground>();
+        }
+
+        return ground;
+    }
+
+    public Ground GetTargetGroundVector(Vector3 target)
+    {
+        LayerMask layer_mask = LayerMask.GetMask("Ground");
+        RaycastHit hit;
+        Ground ground = null;
+        if (Physics.Raycast(target, -Vector3.up, out hit, 1, layer_mask))
+        {
+            ground = hit.collider.GetComponent<Ground>();
+        }
+
+        return ground;
+    }
 }

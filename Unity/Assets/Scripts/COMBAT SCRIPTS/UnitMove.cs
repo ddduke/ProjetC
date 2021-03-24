@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitMove : TacticsMove
 {
+    /*
     public GameObject formation;
 
     Vector3 relativeFormationPosition;
@@ -224,5 +225,6 @@ public class UnitMove : TacticsMove
         return CurrentLowestDistanceEnemyPosition;
 
     }
+    */
 
 }

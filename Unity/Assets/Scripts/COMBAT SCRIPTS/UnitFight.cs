@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitFight : MonoBehaviour
 {
+    /*
     public bool stuckInFight = false;
     public bool fighting = false;
     public List<GameObject> enemiesToFightOnSides = new List<GameObject>();
@@ -214,4 +215,5 @@ public class UnitFight : MonoBehaviour
             return enemyOnSidesList;
         }
     }
+    */
 }

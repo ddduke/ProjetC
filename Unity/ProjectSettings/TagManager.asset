@@ -12,6 +12,7 @@ TagManager:
   - Regiment
   - RegimentSlot
   - PathLine
+  - Obstacle
   layers:
   - Default
   - TransparentFX

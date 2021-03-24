@@ -1,13 +1,9 @@
 ﻿/*TO DEV : 
  * COMBAT :
  * 
- * terminer formation charge useful function
  * 
- * Pour la charge hors formation: 
- * on identifie les slots dispo des enemis (fonction interne à un régiment car varie en fonction des types d'unités)
- * on identifie le nombre de tours pour atteindre chaque slot et on prend ceux qui arrivent le plus vite jusqu'à un point 
- * si 2 regiments arrivent le plus vite sur un point, alors c'est celui le plus à droite qui y va en premier 
- * si 2 régiments sont encore égaux, c'est celui qui va le plus vite
+ * Last Step Formation Charge ligne 180 : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path list
+ * see if we can store it directly, but seems to need another function to be called because the seeker won't word in this case
  * 
  * 
  * 

@@ -171,9 +171,29 @@ public class Ground : MonoBehaviour
             }
         }
         return null;
+
+        
+    }
+    public bool EmptyGround(Ground ground)
+    {
+
+        RaycastHit hit;
+
+        //check if there is an object upwards of the ground
+        if (Physics.Raycast(ground.transform.position, Vector3.up, out hit, 1))
+        {
+            //check if the thing blocking the ray is a unit (moveable) or the formation
+            if (hit.transform.gameObject.tag == "Regiment" || hit.transform.gameObject.tag == "Obstacle")
+            {
+                return false;
+            }
+            else return true;
+        }
+        else return true;
+        
     }
 
-    public List<Ground> FindNeighborsGroundsByRange(int range, float maxHeight)
+    public List<Ground> StandardFindNeighborsGroundsByRange(int range, float maxHeight)
     {
         List<Ground> grounds = new List<Ground>();
 

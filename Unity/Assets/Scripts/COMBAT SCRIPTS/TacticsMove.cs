@@ -6,7 +6,7 @@ using UnityEngine;
 //class used to manage moving and selecting ground for every unit in combat
 public class TacticsMove : MonoBehaviour
 {
-
+    /*
     public bool turn;
     public bool enemy;
 
@@ -357,5 +357,6 @@ public class TacticsMove : MonoBehaviour
             // do nothing
         }
     }
+    */
 }
 

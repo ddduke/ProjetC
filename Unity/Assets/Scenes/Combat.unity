@@ -6848,7 +6848,7 @@ PrefabInstance:
     - target: {fileID: 4750108380768158420, guid: 08a877720d7e20540a23d11437eec6b2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4750108380768158420, guid: 08a877720d7e20540a23d11437eec6b2,
         type: 3}
@@ -6925,7 +6925,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 4760604696253653414}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417089880}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0d198909f36dec45a6c0938ff6c77e8, type: 3}
@@ -10707,7 +10707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80, y: -20.19}
+  m_AnchoredPosition: {x: -80, y: -20.190002}
   m_SizeDelta: {x: 222.12, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463030840
@@ -31840,96 +31840,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08a877720d7e20540a23d11437eec6b2, type: 3}
---- !u!1 &1417089880 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
+--- !u!114 &1417089882 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1417089882, guid: eb03f14aed2f78f42813df55af26d760,
     type: 3}
   m_PrefabInstance: {fileID: 4760604696253653414}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1417089881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417089880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 634e85bc351c5e542b2b283521926dda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatMapMaxX: 27
-  combatMapMinX: -10
-  combatMapMaxZ: 6
-  combatMapMinZ: -6
---- !u!114 &1417089882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417089880}
+  m_GameObject: {fileID: 0}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6424a0ed37077640b5ce9db41e78928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RegimentSlot: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
-    type: 3}
-  target: {x: 0, y: 0, z: 0}
-  newTarget: {x: 0, y: 0, z: 0}
-  cam: {fileID: 0}
-  DisplayPath: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
-    type: 3}
-  side: player
---- !u!114 &1417089883
+--- !u!114 &1417089885 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1417089885, guid: eb03f14aed2f78f42813df55af26d760,
+    type: 3}
+  m_PrefabInstance: {fileID: 4760604696253653414}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417089880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 1
-    exactEndPoint: 4
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: 0
---- !u!114 &1417089885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417089880}
+  m_GameObject: {fileID: 0}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2da79e87a88d43442ba73fb46d70656a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RegimentSlot: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
-    type: 3}
-  target: {x: 0, y: 0, z: 0}
-  newTarget: {x: 0, y: 0, z: 0}
-  cam: {fileID: 0}
-  DisplayPath: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
-    type: 3}
-  side: 
 --- !u!1001 &1419687691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33990,7 +33924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -80, y: -105.4}
+  m_AnchoredPosition: {x: -80, y: -105.40001}
   m_SizeDelta: {x: 222.12, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496122554
@@ -48782,20 +48716,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
+      propertyPath: Obstacle
+      value: 
+      objectReference: {fileID: 4750108380768158443, guid: b21ddeadcf5a3194ba1746e24520e574,
+        type: 3}
     - target: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
         type: 3}
       propertyPath: m_Name
       value: CombatScripts
-      objectReference: {fileID: 0}
-    - target: {fileID: 4760604696023883209, guid: eb03f14aed2f78f42813df55af26d760,
-        type: 3}
-      propertyPath: turn
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 4760604696023883209, guid: eb03f14aed2f78f42813df55af26d760,
-        type: 3}
-      propertyPath: round
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4760604696023883209, guid: eb03f14aed2f78f42813df55af26d760,
         type: 3}

@@ -86,7 +86,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void Fight()
+    /*public void Fight()
     {
         //get the units that are fighting and apply damages
         List<GameObject> enemyAndPlayerGroups = new List<GameObject>();
@@ -112,7 +112,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     public List<GameObject> GetAllUnitsBySide(string side)
     {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FormationMove : TacticsMove
 {
+    /*
     public Ground targetGround;
     public float InFormationMoveCapacity;
 
@@ -63,4 +64,5 @@ public class FormationMove : TacticsMove
             }
         }
     }
+    */
 }
