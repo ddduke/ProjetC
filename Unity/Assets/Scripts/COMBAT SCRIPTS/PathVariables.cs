@@ -10,6 +10,7 @@ public class PathVariables : MonoBehaviour
     public bool dynamicTarget = false;
     public string GraphStringToUse;
     public GraphMask GraphMaskToUse;
+    public Path pathInjected = null;
     private void Update()
     {
         

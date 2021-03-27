@@ -6249,9 +6249,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1417089882}
-        m_TargetAssemblyTypeName: DisplaysOnCombatMap, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 322969687}
+        m_TargetAssemblyTypeName: DisplayRegimentCharge, Assembly-CSharp
+        m_MethodName: StartScript
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7255,6 +7255,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25cf3999b271c2241a7c2aee9cffb4f8, type: 3}
+--- !u!114 &322969687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760,
+    type: 3}
+  m_PrefabInstance: {fileID: 4760604696253653414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec27cef214dddb47bda8ac4e942028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &327313047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6804731162899423804, guid: 25cf3999b271c2241a7c2aee9cffb4f8,
@@ -47382,9 +47394,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1417089882}
-        m_TargetAssemblyTypeName: DisplaysOnCombatMap, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 322969687}
+        m_TargetAssemblyTypeName: DisplayRegimentCharge, Assembly-CSharp
+        m_MethodName: StopScript
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -48716,10 +48728,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1417089883, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
+      propertyPath: graphMask.value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
       propertyPath: Obstacle
       value: 
       objectReference: {fileID: 4750108380768158443, guid: b21ddeadcf5a3194ba1746e24520e574,
+        type: 3}
+    - target: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
+      propertyPath: PathLine
+      value: 
+      objectReference: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
+        type: 3}
+    - target: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
+      propertyPath: DisplayPath
+      value: 
+      objectReference: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
+        type: 3}
+    - target: {fileID: 1417089884, guid: eb03f14aed2f78f42813df55af26d760, type: 3}
+      propertyPath: RegimentSlot
+      value: 
+      objectReference: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
         type: 3}
     - target: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
         type: 3}

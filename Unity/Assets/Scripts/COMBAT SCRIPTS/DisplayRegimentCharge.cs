@@ -7,7 +7,23 @@ using Pathfinding;
 public class DisplayRegimentCharge : MonoBehaviour
 {
     public GameObject Obstacle;
-    
+    public GameObject PathLine;
+    public GameObject RegimentSlot;
+
+    public void StartScript()
+    {
+        string side = GetComponent<TurnManager>().turn;
+        RegimentChargeDisplay(side);
+    }
+
+    public void StopScript()
+    {
+        GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
+        foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
+        GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
+        foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
+    }
+
     public void RegimentChargeDisplay(string side)
     {
         
@@ -54,14 +70,17 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //Check if there is already positions booked by the selected cases list, in this case remove it
                 foreach (Ground tmp in possibleGrounds)
                 {
-                    foreach(SelectedCases cs in selectedCasesList)
+                    //Debug.Log(tmp);
+                    foreach (SelectedCases cs in selectedCasesList)
                     {
+                        
                         if (tmp == cs.positionBooked) possibleGrounds.Remove(tmp);
                     }
                 }
                 //then use the seeker to get the path to the possible positions
                 foreach(Ground possibleGround in possibleGrounds)
                 {
+                    Debug.Log(possibleGround);
                     //if we found a valid path between the two points (avoiding booked positions in end of rounds and in end of the charge)
                     if(PathSearchComplete(possibleGround,regiment,selectedCasesList) != null)
                     {
@@ -103,6 +122,11 @@ public class DisplayRegimentCharge : MonoBehaviour
              * 5) then just get one for god sake 
              */
             //1st get the minimum rounds in cases list
+
+            foreach(Cases cas in CasesList)
+            {
+                Debug.Log("regiment still in course 0 = " + CasesList.Count);
+            }
             int minRounds = 1000;
             foreach(Cases cas in CasesList)
             {
@@ -114,10 +138,13 @@ public class DisplayRegimentCharge : MonoBehaviour
                 if (cas.numberOfRounds != minRounds) CasesList.Remove(cas);
             }
 
-
+            foreach (Cases cas in CasesList)
+            {
+                Debug.Log("regiment still in course 1 = " + CasesList.Count);
+            }
             //2nd get the right or left max
-            
-            if(side == "enemy")
+
+            if (side == "enemy")
             {
                 int maxLeft = 37;
                 //take the most left regiment
@@ -146,7 +173,10 @@ public class DisplayRegimentCharge : MonoBehaviour
                     if (cas.regiment.transform.position.x != maxRight) CasesList.Remove(cas);
                 }
             }
-
+            foreach (Cases cas in CasesList)
+            {
+                Debug.Log("regiment still in course 2 = " + CasesList.Count);
+            }
             //3rd get the one with max speed (move capacity)
             int maxSpeed = 1;
             foreach (Cases cas in CasesList)
@@ -158,7 +188,10 @@ public class DisplayRegimentCharge : MonoBehaviour
             {
                 if (cas.regiment.GetComponent<CombatVariables>().moveCapacity != maxSpeed) CasesList.Remove(cas);
             }
-
+            foreach (Cases cas in CasesList)
+            {
+                Debug.Log("regiment still in course 3 = " + CasesList.Count);
+            }
             //4rd get the one with lower position 
             int lowerPos = 6;
             foreach (Cases cas in CasesList)
@@ -170,14 +203,34 @@ public class DisplayRegimentCharge : MonoBehaviour
             {
                 if (cas.regiment.transform.position.z != lowerPos) CasesList.Remove(cas);
             }
-
+            foreach (Cases cas in CasesList)
+            {
+                Debug.Log("regiment still in course 4 = " + CasesList.Count);
+            }
             //5th fuck it, get one and store it into SelectedCases List
-            Cases cslct = CasesList[0];
+            Cases cslct = CasesList[1];
             selectedCasesList.Add(new SelectedCases(cslct.regiment, cslct.possiblePosition, cslct.pathUsed, cslct.numberOfRounds, cslct.endOfRoundGrounds));
             regimentsToPrioritize.Remove(cslct.regiment);
 
         }
         // FINAL STEP : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path 
+        foreach (SelectedCases cas in selectedCasesList)
+        {
+            Debug.Log("Regiment final path is" + cas.regiment + cas.positionBooked + cas.pathUsed);
+            //Instantiate a Pathline from the regiment with exact paht booked
+            GameObject PathInstantiated = Instantiate(PathLine, cas.regiment.transform.position, Quaternion.identity);
+            PathInstantiated.GetComponent<PathVariables>().dynamicTarget = false;
+            PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "FormationGraph";
+            //Inject the path selected
+            PathInstantiated.GetComponent<PathVariables>().pathInjected = cas.pathUsed;
+            //Instantiate a regiment slot on the position booked
+            Vector3 position = cas.positionBooked.transform.position + new Vector3(0, 1, 0);
+            Instantiate(RegimentSlot, position, Quaternion.identity);
+        }
+
+        selectedCasesList.Clear();
+        CasesList.Clear();
+
     }
 
     public Path PathSearchComplete(Ground possibleGround, GameObject regiment, List<SelectedCases> selectedCasesList)
@@ -185,7 +238,9 @@ public class DisplayRegimentCharge : MonoBehaviour
         bool pathCompleted = false;
         Path p;
         //if the path don't already exists, no need to use the while loop
-        p = GetComponent<Seeker>().StartPath(regiment.transform.position, possibleGround.transform.position);
+        Vector3 position = regiment.transform.position + new Vector3(0, 1, 0);
+        Vector3 target = possibleGround.transform.position + new Vector3(0, 1, 0);
+        p = GetComponent<Seeker>().StartPath(position, target);
         p.BlockUntilCalculated();
         if (p.error)
         {
@@ -196,7 +251,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         //if the path exists, we need to loop until the path do not go on a booked ground 
         while (!pathCompleted)
         {
-            p = GetComponent<Seeker>().StartPath(regiment.transform.position, possibleGround.transform.position);
+            p = GetComponent<Seeker>().StartPath(position, target);
             p.BlockUntilCalculated();
             if (p.error)
             {
@@ -243,9 +298,9 @@ public class DisplayRegimentCharge : MonoBehaviour
                         {
                             obstaclesCreated += 1;
                             Ground g = endOfRoundPosition[index2];
-                            Vector3 position = g.transform.position + new Vector3(0, 1, 0);
+                            Vector3 position2 = g.transform.position + new Vector3(0, 1, 0);
                             //we create an obstacle on this position to restart the path
-                            Instantiate(Obstacle, position, Quaternion.identity);
+                            Instantiate(Obstacle, position2, Quaternion.identity);
                         }
 
                     }
@@ -254,7 +309,11 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //at the end of the simulation, if no obstacles were put on the path of the regiment, then set the pathCompleted to true
                 if (obstaclesCreated == 0) pathCompleted = true;
             }
+            
         }
+        //Destroy all obstacles created for this path
+        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in existingObstacles) GameObject.Destroy(obstacle);
         return p;
     }
     /*Regiment Charge (side)

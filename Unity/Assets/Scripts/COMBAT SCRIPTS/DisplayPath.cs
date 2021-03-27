@@ -27,6 +27,8 @@ public class DisplayPath : MonoBehaviour
 
     void Update()
     {
+        GetComponent<Seeker>().graphMask = gameObject.transform.parent.GetComponent<PathVariables>().GraphMaskToUse;
+        Path p = null;
         // Check if activated for a dynamic target (mouse position) or a static target (exact point on the graph).
         if (gameObject.transform.parent.GetComponent<PathVariables>().dynamicTarget)
         {
@@ -47,21 +49,34 @@ public class DisplayPath : MonoBehaviour
                 }
                 AstarPath.active.Scan();
             }
+            //check if the target is reachable or recalculate it based on max
+            target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+            target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
+            //Get the seeker of GO, calculate path from the parent position (regiment) to the target
+
+            p = GetComponent<Seeker>().StartPath(transform.position, target);
+            p.BlockUntilCalculated();
         }
-        else // if we already have an exact point to display path on, we juste set it as our target
+        // if we already have an exact point to display path on, we juste set it as our target
+        else if (gameObject.transform.parent.GetComponent<PathVariables>().pathInjected == null)
         {
             target = gameObject.transform.parent.GetComponent<PathVariables>().staticTarget;
             target.y += 0.5f;
+            //check if the target is reachable or recalculate it based on max
+            target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+            target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
+            //Get the seeker of GO, calculate path from the parent position (regiment) to the target
+
+            p = GetComponent<Seeker>().StartPath(transform.position, target);
+            p.BlockUntilCalculated();
+        }
+        // if we already have a path injected in the 
+        else if (gameObject.transform.parent.GetComponent<PathVariables>().pathInjected != null)
+        {
+            p = gameObject.transform.parent.GetComponent<PathVariables>().pathInjected;
         }
 
-        //check if the target is reachable or recalculate it based on max
-        target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
-        target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
-        //Get the seeker of GO, calculate path from the parent position (regiment) to the target
-
-        GetComponent<Seeker>().graphMask = gameObject.transform.parent.GetComponent<PathVariables>().GraphMaskToUse;
-        Path p = GetComponent<Seeker>().StartPath(transform.position, target);
-        p.BlockUntilCalculated();
+        
         // check if the path displayed is too large for the line (that can be 1st tour or 2nd Tour), in this case we reduce the path to the length of the line
         if (endDisplayPath < p.vectorPath.Count)
         {
