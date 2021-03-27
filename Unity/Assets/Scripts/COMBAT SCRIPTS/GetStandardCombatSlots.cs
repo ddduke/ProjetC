@@ -31,7 +31,7 @@ public class GetStandardCombatSlots : MonoBehaviour
             //get the position of the regiment and its neighbors (to update in case of differents 
             Ground g = CombatScripts.GetComponent<UsefulCombatFunctions>().GetTargetGround(reg);
             List<Ground> neighborsGrounds = new List<Ground>();
-            neighborsGrounds = g.StandardFindNeighborsGroundsByRange(1, 1);
+            neighborsGrounds = g.StandardFindNeighborsGroundsByRange(2, 1);
 
 
             //check if there is an obstacle, if not store it into possible positions
@@ -58,7 +58,7 @@ public class GetStandardCombatSlots : MonoBehaviour
             //get the position of the regiment and its neighbors (to update in case of differents 
             Ground g = CombatScripts.GetComponent<UsefulCombatFunctions>().GetTargetGround(reg);
             List<Ground> neighborsGrounds = new List<Ground>();
-            neighborsGrounds = g.StandardFindNeighborsGroundsByRange(2, 1);
+            neighborsGrounds = g.StandardFindNeighborsGroundsByRange(3, 1);
 
 
             //check if there is an obstacle, if not store it into possible positions
@@ -75,7 +75,7 @@ public class GetStandardCombatSlots : MonoBehaviour
                 //get the position of the regiment and its neighbors (to update in case of differents 
                 Ground g = CombatScripts.GetComponent<UsefulCombatFunctions>().GetTargetGround(reg);
                 List<Ground> neighborsGrounds = new List<Ground>();
-                neighborsGrounds = g.StandardFindNeighborsGroundsByRange(3, 1);
+                neighborsGrounds = g.StandardFindNeighborsGroundsByRange(4, 1);
 
 
                 //check if there is an obstacle, if not store it into possible positions
@@ -92,7 +92,7 @@ public class GetStandardCombatSlots : MonoBehaviour
                     //get the position of the regiment and its neighbors (to update in case of differents 
                     Ground g = CombatScripts.GetComponent<UsefulCombatFunctions>().GetTargetGround(reg);
                     List<Ground> neighborsGrounds = new List<Ground>();
-                    neighborsGrounds = g.StandardFindNeighborsGroundsByRange(4, 1);
+                    neighborsGrounds = g.StandardFindNeighborsGroundsByRange(5, 1);
 
 
                     //check if there is an obstacle, if not store it into possible positions

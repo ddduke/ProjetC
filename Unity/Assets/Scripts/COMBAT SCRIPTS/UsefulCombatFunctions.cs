@@ -194,7 +194,6 @@ public class UsefulCombatFunctions : MonoBehaviour
         {
             ground = hit.collider.GetComponent<Ground>();
         }
-
         return ground;
     }
 
@@ -202,12 +201,14 @@ public class UsefulCombatFunctions : MonoBehaviour
     {
         LayerMask layer_mask = LayerMask.GetMask("Ground");
         RaycastHit hit;
+        Debug.Log("targeted target is " + target);
         Ground ground = null;
-        if (Physics.Raycast(target, -Vector3.up, out hit, 1, layer_mask))
+        if (Physics.Raycast(target, -Vector3.up, out hit, 10, layer_mask))
         {
             ground = hit.collider.GetComponent<Ground>();
         }
-
+        else Debug.Log("failure to get the ground for target " + target);
+        Debug.Log("targeted groud is " + ground);
         return ground;
     }
 }
