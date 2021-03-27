@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Pathfinding;
 
-//TO DEV : FIND A WAY TO NOT THROW OUT A POSITION BOOKED BY A REGIMENT IN ANOTHER ROUND : MAYBE A CLASS ROUND / GROUND ??
+//TO DEV : WHY THE AMOUNT OF REGIMENT TO PRIORITIZE DO NOT DECREASE WHEREAS THE PATH AR SCANED
 public class DisplayRegimentCharge : MonoBehaviour
 {
     public GameObject Obstacle;
@@ -42,7 +42,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         List<SelectedCases> selectedCasesList = new List<SelectedCases>();
 
         //instantiate the list of selected cases
-        List<Cases> CasesList = new List<Cases>();
+        List<Cases> casesList = new List<Cases>();
 
 
         // while the prioritization has not been done for all regiments 
@@ -50,8 +50,9 @@ public class DisplayRegimentCharge : MonoBehaviour
         {
             Debug.Log("regiments to prioritize left :" + regimentsToPrioritize.Count);
             //get the regiments that has not already be prioritized ( in the "regimentsToPrioritize" list)
-            foreach(GameObject regiment in regimentsToPrioritize)
+            for (int k = 0; k < regimentsToPrioritize.Count; k++)
             {
+                GameObject regiment = regimentsToPrioritize[k];
                 Debug.Log("For Regiment " + regiment);
 
                 List<Ground> possibleGrounds = new List<Ground>();
@@ -90,6 +91,8 @@ public class DisplayRegimentCharge : MonoBehaviour
                 }
 
                 Debug.Log("For Regiment " + regiment + " possible grounds reprocessed :" + possibleGrounds.Count);
+                //if there is no possibleGround for this regiment, just remove it
+                if(possibleGrounds.Count==0) regimentsToPrioritize.Remove(regiment);
                 //then use the seeker to get the path to the possible positions
                 foreach (Ground possibleGround in possibleGrounds)
                 {
@@ -120,7 +123,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                         }
                         //check if we have not forgotten the last round position that is the end position of the object
                         if (i % numberOfMovesPerRound != 0) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
-                        CasesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
+                        casesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
                     }
                     else Debug.Log("no possible path for " + possibleGround);
 
@@ -139,25 +142,25 @@ public class DisplayRegimentCharge : MonoBehaviour
              */
             //1st get the minimum rounds in cases list
 
-            foreach(Cases cas in CasesList)
+            foreach(Cases cas in casesList)
             {
-                Debug.Log("regiment still in course 0 = " + CasesList.Count);
+                Debug.Log("regiment still in course 0 = " + casesList.Count);
             }
             int minRounds = 1000;
-            foreach(Cases cas in CasesList)
+            foreach(Cases cas in casesList)
             {
                 if (cas.numberOfRounds < minRounds) minRounds = cas.numberOfRounds;
                 Debug.Log("minRound is " + minRounds);
             }
             //then delete all cases that are not on the optimum
-            for (int i = 0; i < CasesList.Count; i++)
+            for (int i = 0; i < casesList.Count; i++)
             {
-                if (CasesList[i].numberOfRounds != minRounds) CasesList.Remove(CasesList[i]);
+                if (casesList[i].numberOfRounds != minRounds) casesList.Remove(casesList[i]);
             }
 
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
-                Debug.Log("regiment still in course 1 = " + CasesList.Count);
+                Debug.Log("regiment still in course 1 = " + casesList.Count);
             }
             //2nd get the right or left max
 
@@ -165,14 +168,14 @@ public class DisplayRegimentCharge : MonoBehaviour
             {
                 int maxLeft = 37;
                 //take the most left regiment
-                foreach (Cases cas in CasesList)
+                foreach (Cases cas in casesList)
                 {
                     if (cas.regiment.transform.position.x < maxLeft) maxLeft = (int)cas.regiment.transform.position.x;
                 }
                 //then delete all cases that are not on the optimum
-                for (int i = 0; i < CasesList.Count; i++)
+                for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (CasesList[i].regiment.transform.position.x != maxLeft) CasesList.Remove(CasesList[i]);
+                    if (casesList[i].regiment.transform.position.x != maxLeft) casesList.Remove(casesList[i]);
                 }
 
             }
@@ -180,56 +183,57 @@ public class DisplayRegimentCharge : MonoBehaviour
             {
                 int maxRight = -10;
                 //take the most right regiment
-                foreach (Cases cas in CasesList)
+                foreach (Cases cas in casesList)
                 {
                     if (cas.regiment.transform.position.x > maxRight) maxRight = (int)cas.regiment.transform.position.x;
                 }
                 //then delete all cases that are not on the optimum
-                for (int i = 0; i < CasesList.Count; i++)
+                for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (CasesList[i].regiment.transform.position.x != maxRight) CasesList.Remove(CasesList[i]);
+                    if (casesList[i].regiment.transform.position.x != maxRight) casesList.Remove(casesList[i]);
                 }
             }
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
-                Debug.Log("regiment still in course 2 = " + CasesList.Count);
+                Debug.Log("regiment still in course 2 = " + casesList.Count);
             }
             //3rd get the one with max speed (move capacity)
             int maxSpeed = 1;
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
                 if (cas.regiment.GetComponent<CombatVariables>().moveCapacity > maxSpeed) maxSpeed = cas.regiment.GetComponent<CombatVariables>().moveCapacity;
             }
             //then delete all cases that are not on the optimum
-            for (int i = 0; i < CasesList.Count; i++)
+            for (int i = 0; i < casesList.Count; i++)
             {
-                if (CasesList[i].regiment.GetComponent<CombatVariables>().moveCapacity != maxSpeed) CasesList.Remove(CasesList[i]);
+                if (casesList[i].regiment.GetComponent<CombatVariables>().moveCapacity != maxSpeed) casesList.Remove(casesList[i]);
             }
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
-                Debug.Log("regiment still in course 3 = " + CasesList.Count);
+                Debug.Log("regiment still in course 3 = " + casesList.Count);
             }
             //4rd get the one with lower position 
             int lowerPos = 6;
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
                 if (cas.regiment.transform.position.z < lowerPos) lowerPos = (int)cas.regiment.transform.position.z;
             }
             //then delete all cases that are not on the optimum
-            for (int i = 0; i < CasesList.Count; i++)
+            for (int i = 0; i < casesList.Count; i++)
             {
-                if (CasesList[i].regiment.transform.position.z != lowerPos) CasesList.Remove(CasesList[i]);
+                if (casesList[i].regiment.transform.position.z != lowerPos) casesList.Remove(casesList[i]);
             }
-            foreach (Cases cas in CasesList)
+            foreach (Cases cas in casesList)
             {
-                Debug.Log("regiment still in course 4 = " + CasesList.Count);
+                Debug.Log("regiment still in course 4 = " + casesList.Count);
             }
             //5th fuck it, get one and store it into SelectedCases List
             Debug.Log("Getting at the end of prioritization");
-            Cases cslct = CasesList[0];
+            Cases cslct = casesList[0];
             cslct.PrintData();
             selectedCasesList.Add(new SelectedCases(cslct.regiment, cslct.possiblePosition, cslct.pathUsed, cslct.numberOfRounds, cslct.endOfRoundGrounds));
             regimentsToPrioritize.Remove(cslct.regiment);
+            casesList.Clear();
 
         }
         // FINAL STEP : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path 
@@ -248,13 +252,12 @@ public class DisplayRegimentCharge : MonoBehaviour
         }
 
         selectedCasesList.Clear();
-        CasesList.Clear();
 
     }
 
     public Path PathSearchComplete(Ground possibleGround, GameObject regiment, List<SelectedCases> selectedCasesList)
     {
-        Debug.Log("launch of pathSearchComplete");
+        Debug.Log("launch of pathSearchComplete for regiment " + regiment);
         bool pathCompleted = false;
         Path p;
         //if the path don't already exists, no need to use the while loop
@@ -268,10 +271,12 @@ public class DisplayRegimentCharge : MonoBehaviour
             pathCompleted = true;
             return null;
         }
+        int numberOfTests = 0;
         //if the path exists, we need to loop until the path do not go on a booked ground 
-        while (!pathCompleted)
+        while (!pathCompleted && numberOfTests < 100)
         {
-            
+            numberOfTests += 1;
+            AstarPath.active.Scan();
             p = GetComponent<Seeker>().StartPath(position, target);
             p.BlockUntilCalculated();
             if (p.error)
@@ -335,7 +340,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                         if (cs.endOfRoundGrounds.Count - 2 >= j) index1 = j;
                         else index1 = cs.endOfRoundGrounds.Count - 2;
                         if (endOfRoundPosition.Count - 2 >= j) index2 = j;
-                        else index2 = cs.endOfRoundGrounds.Count - 2;
+                        else index2 = endOfRoundPosition.Count - 2;
                         //check if the two index matches
                         if (cs.endOfRoundGrounds[index1] == endOfRoundPosition[index2])//if at some point the two target grounds matches
                         {
@@ -352,9 +357,14 @@ public class DisplayRegimentCharge : MonoBehaviour
                 }
                 //at the end of the simulation, if no obstacles were put on the path of the regiment, then set the pathCompleted to true
                 Debug.Log("obstacles created : " + obstaclesCreated);
-                if (obstaclesCreated == 0)
+                if (obstaclesCreated == 0 && numberOfTests < 1000)
                 {
                     Debug.Log("path completed with no obstacles");
+                    pathCompleted = true;
+                }
+                if (numberOfTests >= 100)
+                {
+                    Debug.Log("Too much test on " + regiment + "for target " + possibleGround);
                     pathCompleted = true;
                 }
             }
