@@ -247,7 +247,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             //Inject the path selected
             PathInstantiated.GetComponent<PathVariables>().pathInjected = cas.pathUsed;
             //Instantiate a regiment slot on the position booked
-            Vector3 position = cas.positionBooked.transform.position + new Vector3(0, 1, 0);
+            Vector3 position = cas.positionBooked.transform.position + new Vector3(0, 0.5f, 0);
             Instantiate(RegimentSlot, position, Quaternion.identity);
         }
 
