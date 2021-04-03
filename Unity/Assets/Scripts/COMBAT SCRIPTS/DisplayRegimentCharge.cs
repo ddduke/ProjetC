@@ -10,11 +10,24 @@ public class DisplayRegimentCharge : MonoBehaviour
     public GameObject Obstacle;
     public GameObject PathLine;
     public GameObject RegimentSlot;
+    public int numberOfPathTested = 0;
+    public float startTime;
+    public float endTime;
+    public float time;
+    /*
+     * 1 vs 1 = 0,4 sec , 1 vs 2 = 1 sec , 2 vs 2 = 2 secondes , 4 vs 4 = 22 secs , 8 vs 8 = 150 secs
+     * Priorization of regiment slots have to be changed, get the less distance if they are available
+     * 
+     */
 
     public void StartScript()
     {
+        startTime = Time.realtimeSinceStartup;
         string side = GetComponent<TurnManager>().turn;
         RegimentChargeDisplay(side);
+        endTime = Time.realtimeSinceStartup;
+        time = endTime - startTime;
+        Debug.Log("number of path tested at the end :" + numberOfPathTested + "Time " + time);
     }
 
     public void StopScript()
@@ -27,6 +40,7 @@ public class DisplayRegimentCharge : MonoBehaviour
 
     public void RegimentChargeDisplay(string side)
     {
+
         
         //get the list of the regiments of the actual side
         List<GameObject> regimentsList = new List<GameObject>();
@@ -81,12 +95,16 @@ public class DisplayRegimentCharge : MonoBehaviour
                     //Debug.Log(tmp);
                     foreach (SelectedCases cs in selectedCasesList)
                     {
-
-                        if (possibleGrounds[i] == cs.positionBooked)
+                        if(i < possibleGrounds.Count)
                         {
-                            Debug.Log("position booked :"+cs.positionBooked);
-                            possibleGrounds.Remove(possibleGrounds[i]);
+                            Debug.Log("index out of range");
+                            if (possibleGrounds[i] == cs.positionBooked)
+                            {
+                                Debug.Log("position booked :" + cs.positionBooked);
+                                possibleGrounds.Remove(possibleGrounds[i]);
+                            }
                         }
+                        
                     }
                 }
 
@@ -252,6 +270,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         }
 
         selectedCasesList.Clear();
+        
 
     }
 
@@ -263,6 +282,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         //if the path don't already exists, no need to use the while loop
         Vector3 position = regiment.transform.position + new Vector3(0, 1, 0);
         Vector3 target = possibleGround.transform.position + new Vector3(0, 1, 0);
+        numberOfPathTested += 1;
         p = GetComponent<Seeker>().StartPath(position, target);
         p.BlockUntilCalculated();
         if (p.error)
@@ -277,6 +297,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         {
             numberOfTests += 1;
             AstarPath.active.Scan();
+            numberOfPathTested += 1;
             p = GetComponent<Seeker>().StartPath(position, target);
             p.BlockUntilCalculated();
             if (p.error)
