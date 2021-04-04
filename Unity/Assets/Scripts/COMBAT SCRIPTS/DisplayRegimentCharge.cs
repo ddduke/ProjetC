@@ -112,6 +112,8 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //if there is no possibleGround for this regiment, just remove it
                 if(possibleGrounds.Count==0) regimentsToPrioritize.Remove(regiment);
                 //then use the seeker to get the path to the possible positions
+
+                //in order to optimize the searched path, we should order the possibleGrounds by distance to the possible ground then inject one and see if a path is created, if not, inject the following etc.
                 foreach (Ground possibleGround in possibleGrounds)
                 {
                     Debug.Log("checking possible path for "+possibleGround);
@@ -140,7 +142,7 @@ public class DisplayRegimentCharge : MonoBehaviour
 
                         }
                         //check if we have not forgotten the last round position that is the end position of the object
-                        if (i % numberOfMovesPerRound != 0) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
+                        if (i % numberOfMovesPerRound != 0 && i < p.vectorPath.Count) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
                         casesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
                     }
                     else Debug.Log("no possible path for " + possibleGround);
@@ -173,7 +175,12 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].numberOfRounds != minRounds) casesList.Remove(casesList[i]);
+                if (casesList[i].numberOfRounds != minRounds)
+                {
+                    casesList.Remove(casesList[i]);
+                    //as we have removed one element of the list, make sure to set i to the previous stage
+                    i = i - 1;
+                }
             }
 
             foreach (Cases cas in casesList)
@@ -193,7 +200,11 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //then delete all cases that are not on the optimum
                 for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (casesList[i].regiment.transform.position.x != maxLeft) casesList.Remove(casesList[i]);
+                    if (casesList[i].regiment.transform.position.x != maxLeft)
+                    {
+                        casesList.Remove(casesList[i]);
+                        i = i - 1;
+                    }
                 }
 
             }
@@ -208,7 +219,11 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //then delete all cases that are not on the optimum
                 for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (casesList[i].regiment.transform.position.x != maxRight) casesList.Remove(casesList[i]);
+                    if (casesList[i].regiment.transform.position.x != maxRight)
+                    {
+                        casesList.Remove(casesList[i]);
+                        i = i - 1;
+                    }
                 }
             }
             foreach (Cases cas in casesList)
@@ -224,7 +239,11 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].regiment.GetComponent<CombatVariables>().moveCapacity != maxSpeed) casesList.Remove(casesList[i]);
+                if (casesList[i].regiment.GetComponent<CombatVariables>().moveCapacity != maxSpeed)
+                {
+                    casesList.Remove(casesList[i]);
+                    i = i - 1;
+                }
             }
             foreach (Cases cas in casesList)
             {
@@ -239,7 +258,11 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].regiment.transform.position.z != lowerPos) casesList.Remove(casesList[i]);
+                if (casesList[i].regiment.transform.position.z != lowerPos)
+                {
+                    casesList.Remove(casesList[i]);
+                    i = i - 1;
+                }
             }
             foreach (Cases cas in casesList)
             {
@@ -317,17 +340,16 @@ public class DisplayRegimentCharge : MonoBehaviour
                 while (i < p.vectorPath.Count)
                 {
                     
-                    Debug.Log("i = " + i + "Vector Path count :"+ p.vectorPath.Count);
+                    
                     //check if we are at the end of a round (no modulo left to division of the number of rounds), and store it into the endOfRoundPosition List
                     if (i % numberOfMovesPerRound == 0) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0,1,0)));
                     //iterate for each position
                     i += 1;
                 }
                 //check if we have not forgotten the last round position that is the end position of the object
-                if (i % numberOfMovesPerRound != 0) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
+                if (i % numberOfMovesPerRound != 0 && i < p.vectorPath.Count) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
                 foreach(Ground gggg in endOfRoundPosition)
                 {
-
                     Debug.Log("EndOfRound List : "+ gggg);
                 }
                 //check if the path created has no obstacles put on it and so the path is completed 
