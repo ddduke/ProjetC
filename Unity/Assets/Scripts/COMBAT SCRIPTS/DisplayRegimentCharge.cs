@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Pathfinding;
 
-//TO DEV : WHY THE AMOUNT OF REGIMENT TO PRIORITIZE DO NOT DECREASE WHEREAS THE PATH AR SCANED
+//TO DEV : 
 public class DisplayRegimentCharge : MonoBehaviour
 {
     public GameObject Obstacle;
@@ -16,10 +16,8 @@ public class DisplayRegimentCharge : MonoBehaviour
     public float endTime;
     public float time;
     /*
-     * 1 vs 1 = 0,4 sec , 1 vs 2 = 1 sec , 2 vs 2 = 2 secondes , 4 vs 4 = 22 secs , 8 vs 8 = 150 secs
-     * Priorization of regiment slots have to be changed, get the less distance if they are available
-     * path search complete to read slowly : instantiating new obstacle at the same place
-     * combat slots available to study cause if there is too much combat slots booked regiments keep them available
+     * 1st thing to do : integrate new obstacles at the end position of the unit to avoid passing by after last round of the unit, to delete after all regiments are done
+     * combat slots available to study cause if there is too much combat slots booked regiments keep them available ==> maybe the new obstacle system would fix it ?
      * pathfiniding to use : depends on ally & enemy should avoid enemy
      * path displayed should have regiment as parent (in order to get the number of moves per round capacity and use it after for movement)
      * 
