@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using Pathfinding;
@@ -17,6 +18,10 @@ public class DisplayRegimentCharge : MonoBehaviour
     /*
      * 1 vs 1 = 0,4 sec , 1 vs 2 = 1 sec , 2 vs 2 = 2 secondes , 4 vs 4 = 22 secs , 8 vs 8 = 150 secs
      * Priorization of regiment slots have to be changed, get the less distance if they are available
+     * path search complete to read slowly : instantiating new obstacle at the same place
+     * combat slots available to study cause if there is too much combat slots booked regiments keep them available
+     * pathfiniding to use : depends on ally & enemy should avoid enemy
+     * path displayed should have regiment as parent (in order to get the number of moves per round capacity and use it after for movement)
      * 
      */
 
@@ -60,7 +65,7 @@ public class DisplayRegimentCharge : MonoBehaviour
 
 
         // while the prioritization has not been done for all regiments 
-        while (regimentsToPrioritize.Count != 0)
+        while (regimentsToPrioritize.Count != 0)//
         {
             Debug.Log("regiments to prioritize left :" + regimentsToPrioritize.Count);
             //get the regiments that has not already be prioritized ( in the "regimentsToPrioritize" list)
@@ -111,11 +116,18 @@ public class DisplayRegimentCharge : MonoBehaviour
                 Debug.Log("For Regiment " + regiment + " possible grounds reprocessed :" + possibleGrounds.Count);
                 //if there is no possibleGround for this regiment, just remove it
                 if(possibleGrounds.Count==0) regimentsToPrioritize.Remove(regiment);
-                //then use the seeker to get the path to the possible positions
 
                 //in order to optimize the searched path, we should order the possibleGrounds by distance to the possible ground then inject one and see if a path is created, if not, inject the following etc.
-                foreach (Ground possibleGround in possibleGrounds)
+                List<possibleGroundsDistance> possibleGroundsOrdered = new List<possibleGroundsDistance>();
+                foreach(Ground possibleGround in possibleGrounds)
                 {
+                    possibleGroundsOrdered.Add(new possibleGroundsDistance(regiment, possibleGround));
+                }
+                possibleGroundsOrdered = possibleGroundsOrdered.OrderBy(x => x.distanceFromRegiment).ToList();
+                //then use the seeker to get the path to the possible positions
+                foreach (possibleGroundsDistance pg in possibleGroundsOrdered)
+                {
+                    Ground possibleGround = pg.possibleGround;
                     Debug.Log("checking possible path for "+possibleGround);
                     //if we found a valid path between the two points (avoiding booked positions in end of rounds and in end of the charge)
                     if (PathSearchComplete(possibleGround, regiment, selectedCasesList) != null)
@@ -144,6 +156,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                         //check if we have not forgotten the last round position that is the end position of the object
                         if (i % numberOfMovesPerRound != 0 && i < p.vectorPath.Count) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
                         casesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
+                        break;
                     }
                     else Debug.Log("no possible path for " + possibleGround);
 
@@ -176,6 +189,26 @@ public class DisplayRegimentCharge : MonoBehaviour
             for (int i = 0; i < casesList.Count; i++)
             {
                 if (casesList[i].numberOfRounds != minRounds)
+                {
+                    casesList.Remove(casesList[i]);
+                    //as we have removed one element of the list, make sure to set i to the previous stage
+                    i = i - 1;
+                }
+            }
+
+            //1st bis get the one who has the less distance 
+
+            
+            float minDistance = 1000f;
+            foreach (Cases cas in casesList)
+            {
+                if (Vector3.Distance(cas.regiment.transform.position,cas.possiblePosition.transform.position) < minDistance) minDistance = Vector3.Distance(cas.regiment.transform.position, cas.possiblePosition.transform.position);
+                Debug.Log("minDistance is " + minRounds);
+            }
+            //then delete all cases that are not on the optimum
+            for (int i = 0; i < casesList.Count; i++)
+            {
+                if (Vector3.Distance(casesList[i].regiment.transform.position, casesList[i].possiblePosition.transform.position) != minDistance)
                 {
                     casesList.Remove(casesList[i]);
                     //as we have removed one element of the list, make sure to set i to the previous stage
@@ -384,7 +417,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                         else index1 = cs.endOfRoundGrounds.Count - 2;
                         if (endOfRoundPosition.Count - 2 >= j) index2 = j;
                         else index2 = endOfRoundPosition.Count - 2;
-                        //check if the two index matches
+                        //check if the two index matches : beware there is instantiated obstacles at the same position
                         if (cs.endOfRoundGrounds[index1] == endOfRoundPosition[index2])//if at some point the two target grounds matches
                         {
                             obstaclesCreated += 1;
@@ -531,3 +564,16 @@ public class SelectedCases
     }
 }
 
+public class possibleGroundsDistance
+{
+    
+    public Ground possibleGround;
+    public GameObject regiment;
+    public float distanceFromRegiment;
+    public possibleGroundsDistance(GameObject oregiment, Ground oPossibleGround)
+    {
+        regiment = oregiment;
+        possibleGround = oPossibleGround;
+        distanceFromRegiment = Vector3.Distance(regiment.transform.position, possibleGround.transform.position);
+    }
+}
