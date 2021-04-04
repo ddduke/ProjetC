@@ -63,9 +63,9 @@ public class DisplayRegimentCharge : MonoBehaviour
         //instantiate the list of selected cases
         List<Cases> casesList = new List<Cases>();
 
-
+        
         // while the prioritization has not been done for all regiments 
-        while (regimentsToPrioritize.Count != 0)//
+        while (regimentsToPrioritize.Count != 0 || time > 200f)//
         {
             Debug.Log("regiments to prioritize left :" + regimentsToPrioritize.Count);
             //get the regiments that has not already be prioritized ( in the "regimentsToPrioritize" list)
@@ -308,6 +308,8 @@ public class DisplayRegimentCharge : MonoBehaviour
             selectedCasesList.Add(new SelectedCases(cslct.regiment, cslct.possiblePosition, cslct.pathUsed, cslct.numberOfRounds, cslct.endOfRoundGrounds));
             regimentsToPrioritize.Remove(cslct.regiment);
             casesList.Clear();
+            endTime = Time.realtimeSinceStartup;
+            time = endTime - startTime;
 
         }
         // FINAL STEP : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path 
@@ -326,6 +328,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         }
 
         selectedCasesList.Clear();
+
         
 
     }
@@ -364,6 +367,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             }
             else
             {
+                AstarPath.active.Scan();
                 Debug.Log("path found");
                 //get the number of moves per round for this regiment
                 int numberOfMovesPerRound = regiment.GetComponent<CombatVariables>().moveCapacity;
@@ -406,12 +410,12 @@ public class DisplayRegimentCharge : MonoBehaviour
                     }
                     for (int j = 0; j < maxRound; j++)
                     {
-                        Debug.Log("Maxindex1 " + cs.endOfRoundGrounds.Count);//18
-                        Debug.Log("Maxindex2 " + endOfRoundPosition.Count);//19
+                        Debug.Log("Maxindex1 " + cs.endOfRoundGrounds.Count);
+                        Debug.Log("Maxindex2 " + endOfRoundPosition.Count);
 
-                        Debug.Log("index1 " + index1);//16
-                        Debug.Log("index2 " + index2);//16
-                        Debug.Log("indexj " + j);//17
+                        Debug.Log("index1 " + index1);
+                        Debug.Log("index2 " + index2);
+                        Debug.Log("indexj " + j);
                         //check if j has reached the max of the index for the list, and if it has keep it at the max no upper
                         if (cs.endOfRoundGrounds.Count - 2 >= j) index1 = j;
                         else index1 = cs.endOfRoundGrounds.Count - 2;
