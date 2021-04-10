@@ -15,18 +15,16 @@ public class DisplayRegimentCharge : MonoBehaviour
     public float startTime;
     public float endTime;
     public float time;
+    public GraphMask GraphMaskToUse;
+    public string side;
     /*
-     * 1st thing to do : integrate new obstacles at the end position of the unit to avoid passing by after last round of the unit, to delete after all regiments are done
-     * combat slots available to study cause if there is too much combat slots booked regiments keep them available ==> maybe the new obstacle system would fix it ?
-     * pathfiniding to use : depends on ally & enemy should avoid enemy
-     * path displayed should have regiment as parent (in order to get the number of moves per round capacity and use it after for movement)
      * 
      */
 
     public void StartScript()
     {
         startTime = Time.realtimeSinceStartup;
-        string side = GetComponent<TurnManager>().turn;
+        side = GetComponent<TurnManager>().turn;
         RegimentChargeDisplay(side);
         endTime = Time.realtimeSinceStartup;
         time = endTime - startTime;
@@ -105,6 +103,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                             {
                                 Debug.Log("position booked :" + cs.positionBooked);
                                 possibleGrounds.Remove(possibleGrounds[i]);
+                                i = i - 1;
                             }
                         }
                         
@@ -122,16 +121,16 @@ public class DisplayRegimentCharge : MonoBehaviour
                     possibleGroundsOrdered.Add(new possibleGroundsDistance(regiment, possibleGround));
                 }
                 possibleGroundsOrdered = possibleGroundsOrdered.OrderBy(x => x.distanceFromRegiment).ToList();
+                //possibleGroundsOrdered.Reverse();
                 //then use the seeker to get the path to the possible positions
                 foreach (possibleGroundsDistance pg in possibleGroundsOrdered)
                 {
                     Ground possibleGround = pg.possibleGround;
                     Debug.Log("checking possible path for "+possibleGround);
                     //if we found a valid path between the two points (avoiding booked positions in end of rounds and in end of the charge)
-                    if (PathSearchComplete(possibleGround, regiment, selectedCasesList) != null)
+                    Path p = PathSearchComplete(possibleGround, regiment, selectedCasesList);
+                    if (p != null)
                     {
-                        Debug.Log("there is a path for " + possibleGround);
-                        Path p = PathSearchComplete(possibleGround, regiment, selectedCasesList);
                         //get the number of moves per round for this regiment
                         int numberOfMovesPerRound = regiment.GetComponent<CombatVariables>().moveCapacity;
                         //check at each end of round if the regiment is in a ground already booked by another regiment 
@@ -156,7 +155,6 @@ public class DisplayRegimentCharge : MonoBehaviour
                         casesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
                         break;
                     }
-                    else Debug.Log("no possible path for " + possibleGround);
 
 
 
@@ -302,12 +300,10 @@ public class DisplayRegimentCharge : MonoBehaviour
             //5th fuck it, get one and store it into SelectedCases List
             Debug.Log("Getting at the end of prioritization");
             Cases cslct = casesList[0];
-            cslct.PrintData();
+            cslct.PrintData();  
             selectedCasesList.Add(new SelectedCases(cslct.regiment, cslct.possiblePosition, cslct.pathUsed, cslct.numberOfRounds, cslct.endOfRoundGrounds));
             regimentsToPrioritize.Remove(cslct.regiment);
             casesList.Clear();
-            endTime = Time.realtimeSinceStartup;
-            time = endTime - startTime;
 
         }
         // FINAL STEP : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path 
@@ -317,9 +313,18 @@ public class DisplayRegimentCharge : MonoBehaviour
             //Instantiate a Pathline from the regiment with exact paht booked
             GameObject PathInstantiated = Instantiate(PathLine, cas.regiment.transform.position, Quaternion.identity);
             PathInstantiated.GetComponent<PathVariables>().dynamicTarget = false;
-            PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "FormationGraph";
+            if(side == "enemy")
+            {
+                PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "EnemyRegimentAloneGraph";
+            }
+            else
+            {
+                PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "PlayerRegimentAloneGraph";
+            }
             //Inject the path selected
             PathInstantiated.GetComponent<PathVariables>().pathInjected = cas.pathUsed;
+            //Inject the path selected
+            PathInstantiated.GetComponent<PathVariables>().movesPerRound = cas.regiment.GetComponent<CombatVariables>().movesPerRound;
             //Instantiate a regiment slot on the position booked
             Vector3 position = cas.positionBooked.transform.position + new Vector3(0, 0.5f, 0);
             Instantiate(RegimentSlot, position, Quaternion.identity);
@@ -327,27 +332,40 @@ public class DisplayRegimentCharge : MonoBehaviour
 
         selectedCasesList.Clear();
 
-        
+        endTime = Time.realtimeSinceStartup;
+        time = endTime - startTime;
+
+
 
     }
 
     public Path PathSearchComplete(Ground possibleGround, GameObject regiment, List<SelectedCases> selectedCasesList)
     {
+        if (side == "enemy")
+        {
+            GraphMaskToUse = GraphMask.FromGraphName("EnemyRegimentAloneGraph");
+            GetComponent<Seeker>().graphMask = GraphMaskToUse;
+        }
+        else
+        {
+            GraphMaskToUse = GraphMask.FromGraphName("PlayerRegimentAloneGraph");
+            GetComponent<Seeker>().graphMask = GraphMaskToUse;
+        }
+        
         Debug.Log("launch of pathSearchComplete for regiment " + regiment);
         bool pathCompleted = false;
-        Path p;
+        Path p = null;
         //if the path don't already exists, no need to use the while loop
-        Vector3 position = regiment.transform.position + new Vector3(0, 1, 0);
+        Vector3 position = regiment.transform.position + new Vector3(0, 0, 0);
         Vector3 target = possibleGround.transform.position + new Vector3(0, 1, 0);
-        numberOfPathTested += 1;
-        p = GetComponent<Seeker>().StartPath(position, target);
+        /*p = GetComponent<Seeker>().StartPath(position, target);
         p.BlockUntilCalculated();
         if (p.error)
         {
             Debug.Log("no path found");
             pathCompleted = true;
             return null;
-        }
+        }*/
         int numberOfTests = 0;
         //if the path exists, we need to loop until the path do not go on a booked ground 
         while (!pathCompleted && numberOfTests < 100)
@@ -544,6 +562,7 @@ public class SelectedCases
     public Path pathUsed;
     public int numberOfRounds;
     public List<Ground> endOfRoundGrounds = new List<Ground>();
+    public string row;
     public SelectedCases(GameObject oregiment, Ground oPosition, Path opathUsed, int onumberOfRounds, List<Ground> oendOfRoundGrounds)
     {
         regiment = oregiment;
@@ -551,6 +570,8 @@ public class SelectedCases
         pathUsed = opathUsed;
         numberOfRounds = onumberOfRounds;
         endOfRoundGrounds = oendOfRoundGrounds;
+        row = positionBooked.transform.parent.name;
+        
 
     }
 
@@ -572,10 +593,12 @@ public class possibleGroundsDistance
     public Ground possibleGround;
     public GameObject regiment;
     public float distanceFromRegiment;
+    public string row;
     public possibleGroundsDistance(GameObject oregiment, Ground oPossibleGround)
     {
         regiment = oregiment;
         possibleGround = oPossibleGround;
         distanceFromRegiment = Vector3.Distance(regiment.transform.position, possibleGround.transform.position);
+        row = possibleGround.transform.parent.name;
     }
 }

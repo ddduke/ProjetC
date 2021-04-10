@@ -87,7 +87,7 @@ public class DisplayPath : MonoBehaviour
                 Vector3 tmp = p.vectorPath[i];
                 tmp.y += 0.2f;
                 pathLine.SetPosition(vertexPosition, tmp);
-                Debug.Log(p.vectorPath[i]);
+                //Debug.Log(p.vectorPath[i]);
                 vertexPosition++;
             }
         }
