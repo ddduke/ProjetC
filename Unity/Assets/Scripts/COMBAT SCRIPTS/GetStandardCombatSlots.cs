@@ -11,6 +11,11 @@ public class GetStandardCombatSlots : MonoBehaviour
         CombatScripts = GameObject.Find("CombatScripts").transform.gameObject;
     }
 
+    public bool PreferedCombatSlotsExists()
+    {
+        return false;
+    }
+
     public bool CombatSlotsExists()
     {
 

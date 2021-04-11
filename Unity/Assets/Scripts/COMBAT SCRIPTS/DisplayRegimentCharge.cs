@@ -72,47 +72,73 @@ public class DisplayRegimentCharge : MonoBehaviour
 
                 List<Ground> possibleGrounds = new List<Ground>();
                 //PUT IN HERE THE PREFERABLE POSITIONS TO SEE IF THERE IS ONE (EXAMPLE PIKEMEN)
-
-                //get the possible combat positions for each regiment (function for each regiment, with prefered slots example archers or pikemen, check if the slot is available(i.e no unit of osbstacle)) 
-                if (regiment.GetComponent<GetStandardCombatSlots>().CombatSlotsExists())
+                if (regiment.GetComponent<GetStandardCombatSlots>().PreferedCombatSlotsExists())
                 {
-                    //list of the possible grounds
-                    
-                    possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetCombatSlots();
-                    Debug.Log("For Regiment " + regiment + " number of possible grounds :"+possibleGrounds.Count);
-
+                    //complete with preferable slots
                 }
-                //if there is no combat slot for the regiment, get the possible positions most next to them
-                if (!regiment.GetComponent<GetStandardCombatSlots>().CombatSlotsExists())
+                else
                 {
-                    possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetNextPositionsToCombatSlots();
-
-                    Debug.Log("For Regiment " + regiment + " number of possible grounds extended :" + possibleGrounds.Count);
-                }
-
-                //Check if there is already positions booked by the selected cases list, in this case remove it
-                for (int i = 0; i < possibleGrounds.Count; i++)
-                {
-                    //Debug.Log(tmp);
-                    foreach (SelectedCases cs in selectedCasesList)
+                    //get the possible combat positions for each regiment (function for each regiment, with prefered slots example archers or pikemen, check if the slot is available(i.e no unit of osbstacle)) 
+                    if (regiment.GetComponent<GetStandardCombatSlots>().CombatSlotsExists())
                     {
-                        if(i < possibleGrounds.Count)
+                        //list of the possible grounds
+                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetCombatSlots();
+                        Debug.Log("For Regiment " + regiment + " number of possible grounds :" + possibleGrounds.Count);
+                        //Check if there is already positions booked by the selected cases list, in this case remove it
+                        for (int i = 0; i < possibleGrounds.Count; i++)
                         {
-                            Debug.Log("index out of range");
-                            if (possibleGrounds[i] == cs.positionBooked)
+                            //Debug.Log(tmp);
+                            foreach (SelectedCases cs in selectedCasesList)
                             {
-                                Debug.Log("position booked :" + cs.positionBooked);
-                                possibleGrounds.Remove(possibleGrounds[i]);
-                                i = i - 1;
+                                if (i < possibleGrounds.Count)
+                                {
+                                    Debug.Log("index out of range");
+                                    if (possibleGrounds[i] == cs.positionBooked)
+                                    {
+                                        Debug.Log("position booked :" + cs.positionBooked);
+                                        possibleGrounds.Remove(possibleGrounds[i]);
+                                        i = i - 1;
+                                    }
+                                }
+
                             }
                         }
-                        
+
+                    }
+                    //if there is no combat slot for the regiment, get the possible positions most next to them
+                    if (possibleGrounds.Count == 0)
+                    {
+                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetNextPositionsToCombatSlots();
+                        Debug.Log("For Regiment " + regiment + " number of possible grounds extended :" + possibleGrounds.Count);
+                        //Check if there is already positions booked by the selected cases list, in this case remove it
+                        for (int i = 0; i < possibleGrounds.Count; i++)
+                        {
+                            //Debug.Log(tmp);
+                            foreach (SelectedCases cs in selectedCasesList)
+                            {
+                                if (i < possibleGrounds.Count)
+                                {
+                                    Debug.Log("index out of range");
+                                    if (possibleGrounds[i] == cs.positionBooked)
+                                    {
+                                        Debug.Log("position booked :" + cs.positionBooked);
+                                        possibleGrounds.Remove(possibleGrounds[i]);
+                                        i = i - 1;
+                                    }
+                                }
+
+                            }
+                        }
                     }
                 }
 
+                
+
+                
+
                 Debug.Log("For Regiment " + regiment + " possible grounds reprocessed :" + possibleGrounds.Count);
                 //if there is no possibleGround for this regiment, just remove it
-                if(possibleGrounds.Count==0) regimentsToPrioritize.Remove(regiment);
+                
 
                 //in order to optimize the searched path, we should order the possibleGrounds by distance to the possible ground then inject one and see if a path is created, if not, inject the following etc.
                 List<possibleGroundsDistance> possibleGroundsOrdered = new List<possibleGroundsDistance>();
@@ -358,14 +384,6 @@ public class DisplayRegimentCharge : MonoBehaviour
         //if the path don't already exists, no need to use the while loop
         Vector3 position = regiment.transform.position + new Vector3(0, 0, 0);
         Vector3 target = possibleGround.transform.position + new Vector3(0, 1, 0);
-        /*p = GetComponent<Seeker>().StartPath(position, target);
-        p.BlockUntilCalculated();
-        if (p.error)
-        {
-            Debug.Log("no path found");
-            pathCompleted = true;
-            return null;
-        }*/
         int numberOfTests = 0;
         //if the path exists, we need to loop until the path do not go on a booked ground 
         while (!pathCompleted && numberOfTests < 100)
