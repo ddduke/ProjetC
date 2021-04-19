@@ -11,6 +11,7 @@ public class Ground : MonoBehaviour
     public bool mouseOver = false;
     public bool path = false;
     public bool walkable = true;
+    public string row;
 
     //using a list to get all the adjacency grounds 
     public List<Ground> adjacencyList = new List<Ground>();
@@ -23,7 +24,7 @@ public class Ground : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        row = transform.parent.name;
     }
 
     // Update is called once per frame
@@ -198,8 +199,8 @@ public class Ground : MonoBehaviour
         List<Ground> grounds = new List<Ground>();
 
         //iterating to get all grounds in range 
-        Vector3 halfExtends = new Vector3(range, (1 + maxHeight / 2), 0.25f);
-        Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3 (range/2,0,0) , halfExtends);
+        Vector3 halfExtends = new Vector3(0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3 (range,0,0) , halfExtends);
         //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
         foreach (Collider item in colliders)
         {
@@ -210,21 +211,9 @@ public class Ground : MonoBehaviour
             }
         }
 
-        //iterating to get all grounds in range 
-        Vector3 halfExtendsbis = new Vector3(range, (1 + maxHeight / 2), 0.25f);
-        Collider[] collidersbis = Physics.OverlapBox(transform.position + new Vector3(range / 2, 0, -(range / 2)), halfExtendsbis);
-        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
-        foreach (Collider item in collidersbis)
-        {
-            Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
-            {
-                grounds.Add(ground);
-            }
-        }
 
-        Vector3 halfExtends2 = new Vector3(-range, (1 + maxHeight / 2), 0.25f);
-        Collider[] colliders2 = Physics.OverlapBox(transform.position + new Vector3(-(range / 2), 0, 0), halfExtends2);
+        Vector3 halfExtends2 = new Vector3(-0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] colliders2 = Physics.OverlapBox(transform.position + new Vector3(-(range), 0, 0), halfExtends2);
         //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
         foreach (Collider item in colliders2)
         {
@@ -235,20 +224,8 @@ public class Ground : MonoBehaviour
             }
         }
 
-        Vector3 halfExtends2bis = new Vector3(-range, (1 + maxHeight / 2), 0.25f);
-        Collider[] colliders2bis = Physics.OverlapBox(transform.position + new Vector3(range / 2, 0, range / 2), halfExtends2bis);
-        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
-        foreach (Collider item in colliders2bis)
-        {
-            Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
-            {
-                grounds.Add(ground);
-            }
-        }
-
-        Vector3 halfExtends3 = new Vector3(0.25f, (1 + maxHeight / 2), range);
-        Collider[] colliders3 = Physics.OverlapBox(transform.position + new Vector3(0, 0, range / 2), halfExtends3);
+        Vector3 halfExtends3 = new Vector3(0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] colliders3 = Physics.OverlapBox(transform.position + new Vector3(0, 0, range), halfExtends3);
         //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
         foreach (Collider item in colliders3)
         {
@@ -259,36 +236,12 @@ public class Ground : MonoBehaviour
             }
         }
 
-        Vector3 halfExtends3bis = new Vector3(0.25f, (1 + maxHeight / 2), range);
-        Collider[] colliders3bis = Physics.OverlapBox(transform.position + new Vector3(-(range/2), 0, range / 2), halfExtends3bis);
-        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
-        foreach (Collider item in colliders3bis)
-        {
-            Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
-            {
-                grounds.Add(ground);
-            }
-        }
 
 
-
-        Vector3 halfExtends4 = new Vector3(0.25f, (1 + maxHeight / 2), -range);
-        Collider[] colliders4 = Physics.OverlapBox(transform.position + new Vector3(0, 0, -(range / 2)), halfExtends4);
+        Vector3 halfExtends4 = new Vector3(0.25f, (1 + maxHeight / 2), -0.25f);
+        Collider[] colliders4 = Physics.OverlapBox(transform.position + new Vector3(0, 0, -(range)), halfExtends4);
         //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
         foreach (Collider item in colliders4)
-        {
-            Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
-            {
-                grounds.Add(ground);
-            }
-        }
-
-        Vector3 halfExtends4bis = new Vector3(0.25f, (1 + maxHeight / 2), -range);
-        Collider[] colliders4bis = Physics.OverlapBox(transform.position + new Vector3(-(range / 2), 0, -(range / 2)), halfExtends4bis);
-        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
-        foreach (Collider item in colliders4bis)
         {
             Ground ground = item.GetComponent<Ground>();
             if (ground != null && ground.walkable)
@@ -305,6 +258,65 @@ public class Ground : MonoBehaviour
         {
             Debug.Log(item + "of row" + item.transform.parent);
         }*/
+
+        return grounds;
+    }
+
+    public List<Ground> DiagonalFindNeighborsGroundsByRange(int range, float maxHeight)
+    {
+        List<Ground> grounds = new List<Ground>();
+
+        //iterating to get all grounds in range 
+        Vector3 halfExtendsbis = new Vector3(0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] collidersbis = Physics.OverlapBox(transform.position + new Vector3(range, 0, -(range)), halfExtendsbis);
+        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
+        foreach (Collider item in collidersbis)
+        {
+            Ground ground = item.GetComponent<Ground>();
+            if (ground != null && ground.walkable)
+            {
+                grounds.Add(ground);
+            }
+        }
+
+
+        Vector3 halfExtends2bis = new Vector3(-0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] colliders2bis = Physics.OverlapBox(transform.position + new Vector3(range , 0, range ), halfExtends2bis);
+        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
+        foreach (Collider item in colliders2bis)
+        {
+            Ground ground = item.GetComponent<Ground>();
+            if (ground != null && ground.walkable)
+            {
+                grounds.Add(ground);
+            }
+        }
+
+
+        Vector3 halfExtends3bis = new Vector3(0.25f, (1 + maxHeight / 2), 0.25f);
+        Collider[] colliders3bis = Physics.OverlapBox(transform.position + new Vector3(-(range ), 0, range ), halfExtends3bis);
+        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
+        foreach (Collider item in colliders3bis)
+        {
+            Ground ground = item.GetComponent<Ground>();
+            if (ground != null && ground.walkable)
+            {
+                grounds.Add(ground);
+            }
+        }
+
+
+        Vector3 halfExtends4bis = new Vector3(0.25f, (1 + maxHeight / 2), -0.25f);
+        Collider[] colliders4bis = Physics.OverlapBox(transform.position + new Vector3(-(range ), 0, -(range )), halfExtends4bis);
+        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
+        foreach (Collider item in colliders4bis)
+        {
+            Ground ground = item.GetComponent<Ground>();
+            if (ground != null && ground.walkable)
+            {
+                grounds.Add(ground);
+            }
+        }
 
         return grounds;
     }

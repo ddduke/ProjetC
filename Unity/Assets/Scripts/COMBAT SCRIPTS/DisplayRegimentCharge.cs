@@ -63,6 +63,8 @@ public class DisplayRegimentCharge : MonoBehaviour
         // while the prioritization has not been done for all regiments 
         while (regimentsToPrioritize.Count != 0 || time > 200f)//
         {
+            
+
             Debug.Log("regiments to prioritize left :" + regimentsToPrioritize.Count);
             //get the regiments that has not already be prioritized ( in the "regimentsToPrioritize" list)
             for (int k = 0; k < regimentsToPrioritize.Count; k++)
@@ -98,6 +100,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                                         Debug.Log("position booked :" + cs.positionBooked);
                                         possibleGrounds.Remove(possibleGrounds[i]);
                                         i = i - 1;
+                                        break;
                                     }
                                 }
 
@@ -105,10 +108,10 @@ public class DisplayRegimentCharge : MonoBehaviour
                         }
 
                     }
-                    //if there is no combat slot for the regiment, get the possible positions most next to them
+                    //if there is no combat slot for the regiment, get the possible positions most next to them, first in diagonal
                     if (possibleGrounds.Count == 0)
                     {
-                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetNextPositionsToCombatSlots();
+                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetDiagonalNextPositionsToCombatSlots();
                         Debug.Log("For Regiment " + regiment + " number of possible grounds extended :" + possibleGrounds.Count);
                         //Check if there is already positions booked by the selected cases list, in this case remove it
                         for (int i = 0; i < possibleGrounds.Count; i++)
@@ -124,6 +127,59 @@ public class DisplayRegimentCharge : MonoBehaviour
                                         Debug.Log("position booked :" + cs.positionBooked);
                                         possibleGrounds.Remove(possibleGrounds[i]);
                                         i = i - 1;
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    //if there is no combat slot for the regiment, get the possible positions most next to them, then in 2nd line
+                    if (possibleGrounds.Count == 0)
+                    {
+                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetStraight2ndNextPositionsToCombatSlots();
+                        Debug.Log("For Regiment " + regiment + " number of possible grounds extended :" + possibleGrounds.Count);
+                        //Check if there is already positions booked by the selected cases list, in this case remove it
+                        for (int i = 0; i < possibleGrounds.Count; i++)
+                        {
+                            //Debug.Log(tmp);
+                            foreach (SelectedCases cs in selectedCasesList)
+                            {
+                                if (i < possibleGrounds.Count)
+                                {
+                                    Debug.Log("index out of range");
+                                    if (possibleGrounds[i] == cs.positionBooked)
+                                    {
+                                        Debug.Log("position booked :" + cs.positionBooked);
+                                        possibleGrounds.Remove(possibleGrounds[i]);
+                                        i = i - 1;
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    //if there is no combat slot for the regiment, get the possible positions most next to them, then in diagonal 2nd line
+                    if (possibleGrounds.Count == 0)
+                    {
+                        possibleGrounds = regiment.GetComponent<GetStandardCombatSlots>().GetDiagonal2ndNextPositionsToCombatSlots();
+                        Debug.Log("For Regiment " + regiment + " number of possible grounds extended :" + possibleGrounds.Count);
+                        //Check if there is already positions booked by the selected cases list, in this case remove it
+                        for (int i = 0; i < possibleGrounds.Count; i++)
+                        {
+                            //Debug.Log(tmp);
+                            foreach (SelectedCases cs in selectedCasesList)
+                            {
+                                if (i < possibleGrounds.Count)
+                                {
+                                    Debug.Log("index out of range");
+                                    if (possibleGrounds[i] == cs.positionBooked)
+                                    {
+                                        Debug.Log("position booked :" + cs.positionBooked);
+                                        possibleGrounds.Remove(possibleGrounds[i]);
+                                        i = i - 1;
+                                        break;
                                     }
                                 }
 
@@ -180,6 +236,10 @@ public class DisplayRegimentCharge : MonoBehaviour
                         if (i % numberOfMovesPerRound != 0 && i < p.vectorPath.Count) endOfRoundPosition.Add(GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(p.vectorPath[i] + new Vector3(0, 1, 0)));
                         casesList.Add(new Cases(regiment, possibleGround, p, numberOfRounds, endOfRoundPosition));
                         break;
+                    }
+                    else
+                    {
+                        Debug.Log("No path found for regiment " + regiment + "going to " + possibleGround);
                     }
 
 
@@ -486,8 +546,18 @@ public class DisplayRegimentCharge : MonoBehaviour
 
         }
         //Destroy all obstacles created for this path
-        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obstacle in existingObstacles) GameObject.Destroy(obstacle);
+        GameObject[] obs = GameObject.FindGameObjectsWithTag("Obstacle");
+        int tries = 0;
+        //checking if there is still obstacles in the game
+        while (obs.Length != 0 || tries > 100)
+        {
+            foreach (GameObject ob in obs)
+            {
+                GameObject.DestroyImmediate(ob.gameObject);
+            }
+            obs = GameObject.FindGameObjectsWithTag("Obstacle");
+            tries += 1;
+        }
         return p;
     }
     /*Regiment Charge (side)
