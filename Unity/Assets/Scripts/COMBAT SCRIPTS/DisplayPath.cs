@@ -56,6 +56,9 @@ public class DisplayPath : MonoBehaviour
 
             p = GetComponent<Seeker>().StartPath(transform.position, target);
             p.BlockUntilCalculated();
+            gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = true;
+            gameObject.transform.parent.GetComponent<PathVariables>().PathOfGO = p.vectorPath;
+
         }
         // if we already have an exact point to display path on, we juste set it as our target
         else if (gameObject.transform.parent.GetComponent<PathVariables>().pathInjected == null)
@@ -67,8 +70,11 @@ public class DisplayPath : MonoBehaviour
             target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
             //Get the seeker of GO, calculate path from the parent position (regiment) to the target
 
+            
             p = GetComponent<Seeker>().StartPath(transform.position, target);
             p.BlockUntilCalculated();
+            gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = true;
+            gameObject.transform.parent.GetComponent<PathVariables>().PathOfGO = p.vectorPath;
         }
         // if we already have a path injected in the 
         else if (gameObject.transform.parent.GetComponent<PathVariables>().pathInjected != null)

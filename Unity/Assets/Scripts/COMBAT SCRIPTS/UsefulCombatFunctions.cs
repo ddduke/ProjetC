@@ -84,11 +84,9 @@ public class UsefulCombatFunctions : MonoBehaviour
         int maxZ = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            Debug.Log("Hey for maxZ regimentz is " + regiment.z);
             if(regiment.z < maxZ) maxZ = (int)(regiment.z);
 
         }
-        Debug.Log("Hey ! MaxZ is " + maxZ);
         return -maxZ;
 
     }
@@ -103,10 +101,8 @@ public class UsefulCombatFunctions : MonoBehaviour
         int maxZ = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            Debug.Log("Hey for minZ regimentz is " + regiment.z);
             if (regiment.z > maxZ) maxZ = (int)(regiment.z);
         }
-        Debug.Log("Hey ! MinZ is " + maxZ);
         return -maxZ;
 
     }
@@ -134,11 +130,9 @@ public class UsefulCombatFunctions : MonoBehaviour
         int maxX = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            Debug.Log("Hey for maxX regimentz is " + regiment.x);
             if (regiment.x < maxX) maxX = (int)(regiment.x);
 
         }
-        Debug.Log("Hey ! MaxZ is " + maxX);
         return -maxX;
 
     }
@@ -153,10 +147,8 @@ public class UsefulCombatFunctions : MonoBehaviour
         int maxX = 0;
         foreach (Vector3 regiment in regimentsList)
         {
-            Debug.Log("Hey for minZ regimentz is " + regiment.x);
             if (regiment.x > maxX) maxX = (int)(regiment.x);
         }
-        Debug.Log("Hey ! MinZ is " + maxX);
         return -maxX;
 
     }
@@ -201,14 +193,11 @@ public class UsefulCombatFunctions : MonoBehaviour
     {
         LayerMask layer_mask = LayerMask.GetMask("Ground");
         RaycastHit hit;
-        Debug.Log("targeted target is " + target);
         Ground ground = null;
         if (Physics.Raycast(target, -Vector3.up, out hit, 10, layer_mask))
         {
             ground = hit.collider.GetComponent<Ground>();
         }
-        else Debug.Log("failure to get the ground for target " + target);
-        Debug.Log("targeted groud is " + ground);
         return ground;
     }
 }

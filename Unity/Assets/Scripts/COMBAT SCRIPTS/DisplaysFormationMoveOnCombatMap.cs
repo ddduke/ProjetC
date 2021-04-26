@@ -42,7 +42,21 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
         int minMovesPerRound = 100;
         foreach (GameObject reg in regimentsList)
         {
-            if ((int) reg.GetComponent<CombatVariables>().movesPerRound < minMovesPerRound) minMovesPerRound = (int)reg.GetComponent<CombatVariables>().movesPerRound;
+            if ((int) reg.GetComponent<CombatVariables>().moveCapacityRegStat < minMovesPerRound) minMovesPerRound = (int)reg.GetComponent<CombatVariables>().moveCapacityRegStat;
+            reg.GetComponent<CombatVariables>().inFormation = true;
+            while (!PathInstantiated.GetComponent<PathVariables>().pathCalculated)
+            {
+                //wait until the path is calculated
+            }
+            List<Vector3> pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
+            Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot ;
+            for (int i = 0; i < pp.Count; i++)
+            {
+                pp[i] = pp[i] + relativeDistanceFromPivot;
+            }
+            
+            reg.GetComponent<RegimentPath>().regimentPathList = pp;
+
         }
         PathInstantiated.GetComponent<PathVariables>().movesPerRound = minMovesPerRound;
         //set the target & the graph to use for the seeker (inclue layer regiments for  

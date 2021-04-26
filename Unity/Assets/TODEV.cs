@@ -1,11 +1,7 @@
 ﻿/*TO DEV : 
  * COMBAT :
- * 
- * 
- * Last Step Formation Charge ligne 180 : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path list
- * see if we can store it directly, but seems to need another function to be called because the seeker won't word in this case
- * 
- * 
+ * serpent qui se mord la queue : récupérer le path calculé dans l'objet display path pour l'intégrer dans chaque régiment = c'est niveau sa mere compliqué avec les updates
+ * Turn Manager : make a value to check if function in this turn are finished (+ 1 / - 1 system)
  * 
  * 
  * Attention l'attaque doit etre gérée par le régiment de manière unitaire et pas par une fonction macro (la fonction macro doit activer l'attaque mais la fonction attaque peut etre appelée par d'autres fonctions ex feat) 
@@ -18,5 +14,7 @@
  * MAP :
  * Mettre une condition pour empecher le joueur de cliquer sur les autres POI quand l'action Moving est lancée
  * Tester la génération de map : encore des connexions incohérentes = repenser le process ? 
+ * 
+ * store 
  * 
  */

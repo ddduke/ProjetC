@@ -6,9 +6,9 @@ public class CombatVariables : MonoBehaviour
 {
     //variables for the game design
     //Moves per round is the standard move per round autorisation for this unit (not modified except by winning experience tier etc)
-    public int movesPerRound = 1;
+    public int movesPerRoundGame = 1;
     //MoveCapacity is the actual move capacity for the unit, so it can be less or more depending on actual buffers
-    public int moveCapacity = 1;
+    public int moveCapacityRegStat = 1;
     public int range = 1;
     public int rangeHeight = 2;
     public int people = 3;
@@ -22,7 +22,6 @@ public class CombatVariables : MonoBehaviour
     public bool dead = false;
 
     public bool inFormation = true;
-    public bool chargeAndBreakFormation = false;
 
     void Start()
     {

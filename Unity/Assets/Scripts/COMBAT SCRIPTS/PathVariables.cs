@@ -11,6 +11,8 @@ public class PathVariables : MonoBehaviour
     public string GraphStringToUse;
     public GraphMask GraphMaskToUse;
     public Path pathInjected = null;
+    public List<Vector3> PathOfGO;
+    public bool pathCalculated;
     private void Update()
     {
         

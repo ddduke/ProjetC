@@ -74,7 +74,6 @@ public class GetStandardCombatSlots : MonoBehaviour
                 if (gr.EmptyGround(gr)) possiblePositions.Add(gr);
                 else
                 {
-                    Debug.Log("ground not available");
                 }
             }
         }
