@@ -1,6 +1,6 @@
 ﻿/*TO DEV : 
  * COMBAT :
- * serpent qui se mord la queue : récupérer le path calculé dans l'objet display path pour l'intégrer dans chaque régiment = c'est niveau sa mere compliqué avec les updates
+ * 
  * Turn Manager : make a value to check if function in this turn are finished (+ 1 / - 1 system)
  * 
  * 

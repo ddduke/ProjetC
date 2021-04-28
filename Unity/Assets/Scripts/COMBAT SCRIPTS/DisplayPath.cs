@@ -33,6 +33,7 @@ public class DisplayPath : MonoBehaviour
         if (gameObject.transform.parent.GetComponent<PathVariables>().dynamicTarget)
         {
             // Update the way to the goal every second.
+            Vector3 previousTarget = new Vector3(100,100,100);
             elapsed += Time.deltaTime;
             if (elapsed > 0.1f)
             {
@@ -49,15 +50,22 @@ public class DisplayPath : MonoBehaviour
                 }
                 AstarPath.active.Scan();
             }
-            //check if the target is reachable or recalculate it based on max
-            target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
-            target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
-            //Get the seeker of GO, calculate path from the parent position (regiment) to the target
+            if (previousTarget!=target)
+            {
 
-            p = GetComponent<Seeker>().StartPath(transform.position, target);
-            p.BlockUntilCalculated();
-            gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = true;
-            gameObject.transform.parent.GetComponent<PathVariables>().PathOfGO = p.vectorPath;
+                gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = false;
+                previousTarget = target;
+                //check if the target is reachable or recalculate it based on max
+                target.z = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
+                target.x = CombatScripts.GetComponent<UsefulCombatFunctions>().CorrectTargetX(target.x);
+                //Get the seeker of GO, calculate path from the parent position (regiment) to the target
+
+                p = GetComponent<Seeker>().StartPath(transform.position, target);
+                p.BlockUntilCalculated();
+                gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = true;
+                gameObject.transform.parent.GetComponent<PathVariables>().PathOfGO = p.vectorPath;
+            }
+            
 
         }
         // if we already have an exact point to display path on, we juste set it as our target

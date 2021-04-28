@@ -21,6 +21,7 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
     public GameObject DisplayPath;
     //public Vector3 formationPivot;
     public string side;
+    public GameObject PathInstantiated;
 
     void Start()
     {
@@ -44,18 +45,7 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
         {
             if ((int)reg.GetComponent<CombatVariables>().moveCapacityRegStat < minMovesPerRound) minMovesPerRound = (int)reg.GetComponent<CombatVariables>().moveCapacityRegStat;
             reg.GetComponent<CombatVariables>().inFormation = true;
-            while (!PathInstantiated.GetComponent<PathVariables>().pathCalculated)
-            {
-                //wait until the path is calculated
-            }
-            List<Vector3> pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
-
-            Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
-            for (int i = 0; i < pp.Count; i++)
-            {
-                pp[i] = pp[i] + relativeDistanceFromPivot;
-            }
-            reg.GetComponent<RegimentPath>().regimentPathList = pp;
+            
         }
         PathInstantiated.GetComponent<PathVariables>().movesPerRound = minMovesPerRound;
         //set the target & the graph to use for the seeker (inclue layer regiments)
@@ -64,6 +54,31 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
         PathInstantiated.GetComponent<PathVariables>().GraphStringToUse = "FormationGraph";
 
     }
+
+    void Update()
+    {
+        //also check if the path is available and store it into each unit
+        List<GameObject> regimentsList = new List<GameObject>();
+        regimentsList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
+        Vector3 formationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
+        foreach (GameObject reg in regimentsList)
+        {
+            List<Vector3> pp = new List<Vector3>();
+            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated)
+            {
+                pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
+                List<Vector3> ppGO = new List<Vector3>();
+                Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
+                for (int i = 0; i < pp.Count; i++)
+                {
+                    ppGO.Add(pp[i] + relativeDistanceFromPivot);
+                }
+                reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
+            }
+        }
+
+    }
+
     /// <summary>
     /// Launch the display of the formation slots and the path that regiments will follow
     /// </summary>
@@ -86,7 +101,7 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
 
     }
 
-
+    
 
     /// <summary>
     /// Get to display the formation slots where the regiments can move relatively to the target
