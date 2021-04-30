@@ -115,6 +115,13 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
                 {
                     ppGO.Add(pp[i] + relativeDistanceFromPivot);
                 }
+                /*for (int i = 0; i < ppGO.Count; i++)
+                {
+                    //get the ground p and add +0.5 to its y position to get the real position
+                    Ground g =   GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(new Vector3(ppGO[i].x, 7, ppGO[i].z));
+                    if (g == null) Debug.Log(ppGO[i]+" is null");
+                    ppGO[i] = new Vector3(ppGO[i].x, g.transform.position.y + 1, ppGO[i].z);
+                }/*/
                 reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
             }
                 

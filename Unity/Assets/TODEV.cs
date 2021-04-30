@@ -1,6 +1,6 @@
 ﻿/*TO DEV : 
  * COMBAT :
- * 
+ * Combat : si charge puis retour en arriere puis charge avec autre vitesse pour un regiment = bug 
  * Turn Manager : make a value to check if function in this turn are finished (+ 1 / - 1 system)
  * 
  * 

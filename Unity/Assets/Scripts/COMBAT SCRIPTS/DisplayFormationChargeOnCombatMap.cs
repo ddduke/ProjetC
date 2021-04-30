@@ -33,7 +33,7 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
 
         Vector3 formationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
         DisplayFormation(side, target);
-        GameObject PathInstantiated = Instantiate(DisplayPath, formationPivot, Quaternion.identity);
+        PathInstantiated = Instantiate(DisplayPath, formationPivot, Quaternion.identity);
 
         // Get the max speed for these units
         //get all regiments by side 
@@ -73,6 +73,7 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
                 {
                     ppGO.Add(pp[i] + relativeDistanceFromPivot);
                 }
+                reg.GetComponent<RegimentPath>().regimentPathList.Clear();
                 reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
             }
         }

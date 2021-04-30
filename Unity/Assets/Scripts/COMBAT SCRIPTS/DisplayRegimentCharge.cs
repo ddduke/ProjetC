@@ -297,7 +297,7 @@ public class DisplayRegimentCharge : MonoBehaviour
 
             if (side == "enemy")
             {
-                int maxLeft = 37;
+                int maxLeft = 50;
                 //take the most left regiment
                 foreach (Cases cas in casesList)
                 {
@@ -316,7 +316,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             }
             else
             {
-                int maxRight = -10;
+                int maxRight = -50;
                 //take the most right regiment
                 foreach (Cases cas in casesList)
                 {
@@ -348,7 +348,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                 }
             }
             //4rd get the one with lower position 
-            int lowerPos = 6;
+            int lowerPos = 50;
             foreach (Cases cas in casesList)
             {
                 if (cas.regiment.transform.position.z < lowerPos) lowerPos = (int)cas.regiment.transform.position.z;

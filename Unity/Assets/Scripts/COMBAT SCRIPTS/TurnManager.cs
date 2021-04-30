@@ -14,6 +14,8 @@ public class TurnManager : MonoBehaviour
     public string turn = "Enemy";
     public Text roundText;
     public Text turnText;
+    public bool finishedTurn = true;
+    public float  speedOfMovement = 1;
 
     void Start()
     {
@@ -37,13 +39,22 @@ public class TurnManager : MonoBehaviour
 
     public void GetToNextRound()
     {
-        if (round < 4)
+        List<GameObject> group = new List<GameObject>();
+        group = GetAllUnitsBySide(turn);
+        foreach (GameObject g in group)
         {
-            round += 1;
+            g.GetComponent<RegimentPath>().GetToNextRoundPosition();
         }
-        else
+        if (finishedTurn)
         {
-            round = 0;
+            if (round < 4)
+            {
+                round += 1;
+            }
+            else
+            {
+                round = 0;
+            }
         }
     }
 
