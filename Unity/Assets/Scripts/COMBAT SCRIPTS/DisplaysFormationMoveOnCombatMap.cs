@@ -13,6 +13,8 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
     public GameObject PathInstantiated;
     //public Vector3 formationPivot;
     public string side;
+    int iterationOnPath = 0;
+    bool inputMouse = false;
 
     void Start()
     {
@@ -76,7 +78,6 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
 
     void Update()
     {
-        
         //check if the target has changed, if it has delete all gameObjects formationslots and recreate ones
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -86,8 +87,9 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             newTarget = g.transform.position;
             newTarget.y += 0.5f;
         }
-        if (newTarget!=target)
+        if (newTarget!= target)
         {
+            iterationOnPath = 0;
             target = newTarget;
 
             target.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(target.z);
@@ -106,8 +108,9 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
         foreach (GameObject reg in regimentsList)
         {
             List<Vector3> pp = new List<Vector3>();
-            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated)
+            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated && iterationOnPath < regimentsList.Count)
             {
+                iterationOnPath +=1;
                 pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
                 List<Vector3> ppGO = new List<Vector3>();
                 Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
@@ -115,13 +118,6 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
                 {
                     ppGO.Add(pp[i] + relativeDistanceFromPivot);
                 }
-                /*for (int i = 0; i < ppGO.Count; i++)
-                {
-                    //get the ground p and add +0.5 to its y position to get the real position
-                    Ground g =   GetComponent<UsefulCombatFunctions>().GetTargetGroundVector(new Vector3(ppGO[i].x, 7, ppGO[i].z));
-                    if (g == null) Debug.Log(ppGO[i]+" is null");
-                    ppGO[i] = new Vector3(ppGO[i].x, g.transform.position.y + 1, ppGO[i].z);
-                }/*/
                 reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
             }
                 

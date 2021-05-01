@@ -266,7 +266,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].numberOfRounds != minRounds)
+                if (casesList[i].numberOfRounds != minRounds && casesList.Count>1)
                 {
                     casesList.Remove(casesList[i]);
                     //as we have removed one element of the list, make sure to set i to the previous stage
@@ -286,7 +286,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (Vector3.Distance(casesList[i].regiment.transform.position, casesList[i].possiblePosition.transform.position) != minDistance)
+                if (Vector3.Distance(casesList[i].regiment.transform.position, casesList[i].possiblePosition.transform.position) != minDistance && casesList.Count > 1)
                 {
                     casesList.Remove(casesList[i]);
                     //as we have removed one element of the list, make sure to set i to the previous stage
@@ -301,12 +301,12 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //take the most left regiment
                 foreach (Cases cas in casesList)
                 {
-                    if (cas.regiment.transform.position.x < maxLeft) maxLeft = (int)cas.regiment.transform.position.x;
+                    if (cas.regiment.transform.position.x < maxLeft) maxLeft = (int)Mathf.Ceil(cas.regiment.transform.position.x);
                 }
                 //then delete all cases that are not on the optimum
                 for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (casesList[i].regiment.transform.position.x != maxLeft)
+                    if (casesList[i].regiment.transform.position.x != maxLeft && casesList.Count > 1)
                     {
                         casesList.Remove(casesList[i]);
                         i = i - 1;
@@ -320,12 +320,12 @@ public class DisplayRegimentCharge : MonoBehaviour
                 //take the most right regiment
                 foreach (Cases cas in casesList)
                 {
-                    if (cas.regiment.transform.position.x > maxRight) maxRight = (int)cas.regiment.transform.position.x;
+                    if (cas.regiment.transform.position.x > maxRight) maxRight = (int)Mathf.Ceil(cas.regiment.transform.position.x);
                 }
                 //then delete all cases that are not on the optimum
                 for (int i = 0; i < casesList.Count; i++)
                 {
-                    if (casesList[i].regiment.transform.position.x != maxRight)
+                    if (casesList[i].regiment.transform.position.x != maxRight && casesList.Count > 1)
                     {
                         casesList.Remove(casesList[i]);
                         i = i - 1;
@@ -341,7 +341,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].regiment.GetComponent<CombatVariables>().moveCapacityRegStat != maxSpeed)
+                if (casesList[i].regiment.GetComponent<CombatVariables>().moveCapacityRegStat != maxSpeed && casesList.Count > 1)
                 {
                     casesList.Remove(casesList[i]);
                     i = i - 1;
@@ -351,12 +351,12 @@ public class DisplayRegimentCharge : MonoBehaviour
             int lowerPos = 50;
             foreach (Cases cas in casesList)
             {
-                if (cas.regiment.transform.position.z < lowerPos) lowerPos = (int)cas.regiment.transform.position.z;
+                if (cas.regiment.transform.position.z < lowerPos) lowerPos = (int)Mathf.Ceil(cas.regiment.transform.position.z);
             }
             //then delete all cases that are not on the optimum
             for (int i = 0; i < casesList.Count; i++)
             {
-                if (casesList[i].regiment.transform.position.z != lowerPos)
+                if (casesList[i].regiment.transform.position.z != lowerPos && casesList.Count > 1)
                 {
                     casesList.Remove(casesList[i]);
                     i = i - 1;

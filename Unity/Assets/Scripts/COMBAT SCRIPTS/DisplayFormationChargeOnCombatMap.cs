@@ -22,9 +22,11 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
     //public Vector3 formationPivot;
     public string side;
     public GameObject PathInstantiated;
+    int iterationOnPath = 0;
 
     void Start()
     {
+        iterationOnPath = 0;
         side = GetComponent<TurnManager>().turn;
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         target = GetComponent<UsefulCombatFunctions>().FormationGetNearestEnemyPositionToCharge(side);
@@ -64,8 +66,9 @@ public class DisplayFormationChargeOnCombatMap : MonoBehaviour
         foreach (GameObject reg in regimentsList)
         {
             List<Vector3> pp = new List<Vector3>();
-            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated)
+            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated && iterationOnPath < regimentsList.Count)
             {
+                iterationOnPath +=1;
                 pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
                 List<Vector3> ppGO = new List<Vector3>();
                 Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;

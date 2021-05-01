@@ -1,6 +1,6 @@
 ﻿/*TO DEV : 
  * COMBAT :
- * Combat : si charge puis retour en arriere puis charge avec autre vitesse pour un regiment = bug 
+ * Combat : mettre à jour les fonctions en formation pour que move + click bloque la fonction de recherche d'emplacements et le path + que le pathinstantiated soit aussi propre que regiment charge
  * Turn Manager : make a value to check if function in this turn are finished (+ 1 / - 1 system)
  * 
  * 
