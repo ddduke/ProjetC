@@ -15,6 +15,8 @@ public class DisplayPath : MonoBehaviour
     //private UnityEngine.AI.NavMeshPath path;
     private float elapsed = 0.0f;
     private GraphMask graph;
+    Vector3 previousTarget = new Vector3(100, 100, 100);
+    Path p = null;
     void Start()
     {
         //path = new UnityEngine.AI.NavMeshPath();
@@ -28,12 +30,12 @@ public class DisplayPath : MonoBehaviour
     void Update()
     {
         GetComponent<Seeker>().graphMask = gameObject.transform.parent.GetComponent<PathVariables>().GraphMaskToUse;
-        Path p = null;
+        
         // Check if activated for a dynamic target (mouse position) or a static target (exact point on the graph).
         if (gameObject.transform.parent.GetComponent<PathVariables>().dynamicTarget)
         {
             // Update the way to the goal every second.
-            Vector3 previousTarget = new Vector3(100,100,100);
+            
             elapsed += Time.deltaTime;
             if (elapsed > 0.1f)
             {
@@ -50,7 +52,7 @@ public class DisplayPath : MonoBehaviour
                 }
                 AstarPath.active.Scan();
             }
-            if (previousTarget!=target)
+            if (previousTarget!=target && !CombatScripts.GetComponent<DisplaysFormationMoveOnCombatMap>().inputMouse)
             {
 
                 gameObject.transform.parent.GetComponent<PathVariables>().pathCalculated = false;

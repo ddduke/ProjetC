@@ -14,7 +14,7 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
     //public Vector3 formationPivot;
     public string side;
     int iterationOnPath = 0;
-    bool inputMouse = false;
+    public bool inputMouse = false;
 
     void Start()
     {
@@ -73,11 +73,16 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
         GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
         foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
         GetComponent<DisplaysFormationMoveOnCombatMap>().enabled = false;
+        inputMouse = false;
 
     }
 
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            inputMouse = true;
+        }
         //check if the target has changed, if it has delete all gameObjects formationslots and recreate ones
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -87,7 +92,7 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             newTarget = g.transform.position;
             newTarget.y += 0.5f;
         }
-        if (newTarget!= target)
+        if (newTarget!= target && !inputMouse)
         {
             iterationOnPath = 0;
             target = newTarget;
