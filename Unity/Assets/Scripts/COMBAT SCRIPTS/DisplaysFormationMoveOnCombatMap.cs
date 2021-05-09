@@ -91,6 +91,8 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             Ground g = hit.collider.GetComponent<Ground>();
             newTarget = g.transform.position;
             newTarget.y += 0.5f;
+            newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(newTarget.z);
+            newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(newTarget.x);
         }
         if (newTarget!= target && !inputMouse)
         {
@@ -105,28 +107,32 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
             DisplayFormation(side, target);
         }
 
-
-        //also check if the path is available and store it into each unit
-        List<GameObject> regimentsList = new List<GameObject>();
-        regimentsList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
-        Vector3 formationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
-        foreach (GameObject reg in regimentsList)
+        if(inputMouse)
         {
-            List<Vector3> pp = new List<Vector3>();
-            if (PathInstantiated.GetComponent<PathVariables>().pathCalculated && iterationOnPath < regimentsList.Count)
+            //also check if the path is available and store it into each unit
+            List<GameObject> regimentsList = new List<GameObject>();
+            regimentsList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
+            Vector3 formationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
+            foreach (GameObject reg in regimentsList)
             {
-                iterationOnPath +=1;
-                pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
-                List<Vector3> ppGO = new List<Vector3>();
-                Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
-                for (int i = 0; i < pp.Count; i++)
+                List<Vector3> pp = new List<Vector3>();
+                if (PathInstantiated.GetComponent<PathVariables>().pathCalculated && iterationOnPath < regimentsList.Count)
                 {
-                    ppGO.Add(pp[i] + relativeDistanceFromPivot);
+                    iterationOnPath += 1;
+                    pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
+                    List<Vector3> ppGO = new List<Vector3>();
+                    Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
+                    Debug.Log("formation pivot " + formationPivot);
+                    for (int i = 0; i < pp.Count; i++)
+                    {
+                        ppGO.Add(pp[i] + relativeDistanceFromPivot);
+                    }
+                    reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
                 }
-                reg.GetComponent<RegimentPath>().regimentPathList = ppGO;
+
             }
-                
         }
+        
     }
 
     /// <summary>
