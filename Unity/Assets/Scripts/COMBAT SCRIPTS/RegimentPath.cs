@@ -54,6 +54,7 @@ public class RegimentPath : MonoBehaviour
                     }
                     transform.position = regimentPathList[i];
                     i += 1;
+                    moveAlreadyLaunched = false;
                 }
 
             }
