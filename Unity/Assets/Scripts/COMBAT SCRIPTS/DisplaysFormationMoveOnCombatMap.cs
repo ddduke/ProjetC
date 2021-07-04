@@ -122,7 +122,7 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
                     pp = PathInstantiated.GetComponent<PathVariables>().PathOfGO;
                     List<Vector3> ppGO = new List<Vector3>();
                     Vector3 relativeDistanceFromPivot = reg.transform.position - formationPivot;
-                    Debug.Log("formation pivot " + formationPivot);
+                    UnityEngine.Debug.Log("formation pivot " + formationPivot);
                     for (int i = 0; i < pp.Count; i++)
                     {
                         ppGO.Add(pp[i] + relativeDistanceFromPivot);

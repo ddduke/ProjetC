@@ -28,7 +28,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         RegimentChargeDisplay(side);
         endTime = Time.realtimeSinceStartup;
         time = endTime - startTime;
-        Debug.Log("number of path tested at the end :" + numberOfPathTested + "Time " + time);
+        UnityEngine.Debug.Log("number of path tested at the end :" + numberOfPathTested + "Time " + time);
     }
 
     public void StopScript()
@@ -239,7 +239,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("No path found for regiment " + regiment + "going to " + possibleGround);
+                        UnityEngine.Debug.Log("No path found for regiment " + regiment + "going to " + possibleGround);
                     }
 
 
@@ -374,7 +374,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         // FINAL STEP : Display the path selected putting a path display on each unit , we have to fill the path display gameobject instantiated with the path used in the selected path 
         foreach (SelectedCases cas in selectedCasesList)
         {
-            Debug.Log("Regiment final path is" + cas.regiment + "for ground " + cas.positionBooked + " row " + cas.positionBooked.row);
+           
             //Instantiate a Pathline from the regiment with exact paht booked
             GameObject PathInstantiated = Instantiate(PathLine, cas.regiment.transform.position, Quaternion.identity);
             PathInstantiated.GetComponent<PathVariables>().dynamicTarget = false;
@@ -436,7 +436,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             p.BlockUntilCalculated();
             if (p.error)
             {
-                Debug.Log("no path found");
+                UnityEngine.Debug.Log("no path found");
                 pathCompleted = true;
                 return null;
             }
@@ -499,7 +499,7 @@ public class DisplayRegimentCharge : MonoBehaviour
                 }
                 if (numberOfTests >= 100)
                 {
-                    Debug.Log("Too much test on " + regiment + "for target " + possibleGround);
+                    UnityEngine.Debug.Log("Too much test on " + regiment + "for target " + possibleGround);
                     pathCompleted = true;
                 }
             }
@@ -592,12 +592,12 @@ public class Cases
 
     public void PrintData()
     {
-        Debug.Log("cases class print data called");
-        Debug.Log("cases regiment :" + regiment);
-        Debug.Log("cases possible position :" + possiblePosition);
-        Debug.Log("cases path used :" + pathUsed);
-        Debug.Log("cases numberOfRounds :" + numberOfRounds);
-        Debug.Log("cases endOfRoundGrounds :" + endOfRoundGrounds.Count);
+        UnityEngine.Debug.Log("cases class print data called");
+        UnityEngine.Debug.Log("cases regiment :" + regiment);
+        UnityEngine.Debug.Log("cases possible position :" + possiblePosition);
+        UnityEngine.Debug.Log("cases path used :" + pathUsed);
+        UnityEngine.Debug.Log("cases numberOfRounds :" + numberOfRounds);
+        UnityEngine.Debug.Log("cases endOfRoundGrounds :" + endOfRoundGrounds.Count);
 
     }
 
@@ -626,12 +626,12 @@ public class SelectedCases
 
     public void PrintData()
     {
-        Debug.Log("cases class print data called");
-        Debug.Log("cases regiment :" + regiment);
-        Debug.Log("cases booked position :" + positionBooked);
-        Debug.Log("cases path used :" + pathUsed);
-        Debug.Log("cases numberOfRounds :" + numberOfRounds);
-        Debug.Log("cases endOfRoundGrounds :" + endOfRoundGrounds.Count);
+        UnityEngine.Debug.Log("cases class print data called");
+        UnityEngine.Debug.Log("cases regiment :" + regiment);
+        UnityEngine.Debug.Log("cases booked position :" + positionBooked);
+        UnityEngine.Debug.Log("cases path used :" + pathUsed);
+        UnityEngine.Debug.Log("cases numberOfRounds :" + numberOfRounds);
+        UnityEngine.Debug.Log("cases endOfRoundGrounds :" + endOfRoundGrounds.Count);
 
     }
 }

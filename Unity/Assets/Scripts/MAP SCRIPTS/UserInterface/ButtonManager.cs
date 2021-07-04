@@ -9,8 +9,8 @@ public class ButtonManager : MonoBehaviour
         GameObject Button = GameObject.Find("ButtonGo(Clone)"); ;
         GameObject.Destroy(Button);
         GameObject player = GameObject.Find("Player");
-        if (player == null) Debug.Log("player not found"); 
-        Debug.Log("Button pressed");
+        if (player == null) UnityEngine.Debug.Log("player not found");
+        UnityEngine.Debug.Log("Button pressed");
         player.GetComponent<moving>().enabled = !player.GetComponent<moving>().enabled;
     }
 }

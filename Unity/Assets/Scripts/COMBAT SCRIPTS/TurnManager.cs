@@ -164,7 +164,7 @@ public class TurnManager : MonoBehaviour
 
     public void Test()
     {
-        Debug.Log("Test");
+        UnityEngine.Debug.Log("Test");
         
     }
 }

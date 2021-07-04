@@ -7,8 +7,8 @@ public class CreatingButtonGo : MonoBehaviour
     // Start is called before the first frame update
     GameObject PointOfInterest;
     void Start()
-    { 
-        Debug.Log("it works");
+    {
+        UnityEngine.Debug.Log("it works");
         
     }
 

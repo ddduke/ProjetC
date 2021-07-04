@@ -12,7 +12,7 @@ public class moving : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("moving est lancé");
+        UnityEngine.Debug.Log("moving est lancé");
         //POI_position = POI.transform.position;
 
     }
@@ -20,7 +20,7 @@ public class moving : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log("POIposition equals" + POI_position);
+        UnityEngine.Debug.Log("POIposition equals" + POI_position);
         Vector3 player_position = transform.position;
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(POI_position.x, POI_position.y, 8), Time.deltaTime * movement_speed);
         if (player_position == POI_position)

@@ -86,7 +86,7 @@ public class Mapping_POIs : MonoBehaviour
         while (Map_in_construction(POIsToCreate))
         {
             GameObject OriginPOI = POIsTocheck[0];
-            Debug.Log("We're checking " + OriginPOI);
+            UnityEngine.Debug.Log("We're checking " + OriginPOI);
             //The limits of random are the limits of the map
             Vector3 POIPosition = new Vector3(Random.Range(-10, 8), Random.Range(-1, 5), 1);
             //once we created the POI position, we check if all conditions are ok
@@ -95,13 +95,13 @@ public class Mapping_POIs : MonoBehaviour
                 POIPosition = new Vector3(Random.Range(-10, 8), Random.Range(-1, 5), 1);
                 MaxTries -= 1;
             }
-            if (MaxTries == 0) Debug.Log("nb max de try atteint");
+            if (MaxTries == 0) UnityEngine.Debug.Log("nb max de try atteint");
             GameObject POICreated = Instantiate(POIPrefab, POIPosition, Quaternion.identity);
             POICreated.name = POIsToCreate.Dequeue();
             POICreated.tag = "POI";
             POIsCreated.Add(POICreated);
             CheckRoutes();
-            Debug.Log("POI " + POICreated.name + " created at " + POICreated.transform.position + "Origin POI" + OriginPOI.name + "with " + OriginPOI.GetComponent<POI_Variables>().POIsConnected.Count + "POIs Connected");
+            UnityEngine.Debug.Log("POI " + POICreated.name + " created at " + POICreated.transform.position + "Origin POI" + OriginPOI.name + "with " + OriginPOI.GetComponent<POI_Variables>().POIsConnected.Count + "POIs Connected");
             //Write the if condition for the POI to check to be removed (3 or less POIs connected)
             if (OriginPOI.GetComponent<POI_Variables>().POIsConnected.Count > MaximumPOIsConnected) POIsTocheck.RemoveAt(0);
             POIsTocheck.Add(POICreated);
@@ -109,7 +109,7 @@ public class Mapping_POIs : MonoBehaviour
         //we check if the endPOI has a minimum of 1 POI connected
         if (EndPOI.GetComponent<POI_Variables>().POIsConnected.Count == 0)
         {
-            Debug.Log("EndPOI sans POI connecté");
+            UnityEngine.Debug.Log("EndPOI sans POI connecté");
             objs = GameObject.FindGameObjectsWithTag("POI");
             //Debug.Log(GameObject.FindGameObjectsWithTag("POI").Length);
             //we take a POI from the list and compare it to all the other POIs in the list
@@ -130,7 +130,7 @@ public class Mapping_POIs : MonoBehaviour
         //we check if the startPOI has a minimum of 1 POI connected
         if (StartPOI.GetComponent<POI_Variables>().POIsConnected.Count==0);
         {
-            Debug.Log("StartPOI sans POI connecté");
+            UnityEngine.Debug.Log("StartPOI sans POI connecté");
             objs = GameObject.FindGameObjectsWithTag("POI");
             //Debug.Log(GameObject.FindGameObjectsWithTag("POI").Length);
             //we take a POI from the list and compare it to all the other POIs in the list
@@ -149,10 +149,10 @@ public class Mapping_POIs : MonoBehaviour
             LowestDistancePOI.GetComponent<POI_Variables>().POIsConnected.Add(StartPOI);
         }
         //We Check if a path exists between start and end
-        if (PathExist()) Debug.Log("PathExist");
+        if (PathExist()) UnityEngine.Debug.Log("PathExist");
         while (!PathExist())
         {
-            Debug.Log("proutCheckcheck");
+            UnityEngine.Debug.Log("proutCheckcheck");
             List<GameObject> NewPOIsToCheck = new List<GameObject>();
             List<GameObject> POIsChecked = new List<GameObject>();
             GameObject ActualPOI = StartPOI;
@@ -169,21 +169,21 @@ public class Mapping_POIs : MonoBehaviour
                 {
                     if (!POIsChecked.Contains(POI)) NewPOIsToCheck.Add(POI);
 
-                    Debug.Log("proutCheck" +  POI);
+                    UnityEngine.Debug.Log("proutCheck" +  POI);
 
                 }
                 NewPOIsToCheck.Remove(ActualPOI);
                 POIsChecked.Add(ActualPOI);
-                Debug.Log("proutActual" + ActualPOI);
+                UnityEngine.Debug.Log("proutActual" + ActualPOI);
             }
             //we search the easternPOI in gameobjects connected to startPOI
             foreach (GameObject POI in POIsChecked)
             {
-                Debug.Log("proutEasternCompare" + EasternPOI + POI);
+                UnityEngine.Debug.Log("proutEasternCompare" + EasternPOI + POI);
                 if (EasternPOI.transform.position.x > POI.transform.position.x) EasternPOI = POI;
 
             }
-            Debug.Log("proutEastern" + EasternPOI);
+            UnityEngine.Debug.Log("proutEastern" + EasternPOI);
             objs = GameObject.FindGameObjectsWithTag("POI");
             //we set the easterngame object with a connected POI to the 1st POI next to it
             GameObject LowestDistancePOI = EndPOI;
@@ -191,7 +191,7 @@ public class Mapping_POIs : MonoBehaviour
             {
                 if (EasternPOI.transform.position.x > obj.transform.position.x)
                 {
-                    Debug.Log("prout" + obj);
+                    UnityEngine.Debug.Log("prout" + obj);
                     if (Vector3.Distance(EasternPOI.transform.position, obj.transform.position) > Vector3.Distance(EasternPOI.transform.position, LowestDistancePOI.transform.position))
                     {
                         LowestDistancePOI = obj;
@@ -208,7 +208,7 @@ public class Mapping_POIs : MonoBehaviour
         {
             if (obj.GetComponent<POI_Variables>().POIsConnected.Count()==0)
             {
-                Debug.Log("proutAlone" + obj);
+                UnityEngine.Debug.Log("proutAlone" + obj);
                 GameObject LowestDistancePOI = EndPOI;
                 foreach (GameObject objc in objs)
                 {
@@ -251,7 +251,7 @@ public class Mapping_POIs : MonoBehaviour
             POIsChecked.Add(ActualPOI);
             
         }
-        Debug.Log("path found");
+        UnityEngine.Debug.Log("path found");
         return true;
     }
 
@@ -262,21 +262,21 @@ public class Mapping_POIs : MonoBehaviour
         //GameObject EndPOI = GameObject.Find("Nice");
         if (EndPOI.GetComponent<POI_Variables>().POIsConnected.Count == 0)
         {
-            Debug.Log("probleme endPOI trouvé");
+            UnityEngine.Debug.Log("probleme endPOI trouvé");
             return true;
         }
         else
         {
-            Debug.Log("Pas de probleme endPOI");
+            UnityEngine.Debug.Log("Pas de probleme endPOI");
             //GameObject StartPOI = GameObject.Find("Bordeaux");
             if (StartPOI.GetComponent<POI_Variables>().POIsConnected.Count == 0)
             {
-                Debug.Log("probleme startPOI trouvé");
+                UnityEngine.Debug.Log("probleme startPOI trouvé");
                 return true;
             }
             else
             {
-                Debug.Log("Pas de probleme startPOI");
+                UnityEngine.Debug.Log("Pas de probleme startPOI");
                 return false;
             }
         }
@@ -296,7 +296,7 @@ public class Mapping_POIs : MonoBehaviour
             //check if the point is at the good distance of the origin POI
             if (Vector3.Distance(POIPosition, obj.transform.position) < MinimumDistanceBetweenPOIs)
             {
-                Debug.Log("point trop proche!" + POIPosition + obj.transform.position);
+                UnityEngine.Debug.Log("point trop proche!" + POIPosition + obj.transform.position);
                 return true;
             }
         }
@@ -339,11 +339,11 @@ public class Mapping_POIs : MonoBehaviour
                 }
 
             }
-            Debug.Log("pour la ville" + obj);
-            Debug.Log("voici les valeurs du dictionnaire avant traitement");
+            UnityEngine.Debug.Log("pour la ville" + obj);
+            UnityEngine.Debug.Log("voici les valeurs du dictionnaire avant traitement");
             foreach (KeyValuePair<GameObject, float> POI in POIDistance.OrderBy(Key => Key.Value))
             {
-                    Debug.Log("voici la valeur du dictionnaire" + POI);
+                UnityEngine.Debug.Log("voici la valeur du dictionnaire" + POI);
             }
             //Debug.Log("here is the connected POIs for the POI " + obj);
             int i = 0;
@@ -351,13 +351,13 @@ public class Mapping_POIs : MonoBehaviour
             {
                 if (i <= MaximumPOIsConnected)
                 {
-                    Debug.Log("voici la valeur du dictionnaire en cours de traitement" + POI);
+                    UnityEngine.Debug.Log("voici la valeur du dictionnaire en cours de traitement" + POI);
                     //we set the both POIs in the ConnectedPOIs List of each other
                     obj.GetComponent<POI_Variables>().POIsConnected.Add(POI.Key);
                     POI.Key.GetComponent<POI_Variables>().POIsConnected.Add(obj);
                     i += 1;
                 }
-                if (i > MaximumPOIsConnected) Debug.Log("ville " + POI + "non connectée car trop de villes connectées ");
+                if (i > MaximumPOIsConnected) UnityEngine.Debug.Log("ville " + POI + "non connectée car trop de villes connectées ");
             }
                 
             POIDistance.Clear();

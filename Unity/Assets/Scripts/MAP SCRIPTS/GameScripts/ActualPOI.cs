@@ -18,10 +18,10 @@ public class ActualPOI : MonoBehaviour
     {
         RaycastHit hit = new RaycastHit();
         Vector3 direction = new Vector3(0, 0, -7);
-        Debug.DrawRay(transform.position, direction, Color.green);
+        UnityEngine.Debug.DrawRay(transform.position, direction, Color.green);
         if (Physics.Raycast(transform.position, direction, out hit))
         {
-            Debug.Log("RAY");
+            UnityEngine.Debug.Log("RAY");
             GetComponent<ActualPOI>().PlayerPOI = hit.transform.gameObject;
         }
     }
