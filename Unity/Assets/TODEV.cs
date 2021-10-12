@@ -2,6 +2,11 @@
  * COMBAT :
  * 
  * UI création formation : 
+
+ * --> Dev combat ensuite
+ * 
+ * --> Carte : info pour chaque carte 
+ * --> 
  * - comprendre pourquoi le carré rouge ne bouge pas après le clic ui apparemment est bien detecté
  * - vérifier les boxcolliders 2D tout petits
  * 
