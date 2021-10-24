@@ -25,10 +25,12 @@ public class DisplayRegimentCharge : MonoBehaviour
     {
         startTime = Time.realtimeSinceStartup;
         side = GetComponent<TurnManager>().turn;
+        GetComponent<DisplayBackToFormation>().UpdateFormationInfo(side);
         RegimentChargeDisplay(side);
         endTime = Time.realtimeSinceStartup;
         time = endTime - startTime;
         UnityEngine.Debug.Log("number of path tested at the end :" + numberOfPathTested + "Time " + time);
+
     }
 
     public void StopScript()
@@ -65,7 +67,6 @@ public class DisplayRegimentCharge : MonoBehaviour
         {
             
 
-            //Debug.Log("regiments to prioritize left :" + regimentsToPrioritize.Count);
             //get the regiments that has not already be prioritized ( in the "regimentsToPrioritize" list)
             for (int k = 0; k < regimentsToPrioritize.Count; k++)
             {
@@ -375,7 +376,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         foreach (SelectedCases cas in selectedCasesList)
         {
            
-            //Instantiate a Pathline from the regiment with exact paht booked
+            //Instantiate a Pathline from the regiment with exact path booked
             GameObject PathInstantiated = Instantiate(PathLine, cas.regiment.transform.position, Quaternion.identity);
             PathInstantiated.GetComponent<PathVariables>().dynamicTarget = false;
             if(side == "enemy")

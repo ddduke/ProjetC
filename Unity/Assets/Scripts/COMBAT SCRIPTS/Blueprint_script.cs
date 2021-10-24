@@ -44,8 +44,12 @@ public class Blueprint_script : MonoBehaviour
 
         if(Input.GetMouseButton(0))
         {
-            Instantiate(prefab, movePoint, transform.rotation);
-            Destroy(gameObject);
+            GameObject go = Instantiate(prefab, movePoint, transform.rotation);
+            if (CombatScripts.GetComponent<TurnManager>().turn == "enemy")
+            {
+                go.GetComponent<CombatVariables>().enemy = true;
+            }
+             Destroy(gameObject);
         }
     }
 }

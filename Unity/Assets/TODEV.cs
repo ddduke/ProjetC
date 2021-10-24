@@ -1,8 +1,9 @@
 ﻿/*TO DEV : 
  * COMBAT :
  * 
- * UI création formation : 
-
+ * BackToformation à finir , checker les commmentaires, 
+ * 
+ * 
  * --> Dev combat ensuite
  * 
  * --> Carte : info pour chaque carte 
