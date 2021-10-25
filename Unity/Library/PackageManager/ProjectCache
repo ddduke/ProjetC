@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637564483865484309
+      ticks: 637707493935430948
     m_Hash: 3458579291
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -902,6 +902,12 @@ m_PackageAssets:
         - 3.0.1
         - 3.0.2
         - 3.1.0
+        - 3.2.1
+        - 3.2.2
+        - 3.2.3
+        - 4.0.0
+        - 4.0.3
+        - 4.1.0
         compatible:
         - 0.0.3
         - 0.0.4
@@ -937,6 +943,12 @@ m_PackageAssets:
         - 3.0.1
         - 3.0.2
         - 3.1.0
+        - 3.2.1
+        - 3.2.2
+        - 3.2.3
+        - 4.0.0
+        - 4.0.3
+        - 4.1.0
         verified: 2.2.2
       dependencies:
       - name: com.unity.ugui

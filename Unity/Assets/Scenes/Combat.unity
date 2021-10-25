@@ -17369,6 +17369,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side: 
+  Obstacle: {fileID: 4750108380768158443, guid: b21ddeadcf5a3194ba1746e24520e574,
+    type: 3}
+  PathLine: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
+    type: 3}
   regimentSlot: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
     type: 3}
   inputMouse: 0
@@ -17377,6 +17381,9 @@ MonoBehaviour:
   newTarget: {x: 0, y: 0, z: 0}
   playerFormationPivot: {x: 0, y: 0, z: 0}
   enemyFormationPivot: {x: 0, y: 0, z: 0}
+  numberOfPathTested: 0
+  GraphMaskToUse:
+    value: 0
 --- !u!114 &754667014
 MonoBehaviour:
   m_ObjectHideFlags: 0
