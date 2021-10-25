@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637564315894700809
+      ticks: 637707713393188440
     m_Hash: 2856978993
   m_LockFileStatus:
     m_FilePath: C:/Users/duret/Documents/GitHub/ProjetC/Unity/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637707493935430948
+      ticks: 637707714078539967
     m_Hash: 3458579291
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}

@@ -39,6 +39,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
         GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
         foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
+        GetComponent<Seeker>().graphMask = 1;
     }
 
     public void RegimentChargeDisplay(string side)
@@ -365,6 +366,10 @@ public class DisplayRegimentCharge : MonoBehaviour
             }
             //5th fuck it, get one and store it into SelectedCases List
             //Debug.Log("Getting at the end of prioritization");
+            if (casesList.Count()==0)
+            {
+                Debug.Log("oops");
+            }
             Cases cslct = casesList[0];
             //cslct.PrintData();  
             selectedCasesList.Add(new SelectedCases(cslct.regiment, cslct.possiblePosition, cslct.pathUsed, cslct.numberOfRounds, cslct.endOfRoundGrounds));
@@ -412,12 +417,17 @@ public class DisplayRegimentCharge : MonoBehaviour
     {
         if (side == "enemy")
         {
-            GraphMaskToUse = GraphMask.FromGraphName("EnemyRegimentAloneGraph");
+            //GraphMaskToUse = GraphMask.FromGraphName("EnemyRegimentAloneGraph");
+            GraphMaskToUse = 3;
             GetComponent<Seeker>().graphMask = GraphMaskToUse;
         }
         else
         {
-            GraphMaskToUse = GraphMask.FromGraphName("PlayerRegimentAloneGraph");
+            //GraphMaskToUse = GraphMask.FromGraphName("PlayerRegimentAloneGraph");
+            //From graph name not working good : index must be frozen
+            //=> concrete example if you delete the Formation movement graph the from graph name on playerRegimentAlone
+            //==> fromGRaphname will still be pointing at the 2nd position of the index
+            GraphMaskToUse = 2;
             GetComponent<Seeker>().graphMask = GraphMaskToUse;
         }
         
@@ -433,7 +443,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             numberOfTests += 1;
             AstarPath.active.Scan();
             numberOfPathTested += 1;
-            p = GetComponent<Seeker>().StartPath(position, target);
+            p = GetComponent<Seeker>().StartPath(position, target,null, GraphMaskToUse);
             p.BlockUntilCalculated();
             if (p.error)
             {

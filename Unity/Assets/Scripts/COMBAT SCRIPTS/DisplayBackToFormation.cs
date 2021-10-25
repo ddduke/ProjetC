@@ -49,7 +49,9 @@ public class DisplayBackToFormation : MonoBehaviour
         GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
         foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
         GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
-        foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine); 
+        foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
+        inputMouse = false;
+        GetComponent<Seeker>().graphMask = 1;
         GetComponent<DisplayBackToFormation>().enabled = false;
     }
 
@@ -419,12 +421,17 @@ public class DisplayBackToFormation : MonoBehaviour
     {
         if (side == "enemy")
         {
-            GraphMaskToUse = GraphMask.FromGraphName("EnemyRegimentAloneGraph");
+            //GraphMaskToUse = GraphMask.FromGraphName("EnemyRegimentAloneGraph");
+            GraphMaskToUse = 3;
             GetComponent<Seeker>().graphMask = GraphMaskToUse;
         }
         else
         {
-            GraphMaskToUse = GraphMask.FromGraphName("PlayerRegimentAloneGraph");
+            //GraphMaskToUse = GraphMask.FromGraphName("PlayerRegimentAloneGraph");
+            //From graph name not working good : index must be frozen
+            //=> concrete example if you delete the Formation movement graph the from graph name on playerRegimentAlone
+            //==> fromGRaphname will still be pointing at the 2nd position of the index
+            GraphMaskToUse = 2;
             GetComponent<Seeker>().graphMask = GraphMaskToUse;
         }
 
@@ -440,7 +447,7 @@ public class DisplayBackToFormation : MonoBehaviour
             numberOfTests += 1;
             AstarPath.active.Scan();
             numberOfPathTested += 1;
-            p = GetComponent<Seeker>().StartPath(position, target);
+            p = GetComponent<Seeker>().StartPath(position, target, null, GraphMaskToUse);
             p.BlockUntilCalculated();
             if (p.error)
             {
