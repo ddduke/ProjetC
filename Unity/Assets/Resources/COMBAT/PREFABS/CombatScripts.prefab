@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4760604696023883208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4760604696023883222}
+  - component: {fileID: 4760604696023883209}
+  - component: {fileID: 1417089881}
+  - component: {fileID: 1417089882}
+  - component: {fileID: 1417089883}
+  - component: {fileID: 1417089884}
+  - component: {fileID: 1417089885}
+  m_Layer: 0
+  m_Name: CombatScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4760604696023883222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.522615, y: -46.44882, z: 62.054596}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4760604696023883209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d198909f36dec45a6c0938ff6c77e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  round: 0
+  turn: Enemy
+  roundText: {fileID: 0}
+  turnText: {fileID: 0}
+--- !u!114 &1417089881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634e85bc351c5e542b2b283521926dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatMapMaxX: 27
+  combatMapMinX: -10
+  combatMapMaxZ: 6
+  combatMapMinZ: -6
+--- !u!114 &1417089882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6424a0ed37077640b5ce9db41e78928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RegimentSlot: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
+    type: 3}
+  target: {x: 0, y: 0, z: 0}
+  newTarget: {x: 0, y: 0, z: 0}
+  cam: {fileID: 0}
+  DisplayPath: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
+    type: 3}
+  side: player
+--- !u!114 &1417089883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 1
+    exactEndPoint: 4
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: 0
+--- !u!114 &1417089884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ec27cef214dddb47bda8ac4e942028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1417089885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760604696023883208}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da79e87a88d43442ba73fb46d70656a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RegimentSlot: {fileID: 5533401547217096168, guid: 8dbd91e2cb562cf4aa3f8f7d78464f76,
+    type: 3}
+  target: {x: 0, y: 0, z: 0}
+  newTarget: {x: 0, y: 0, z: 0}
+  cam: {fileID: 0}
+  DisplayPath: {fileID: 4759120117854447301, guid: 71547471efaee9d439b096cebe8dab05,
+    type: 3}
+  side: 
