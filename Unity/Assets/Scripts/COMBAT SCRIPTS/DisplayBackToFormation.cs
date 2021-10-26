@@ -21,6 +21,14 @@ public class DisplayBackToFormation : MonoBehaviour
     public int numberOfPathTested = 0;
     public List<regimentFormationPosition> playerRegimentFormationPositions;
     public List<regimentFormationPosition> enemyRegimentFormationPositions;
+    public int playerMaxXFormation;
+    public int playerMinXFormation;
+    public int playerMaxZFormation;
+    public int playerMinZFormation;
+    public int enemyMaxXFormation;
+    public int enemyMinXFormation;
+    public int enemyMaxZFormation;
+    public int enemyMinZFormation;
 
     public GraphMask GraphMaskToUse;
     // Start is called before the first frame update
@@ -70,21 +78,31 @@ public class DisplayBackToFormation : MonoBehaviour
             Ground g = hit.collider.GetComponent<Ground>();
             newTarget = g.transform.position;
             newTarget.y += 0.5f;
-            /*
-            make a getmax X and average Z on update formation Info and then send them to a new corrct target function taking these args in count
-             * Make A correct Target Z & X but with the target formation not the actual one (in charge)
-            newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(newTarget.z);
-            newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(newTarget.x);
-            */
+            if(side=="player")
+            {
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,playerMinZFormation,playerMaxZFormation)
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,playerMinXFormation,playerMaxXFormation)
+            }
+            if(side=="enemy")
+            {
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,enemyMinZFormation,enemyMaxZFormation)
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,enemyMinXFormation,enemyMaxXFormation)
+            }
+            
         }
         if (newTarget != target && !inputMouse)
         {
             target = newTarget;
-            /*
-             * Make A correct Target Z & X but with the target formation not the actual one (in charge)
-            newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(newTarget.z);
-            newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(newTarget.x);
-            */
+            if(side=="player")
+            {
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,playerMinZFormation,playerMaxZFormation)
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,playerMinXFormation,playerMaxXFormation)
+            }
+            if(side=="enemy")
+            {
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,enemyMinZFormation,enemyMaxZFormation)
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,enemyMinXFormation,enemyMaxXFormation)
+            }
             GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
             foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
             GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
@@ -150,11 +168,16 @@ public class DisplayBackToFormation : MonoBehaviour
             playerFormationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
             List<GameObject> regimentsList = new List<GameObject>();
             regimentsList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
+            GetComponent<UsefulCombatFunctions>().
             foreach (GameObject regiment in regimentsList)
             {
                 Vector3 relativePosition = playerFormationPivot - regiment.transform.position;
                 playerRegimentFormationPositions.Add(new regimentFormationPosition(regiment, relativePosition));
             }
+            playerMaxXFormation = GetComponent<UsefulCombatFunctions>().GetMaxX(side);
+            playerMinXFormation = GetComponent<UsefulCombatFunctions>().GetMinX(side);
+            playerMaxZFormation = GetComponent<UsefulCombatFunctions>().GetMaxZ(side);
+            playerMinZFormation = GetComponent<UsefulCombatFunctions>().GetMinZ(side);
         }
 
         if (side == "enemy")
@@ -168,6 +191,10 @@ public class DisplayBackToFormation : MonoBehaviour
                 Vector3 relativePosition = playerFormationPivot - regiment.transform.position;
                 enemyRegimentFormationPositions.Add(new regimentFormationPosition(regiment, relativePosition));
             }
+            enemyMaxXFormation = GetComponent<UsefulCombatFunctions>().GetMaxX(side);
+            enemyMinXFormation = GetComponent<UsefulCombatFunctions>().GetMinX(side);
+            enemyMaxZFormation = GetComponent<UsefulCombatFunctions>().GetMaxZ(side);
+            enemyMinZFormation = GetComponent<UsefulCombatFunctions>().GetMinZ(side);
         }
     }
 

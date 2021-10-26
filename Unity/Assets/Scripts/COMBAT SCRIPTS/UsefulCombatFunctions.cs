@@ -120,6 +120,22 @@ public class UsefulCombatFunctions : MonoBehaviour
         return target;
     }
 
+    /// <summary>
+    /// correct z of a target to ensure the target is reachable for the formation pivot without going out of the frontiers of the map with Min and max input
+    /// </summary>
+    public float CorrectTargetZWithMinMax(float target, int min, int max)
+    {
+        string side = GetComponent<TurnManager>().turn;
+        //check if the target is reachable or recalculate it based on max
+        //check if reaches the top of the map, and if it is, correct the target 
+        if (target + max > combatMapMaxZ) target = combatMapMaxZ - max;
+        //check if reaches the bottom of the map, and if it is, correct the target 
+        if (target + min < combatMapMinZ) target = combatMapMinZ - min;
+        return target;
+    }
+
+    
+
     public int GetMaxX(string side)
     {
         //get the formation relative position and get the max Z of it
@@ -164,6 +180,20 @@ public class UsefulCombatFunctions : MonoBehaviour
         if (target + GetMaxX(side) > combatMapMaxX) target = combatMapMaxX - GetMaxX(side);
         //check if reaches the bottom of the map, and if it is, correct the target 
         if (target + GetMinX(side) < combatMapMinX) target = combatMapMinX - GetMinX(side);
+        return target;
+    }
+
+    /// <summary>
+    /// correct X of a target to ensure the target is reachable for the formation pivot without going out of the frontiers of the map with Min and max input
+    /// </summary>
+    public float CorrectTargetXWithMinMax(float target, int min, int max)
+    {
+        string side = GetComponent<TurnManager>().turn;
+        //check if the target is reachable or recalculate it based on max
+        //check if reaches the top of the map, and if it is, correct the target 
+        if (target + max > combatMapMaxX) target = combatMapMaxX - max;
+        //check if reaches the bottom of the map, and if it is, correct the target 
+        if (target + min < combatMapMinX) target = combatMapMinX - min;
         return target;
     }
 
