@@ -71,6 +71,7 @@ public class DisplayBackToFormation : MonoBehaviour
             newTarget = g.transform.position;
             newTarget.y += 0.5f;
             /*
+            make a getmax X and average Z on update formation Info and then send them to a new corrct target function taking these args in count
              * Make A correct Target Z & X but with the target formation not the actual one (in charge)
             newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZ(newTarget.z);
             newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetX(newTarget.x);
