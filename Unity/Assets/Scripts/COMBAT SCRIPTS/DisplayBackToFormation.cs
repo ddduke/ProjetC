@@ -80,13 +80,13 @@ public class DisplayBackToFormation : MonoBehaviour
             newTarget.y += 0.5f;
             if(side=="player")
             {
-                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,playerMinZFormation,playerMaxZFormation)
-                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,playerMinXFormation,playerMaxXFormation)
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(newTarget.z,playerMinZFormation,playerMaxZFormation);
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(newTarget.x,playerMinXFormation,playerMaxXFormation);
             }
             if(side=="enemy")
             {
-                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,enemyMinZFormation,enemyMaxZFormation)
-                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,enemyMinXFormation,enemyMaxXFormation)
+                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(newTarget.z,enemyMinZFormation,enemyMaxZFormation);
+                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(newTarget.x,enemyMinXFormation,enemyMaxXFormation);
             }
             
         }
@@ -95,13 +95,13 @@ public class DisplayBackToFormation : MonoBehaviour
             target = newTarget;
             if(side=="player")
             {
-                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,playerMinZFormation,playerMaxZFormation)
-                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,playerMinXFormation,playerMaxXFormation)
+                target.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(target.z,playerMinZFormation,playerMaxZFormation);
+                target.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(target.x,playerMinXFormation,playerMaxXFormation);
             }
             if(side=="enemy")
             {
-                newTarget.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(side,enemyMinZFormation,enemyMaxZFormation)
-                newTarget.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(side,enemyMinXFormation,enemyMaxXFormation)
+                target.z = GetComponent<UsefulCombatFunctions>().CorrectTargetZWithMinMax(target.z,enemyMinZFormation,enemyMaxZFormation);
+                target.x = GetComponent<UsefulCombatFunctions>().CorrectTargetXWithMinMax(target.x,enemyMinXFormation,enemyMaxXFormation);
             }
             GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
             foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);

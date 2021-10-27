@@ -125,7 +125,6 @@ public class UsefulCombatFunctions : MonoBehaviour
     /// </summary>
     public float CorrectTargetZWithMinMax(float target, int min, int max)
     {
-        string side = GetComponent<TurnManager>().turn;
         //check if the target is reachable or recalculate it based on max
         //check if reaches the top of the map, and if it is, correct the target 
         if (target + max > combatMapMaxZ) target = combatMapMaxZ - max;
@@ -188,7 +187,7 @@ public class UsefulCombatFunctions : MonoBehaviour
     /// </summary>
     public float CorrectTargetXWithMinMax(float target, int min, int max)
     {
-        string side = GetComponent<TurnManager>().turn;
+        
         //check if the target is reachable or recalculate it based on max
         //check if reaches the top of the map, and if it is, correct the target 
         if (target + max > combatMapMaxX) target = combatMapMaxX - max;
