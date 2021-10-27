@@ -168,7 +168,6 @@ public class DisplayBackToFormation : MonoBehaviour
             playerFormationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot(side);
             List<GameObject> regimentsList = new List<GameObject>();
             regimentsList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
-            GetComponent<UsefulCombatFunctions>().
             foreach (GameObject regiment in regimentsList)
             {
                 Vector3 relativePosition = playerFormationPivot - regiment.transform.position;
