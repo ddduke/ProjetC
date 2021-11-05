@@ -6,6 +6,7 @@ public class CombatVariables : MonoBehaviour
 {
     //variables for the game design
     //Moves per round is the standard move per round autorisation for this unit (not modified except by winning experience tier etc)
+    public GameObject combatScripts;
     public int movesPerRoundGame = 1;
     //MoveCapacity is the actual move capacity for the unit, so it can be less or more depending on actual buffers
     public int moveCapacityRegStat = 1;
@@ -25,6 +26,7 @@ public class CombatVariables : MonoBehaviour
 
     void Start()
     {
+        combatScripts = GameObject.Find("CombatScripts").transform.gameObject;
         totalHealth = healthByPeople * people;
     }
 
@@ -34,5 +36,17 @@ public class CombatVariables : MonoBehaviour
         //Debug.Log(relativePeopleNumber);
         people = (int)Mathf.Ceil(relativePeopleNumber);
         if (people <= 0) dead = true;
+    }
+    /// <summary>
+    /// Check if the actual position of the regiment is its position in formation or not
+    /// </summary>
+    public void CheckRegimentIsInFormation()
+    {
+        //check if the actual position of the object
+        if (combatScripts.GetComponent<UsefulCombatFunctions>().IsInFormation(transform.gameObject))
+        {
+            inFormation = true;
+        }
+        else inFormation = false;
     }
 }

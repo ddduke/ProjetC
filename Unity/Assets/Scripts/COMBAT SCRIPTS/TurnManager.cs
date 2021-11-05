@@ -11,7 +11,7 @@ public class TurnManager : MonoBehaviour
     List<int> unitsList = new List<int>();
     List<string> formationAndUnitTags= new List<string>();
     public int round = 0;
-    public string turn = "Enemy";
+    public string turn = "enemy";
     public Text roundText;
     public Text turnText;
     public bool finishedTurn = true;
@@ -44,6 +44,8 @@ public class TurnManager : MonoBehaviour
         foreach (GameObject g in group)
         {
             g.GetComponent<RegimentPath>().GetToNextRoundPosition();
+            g.GetComponent<CombatVariables>().CheckRegimentIsInFormation();
+           
         }
         if (finishedTurn)
         {

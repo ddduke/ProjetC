@@ -46,6 +46,7 @@ public class DisplayBackToFormation : MonoBehaviour
     {
         side = GetComponent<TurnManager>().turn;
         GetComponent<DisplayBackToFormation>().enabled = true;
+        GetComponent<OrderManagement>().actualOrder = "BackInFormation";
     }
 
     /// <summary>
@@ -121,43 +122,7 @@ public class DisplayBackToFormation : MonoBehaviour
 
     }
 
-    private void DisplayFormation(string side, Vector3 target)
-    {
-
-        if (side == "player")
-        {
-            List<Vector3> regimentsRelativePosition = new List<Vector3>();
-
-            foreach (regimentFormationPosition elmt in playerRegimentFormationPositions)
-            {
-                regimentsRelativePosition.Add(elmt.relativePosition);
-            }
-            //Displays the regimentslots relatively to the target
-            foreach (Vector3 regimentRelativePosition in regimentsRelativePosition)
-            {
-                Vector3 position = target - regimentRelativePosition;
-                Instantiate(regimentSlot, position, Quaternion.identity);
-            }
-        }
-
-        if (side == "enemy")
-        {
-            List<Vector3> regimentsRelativePosition = new List<Vector3>();
-
-            foreach (regimentFormationPosition elmt in enemyRegimentFormationPositions)
-            {
-                regimentsRelativePosition.Add(elmt.relativePosition);
-            }
-            //Displays the regimentslots relatively to the target
-            foreach (Vector3 regimentRelativePosition in regimentsRelativePosition)
-            {
-                Vector3 position = target - regimentRelativePosition;
-                Instantiate(regimentSlot, position, Quaternion.identity);
-            }
-        }
-
-
-    }
+    
 
 
     public void UpdateFormationInfo(string side)
@@ -434,7 +399,7 @@ public class DisplayBackToFormation : MonoBehaviour
             Instantiate(regimentSlot, position, Quaternion.identity);
             //store the vector 3 path in regiment object 
             cas.regiment.GetComponent<RegimentPath>().regimentPathList = cas.pathUsed.vectorPath;
-            cas.regiment.GetComponent<CombatVariables>().inFormation = false;
+            //stopped because function that check formation is updated in combatVariables cas.regiment.GetComponent<CombatVariables>().inFormation = false;
         }
 
         selectedBCasesList.Clear();

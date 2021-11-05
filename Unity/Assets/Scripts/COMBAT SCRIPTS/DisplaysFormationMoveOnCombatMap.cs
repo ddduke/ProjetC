@@ -46,7 +46,7 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
         foreach (GameObject reg in regimentsList)
         {
             if ((int) reg.GetComponent<CombatVariables>().moveCapacityRegStat < minMovesPerRound) minMovesPerRound = (int)reg.GetComponent<CombatVariables>().moveCapacityRegStat;
-            reg.GetComponent<CombatVariables>().inFormation = true;
+            //stopped because function that check formation is updated in combatVariables reg.GetComponent<CombatVariables>().inFormation = true;
         }
         PathInstantiated.GetComponent<PathVariables>().movesPerRound = minMovesPerRound;
         //set the target & the graph to use for the seeker (inclue layer regiments for  
@@ -61,6 +61,7 @@ public class DisplaysFormationMoveOnCombatMap : MonoBehaviour
     {
         Start();
         GetComponent<DisplaysFormationMoveOnCombatMap>().enabled = true;
+        GetComponent<OrderManagement>().actualOrder = "FormationMove";
     }
 
     /// <summary>

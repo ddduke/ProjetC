@@ -229,4 +229,76 @@ public class UsefulCombatFunctions : MonoBehaviour
         }
         return ground;
     }
+
+
+    /// <summary>
+    /// Bool that return true if the selected regiment is in formation
+    /// </summary>
+    /// 
+    public List<regimentFormationPosition> formationList;
+    public bool IsInFormation(GameObject regiment)
+    {
+        formationList = new List<regimentFormationPosition>();
+        //if the regiment is a player's one
+        if(!regiment.GetComponent<CombatVariables>().enemy)
+        {
+            //first we get info on the actual formation pivot of the player formation, and get the latest update on what formation the player should be
+            Vector3 playerFormationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot("player");
+            formationList = GetComponent<DisplayBackToFormation>().playerRegimentFormationPositions;
+            foreach(regimentFormationPosition elmt in formationList)
+            {
+                if(regiment == elmt.regiment)
+                {
+                    Vector3 formationPosition = playerFormationPivot + elmt.relativePosition;
+                    //if the actual ground of the regiment is the ground that is supposed to be in formation position, then the regiment is in formation
+                    if(GetTargetGroundVector(formationPosition) == GetTargetGroundVector(regiment.transform.position))
+                    {
+                        formationList.Clear();
+                        return true;
+
+                    }
+                }
+            }
+
+        }
+        //if we talk about enemy formation
+        if (regiment.GetComponent<CombatVariables>().enemy)
+        {
+            //first we get info on the actual formation pivot of the player formation, and get the latest update on what formation the player should be
+            Vector3 playerFormationPivot = GetComponent<UsefulCombatFunctions>().FormationPivot("enemy");
+            formationList = GetComponent<DisplayBackToFormation>().enemyRegimentFormationPositions;
+            foreach (regimentFormationPosition elmt in formationList)
+            {
+                if (regiment == elmt.regiment)
+                {
+                    Vector3 formationPosition = playerFormationPivot + elmt.relativePosition;
+                    //if the actual ground of the regiment is the ground that is supposed to be in formation position, then the regiment is in formation
+                    if (GetTargetGroundVector(formationPosition) == GetTargetGroundVector(regiment.transform.position))
+                    {
+                        formationList.Clear();
+                        return true;
+
+                    }
+                }
+            }
+
+        }
+        formationList.Clear();
+        //in any other cases the regiment is not on the formation position
+        return false;
+    }
+
+    public bool sideInFormation(string side)
+    {
+        List<GameObject> tmpList = new List<GameObject>();
+        //get All regiments of the choosen side
+        tmpList = GetComponent<TurnManager>().GetAllUnitsBySide(side);
+        foreach (GameObject tmp in tmpList)
+        {
+            //if one of the regiments are not in formation at this time, return false
+            if (!tmp.GetComponent<CombatVariables>().inFormation) return false;
+        }
+        //if every regiments are in formation, return true
+        return true;
+    }
 }

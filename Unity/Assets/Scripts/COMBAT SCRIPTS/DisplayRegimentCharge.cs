@@ -30,6 +30,7 @@ public class DisplayRegimentCharge : MonoBehaviour
         endTime = Time.realtimeSinceStartup;
         time = endTime - startTime;
         UnityEngine.Debug.Log("number of path tested at the end :" + numberOfPathTested + "Time " + time);
+        GetComponent<OrderManagement>().actualOrder = "RegimentCharge";
 
     }
 
@@ -401,7 +402,7 @@ public class DisplayRegimentCharge : MonoBehaviour
             Instantiate(RegimentSlot, position, Quaternion.identity);
             //store the vector 3 path in regiment object 
             cas.regiment.GetComponent<RegimentPath>().regimentPathList = cas.pathUsed.vectorPath;
-            cas.regiment.GetComponent<CombatVariables>().inFormation = false;
+            //stopped because function that check formation is updated in combatVariables cas.regiment.GetComponent<CombatVariables>().inFormation = false;
         }
 
         selectedCasesList.Clear();
