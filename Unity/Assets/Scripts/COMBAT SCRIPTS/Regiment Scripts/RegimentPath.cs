@@ -56,6 +56,12 @@ public class RegimentPath : MonoBehaviour
                     i += 1;
                     moveAlreadyLaunched = false;
                 }
+                //if we are at the next waypoint and ended our movement, it may seems that there is a duplicate of the previous point or something else, anyway remove it
+                else if(Vector3.Distance(transform.position, regimentPathList[i]) < 0.1f && !moveAlreadyLaunched)
+                {
+                    i += 1;
+                }
+                
 
             }
             //delete all the nodes per round
