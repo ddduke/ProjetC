@@ -5,12 +5,9 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     //ground variables : in order to know if the ground is our current position, targeted, walkable...
-    public bool current = false;
-    public bool target = false;
-    public bool selectable = false;
+    
     public bool mouseOver = false;
-    public bool path = false;
-    public bool walkable = true;
+    public bool range = false;
     public string row;
 
     //using a list to get all the adjacency grounds 
@@ -31,23 +28,12 @@ public class Ground : MonoBehaviour
     void Update()
     {
         //Check if the ground has to be specific color for the player
-        if(current)
-        {
-            GetComponent<MeshRenderer>().material.color = Color.magenta;
-        }
-        else if (target)
-        {
-            GetComponent<MeshRenderer>().material.color = Color.green;
-        }
-        else if (path)
-        {
-            GetComponent<MeshRenderer>().material.color = Color.yellow;
-        }
-        else if (mouseOver)
+        
+        if (mouseOver)
         {
             GetComponent<MeshRenderer>().material.color = Color.black;
         }
-        else if (selectable)
+        else if (range)
         {
             GetComponent<MeshRenderer>().material.color = Color.red;
         }
@@ -72,20 +58,13 @@ public class Ground : MonoBehaviour
     {
 
         adjacencyList.Clear();
-        current = false;
-        target = false;
-        selectable = false;
-        walkable = true;
 
         visited = false;
         parent = null;
         distance = 0;
     }
 
-    public void ResetCurrent()
-    {
-        current = false;
-    }
+    
 
 
     //void used to get the neighbors and check if they are selectable to walk on
@@ -110,7 +89,7 @@ public class Ground : MonoBehaviour
         foreach(Collider item in colliders)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 RaycastHit hit;
 
@@ -154,7 +133,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 RaycastHit hit;
                 LayerMask layer_mask = LayerMask.GetMask("Unit");
@@ -205,7 +184,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -218,7 +197,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders2)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -230,7 +209,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders3)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -244,7 +223,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders4)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -273,7 +252,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in collidersbis)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -286,7 +265,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders2bis)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -299,7 +278,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders3bis)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
@@ -312,7 +291,7 @@ public class Ground : MonoBehaviour
         foreach (Collider item in colliders4bis)
         {
             Ground ground = item.GetComponent<Ground>();
-            if (ground != null && ground.walkable)
+            if (ground != null)
             {
                 grounds.Add(ground);
             }
