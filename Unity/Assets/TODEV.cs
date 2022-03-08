@@ -1,9 +1,7 @@
 ﻿/*TO DEV : 
  * COMBAT :
- * Améliorer la fonction range display enfonction des besoins sur les archers (identifier toutes les cases en range 2 par exemple) et sortir une liste pour simplifier les calculs des ranges sr la partie fight
- * Archers : modifier les combat slots pour prendre ceux à deux cases ou plus de l'enemi
  * UnitFight :
- * Masterscript sur fight : check des enemis a proximité, check des enemis qui nous attaquent, puis une fois qu'on a la liste on lance la fight
+ * Masterscript a créer avec des fonctions utiles pour fight : check des enemis a proximité, check des enemis qui nous attaquent, puis une fois qu'on a la liste on lance la fight
  * intégrer dans unitfight une fonction  pour lister les différents régiments dans la zone et leur action :
  * -  les régiments qui peuvent être attaqués par l'unité (nourri par la fonction de recherche de unitfight de l'unité en question)
  * -  les régiments qui peuvent attaquer l'unité (nourri par les scripts unitfight de ces régiments)

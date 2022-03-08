@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -1445919377964616508}
   - component: {fileID: 5174813964193831025}
   - component: {fileID: 313628268969732250}
+  - component: {fileID: 2523777018224595859}
   m_Layer: 9
   m_Name: Archers
   m_TagString: Regiment
@@ -199,3 +200,17 @@ MonoBehaviour:
   CombatScripts: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
     type: 3}
   side: 
+--- !u!114 &2523777018224595859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750108380768158443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8ba2e7b8633dd4a86481aeb407d831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CombatScripts: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
+    type: 3}

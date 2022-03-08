@@ -173,6 +173,27 @@ public class Ground : MonoBehaviour
         
     }
 
+    public List<Ground> SphericFindNeighborsGroundsByRange(int range, float maxHeight)
+    {
+        List<Ground> grounds = new List<Ground>();
+
+        //iterating to get all grounds in range 
+        Vector3 halfExtends = new Vector3(0.25f, (1 + maxHeight / 2), 0.25f);
+        Vector3 center = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(center, range);
+        //once we get all objects collided in the cube, we get the ground type and if it is walkable we add it to the adjacency list
+        foreach (Collider item in colliders)
+        {
+            Ground ground = item.GetComponent<Ground>();
+            if (ground != null)
+            {
+                grounds.Add(ground);
+            }
+        }
+        return grounds;
+    }
+
+
     public List<Ground> StandardFindNeighborsGroundsByRange(int range, float maxHeight)
     {
         List<Ground> grounds = new List<Ground>();

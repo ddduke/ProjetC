@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -1445919377964616508}
   - component: {fileID: 5174813964193831025}
   - component: {fileID: 313628268969732250}
+  - component: {fileID: -2777593566548323850}
   m_Layer: 9
   m_Name: Horsemen
   m_TagString: Regiment
@@ -126,6 +127,7 @@ MonoBehaviour:
   totalHealth: 30
   dead: 0
   inFormation: 1
+  inFormationOrder: 1
 --- !u!114 &6607067871986998554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +200,17 @@ MonoBehaviour:
   CombatScripts: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
     type: 3}
   side: 
+--- !u!114 &-2777593566548323850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4750108380768158443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acca93ac7ec84646b1f827cad0ff148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CombatScripts: {fileID: 4760604696023883208, guid: eb03f14aed2f78f42813df55af26d760,
+    type: 3}
