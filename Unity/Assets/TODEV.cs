@@ -1,4 +1,8 @@
 ﻿/*TO DEV : 
+ * DEPLACEMENT : 
+ * zone du cavalier pas OK : il faut qu'on prenne la capacité de mouvement de l'unité 
+ * 
+ * 
  * COMBAT :
  * UnitFight :
  * Masterscript a créer avec des fonctions utiles pour fight : check des enemis a proximité, check des enemis qui nous attaquent, puis une fois qu'on a la liste on lance la fight
