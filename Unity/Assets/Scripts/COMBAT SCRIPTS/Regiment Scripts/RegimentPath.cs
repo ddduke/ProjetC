@@ -29,7 +29,7 @@ public class RegimentPath : MonoBehaviour
             }
         }
         
-        //foreach node that we can move on on thi round (depends of movesPerRoundGame)
+        //foreach node that we can move on on the round (depends of movesPerRoundGame)
         if (regimentPathList.Count > 0)
         {
             speedOfMovement = CombatScripts.GetComponent<TurnManager>().speedOfMovement;

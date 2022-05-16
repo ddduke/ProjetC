@@ -1,6 +1,5 @@
 ﻿/*TO DEV : 
- * DEPLACEMENT : 
- * zone du cavalier pas OK : il faut qu'on prenne la capacité de mouvement de l'unité 
+
  * 
  * 
  * COMBAT :
@@ -41,5 +40,9 @@
  * Mettre une condition pour empecher le joueur de cliquer sur les autres POI quand l'action Moving est lancée
  * Tester la génération de map : encore des connexions incohérentes = repenser le process ? 
  * 
+
+ Question : 
+
+Display sur un hover d'une unité :  Mettre également le movement capacity individuelle ? Pas forcément utile vu qu'on les dirige pas individuellement
  * 
  */
