@@ -3,12 +3,19 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 /Library/
+\Library\
 /Temp/
+\Temp\
 /Obj/
+\Obj\
 /Build/
+\Build\
 /Builds/
+\Builds\
 /Logs/
+\Logs\
 /MemoryCaptures/
+\MemoryCaptures\
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -24,6 +31,8 @@
 
 # Useful SOurce
 /Assets/UsefulSources/
+\Assets\UsefulSources\
+# Artifacts
 
 # Gradle cache directory
 .gradle/
