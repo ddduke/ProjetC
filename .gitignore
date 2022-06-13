@@ -16,6 +16,9 @@ Unity/[Bb]uilds/
 Unity/[Ll]ogs/
 Unity/[Uu]ser[Ss]ettings/
 
+Unity/Library/
+Unity\Library\
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 Unity/[Mm]emoryCaptures/
