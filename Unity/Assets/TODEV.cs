@@ -1,5 +1,5 @@
 ﻿/*TO DEV : 
-test
+tester
  * 
  * Déplacement : 
 --> Recalculer les ordres à chaque changement de tour pour les regiments du side
