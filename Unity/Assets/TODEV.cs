@@ -1,10 +1,7 @@
 ﻿/*TO DEV : 
 tester
  * 
- * Déplacement : 
---> Recalculer les ordres à chaque changement de tour pour les regiments du side
---> Appliquer un déplacement lent aux régiments
-
+ * 
  * COMBAT :
  * UnitFight :
  * Masterscript a créer avec des fonctions utiles pour fight : check des enemis a proximité, check des enemis qui nous attaquent, puis une fois qu'on a la liste on lance la fight
