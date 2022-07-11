@@ -66,35 +66,15 @@ public class TurnManager : MonoBehaviour
         if (turn == "player")
         {
             turn = "enemy";
-            List<GameObject> enemyGroup = new List<GameObject>();
-            List<GameObject> playerGroup = new List<GameObject>();
-            enemyGroup = GetAllUnitsBySide("enemy");
-            foreach (GameObject enemy in enemyGroup)
-            {
-                //enemy.GetComponent<TacticsMove>().turn = true;
-            }
-            playerGroup = GetAllUnitsBySide("player");
-            foreach (GameObject player in playerGroup)
-            {
-                // player.GetComponent<TacticsMove>().turn = false;
-            }
+            int tmp = GetComponent<OrderManagement>().enemyOrder;
+            GetComponent<OrderManagement>().launchNewOrder(tmp);
 
         }
         else
         {
             turn = "player";
-            List<GameObject> enemyGroup = new List<GameObject>();
-            List<GameObject> playerGroup = new List<GameObject>();
-            enemyGroup = GetAllUnitsBySide("enemy");
-            foreach (GameObject enemy in enemyGroup)
-            {
-                //enemy.GetComponent<TacticsMove>().turn = false;
-            }
-            playerGroup = GetAllUnitsBySide("player");
-            foreach (GameObject player in playerGroup)
-            {
-                //player.GetComponent<TacticsMove>().turn = true;
-            }
+            int tmp = GetComponent<OrderManagement>().playerOrder;
+            GetComponent<OrderManagement>().launchNewOrder(tmp);
 
         }
     }

@@ -1,7 +1,11 @@
 ﻿/*TO DEV : 
-tester
  * 
- * 
+ * PATHFINDING : 
+ Mettre à jour les chemins à chaque changement de tour : 
+ - stocker l'ordre actuel : 
+    --> Si c'est regiment charge in formation ou break formation il faut juste relancer l'ordre
+    --> Si c'est regiment move il faut modifier la fonction displayFormationMove pour rajouter une condition si le tour n'est pas à 0 on garde en cible la cible qui existait jusqu'à maintenant
+ - à chaque tour et chaque changement de role relancer l'ordre actuel
  * COMBAT :
  * UnitFight :
  * Masterscript a créer avec des fonctions utiles pour fight : check des enemis a proximité, check des enemis qui nous attaquent, puis une fois qu'on a la liste on lance la fight

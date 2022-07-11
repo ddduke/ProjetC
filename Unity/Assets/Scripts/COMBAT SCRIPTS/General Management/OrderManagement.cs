@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class OrderManagement : MonoBehaviour
 {
 
+    public int enemyOrder;
+    public int playerOrder;
+
     //value to get the actual order (modified by the other order scripts)
     public string actualOrder;
 
@@ -14,10 +17,16 @@ public class OrderManagement : MonoBehaviour
 
     public void OnOrderChange()
     {
+        
         //masterFunction on order change : 
 
         //stop actual order script 
         StopActualOrder();
+        //store the new order
+        string side = GetComponent<TurnManager>().turn;
+        if (side == "enemy") enemyOrder = dropdownMenu.value;
+        if (side == "player") playerOrder = dropdownMenu.value;
+        
         //launch new order
         launchNewOrder(dropdownMenu.value);
     }
