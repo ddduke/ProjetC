@@ -17,18 +17,20 @@ public class OrderManagement : MonoBehaviour
 
     public void OnOrderChange()
     {
-        
-        //masterFunction on order change : 
+        if(GetComponent<TurnManager>().round == 0)
+        {
+            //masterFunction on order change : 
 
-        //stop actual order script 
-        StopActualOrder();
-        //store the new order
-        string side = GetComponent<TurnManager>().turn;
-        if (side == "enemy") enemyOrder = dropdownMenu.value;
-        if (side == "player") playerOrder = dropdownMenu.value;
-        
-        //launch new order
-        launchNewOrder(dropdownMenu.value);
+            //stop actual order script 
+            StopActualOrder();
+            //store the new order
+            string side = GetComponent<TurnManager>().turn;
+            if (side == "enemy") enemyOrder = dropdownMenu.value;
+            if (side == "player") playerOrder = dropdownMenu.value;
+
+            //launch new order
+            launchNewOrder(dropdownMenu.value);
+        }
     }
 
 
