@@ -2,6 +2,7 @@
  * 
  * PATHFINDING : 
  Mettre à jour les chemins à chaque changement de tour : 
+ - supprimer les indications de chemin à chaque tour
  - stocker l'ordre actuel : 
     --> Si c'est regiment charge in formation ou break formation il faut juste relancer l'ordre
     --> Si c'est regiment move il faut modifier la fonction displayFormationMove pour rajouter une condition si le tour n'est pas à 0 on garde en cible la cible qui existait jusqu'à maintenant

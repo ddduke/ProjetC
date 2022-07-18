@@ -39,6 +39,13 @@ public class TurnManager : MonoBehaviour
 
     public void GetToNextRound()
     {
+        //delete all path and regimentslot existing on the grid 
+        GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
+        foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
+        GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
+        foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
+
+
         List<GameObject> group = new List<GameObject>();
         group = GetAllUnitsBySide(turn);
         foreach (GameObject g in group)
@@ -62,6 +69,12 @@ public class TurnManager : MonoBehaviour
 
     public void ChangeTurn()
     {
+        
+        //delete all path and regimentslot existing on the grid 
+        GameObject[] existingSlots = GameObject.FindGameObjectsWithTag("RegimentSlot");
+        foreach (GameObject slot in existingSlots) GameObject.Destroy(slot);
+        GameObject[] existingPathLines = GameObject.FindGameObjectsWithTag("PathLine");
+        foreach (GameObject pathLine in existingPathLines) GameObject.Destroy(pathLine);
 
         if (turn == "player")
         {
